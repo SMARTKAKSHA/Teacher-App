@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "718199002218",
+    "firebase_url": "https://smartkaksha-fe247.firebaseio.com",
+    "project_id": "smartkaksha-fe247",
+    "storage_bucket": "smartkaksha-fe247.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718199002218:android:f06814970bcdfde573a613",
+        "android_client_info": {
+          "package_name": "com.example.sqllite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718199002218-78cp1lf431lhkvd3uo158norreukc8jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sqllite",
+            "certificate_hash": "0e54edb2757fa576de6ad6eaeb7ecb37d4b7d6d3"
+          }
+        },
+        {
+          "client_id": "718199002218-o1d7lrv8216msta4aev8u3m7kel4e2t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfeJVeqODtji_BCKNQy1pUB50QNfW8GwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718199002218-o1d7lrv8216msta4aev8u3m7kel4e2t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="TeacherHome"
+
+  >
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relate"
+    >
+    <Button
+
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:onClick="classroom_session"
+
+        android:text="Perform Classroom Session"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:onClick="sync_data"
+        android:text="Synchonize Data With Cloud"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button5"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button4"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:onClick="manage_curriculum"
+        android:text="Manage Curriculum"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button5"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:onClick="student_performance"
+        android:text="View Student's Performance"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+</RelativeLayout>
+
+</RelativeLayout>

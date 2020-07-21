@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.sqllite">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Trial Intern"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SearchStudent"></activity>
+        <activity
+            android:name=".StudentSelectCohort"
+            android:label="@string/title_activity_student_select_cohort">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Home"
+            android:label="HOME" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:label="Password Reset" />
+        <activity
+            android:name=".ResetPasswordActivity2"
+            android:label="Password Reset" />
+        <activity
+            android:name=".ExoPlayer"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:label="Player" />
+        <activity
+            android:name=".TeacherHome"
+            android:label="Home" />
+        <activity
+            android:name=".SynchronizeData"
+            android:label="Sync" />
+        <activity
+            android:name=".Server"
+            android:label="Server" />
+        <activity
+            android:name=".SessionSelect"
+            android:label="Select Session" />
+        <activity
+            android:name=".Test"
+            android:label="Test/Exam" />
+        <activity
+            android:name=".Course"
+            android:label="Curriculum" />
+        <activity
+            android:name=".ConceptActivity"
+            android:label="Manage Curriculum" />
+        <activity
+            android:name=".SubConcept"
+            android:label="Curriculum" />
+    </application>
+
+</manifest>

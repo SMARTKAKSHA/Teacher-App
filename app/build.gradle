@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.example.sqllite"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src/main/java', 'src/main/java/com.example.sqlite/ManageCurriculum', 'src/main/java/com/example/sqlite/ManageCurriculum', 'src/main/java/com/example/sqllite/ManageCurriculum/', 'src/main/java/com/example/sqllite/Home/', 'src/main/java/com/example/sqllite/database/', 'src/main/java/com/example/sqllite/Login', 'src/main/java/com/example/sqllite/ExoPlayer', 'src/main/java/com/example/sqllite/Signup/', 'src/main/java/com/example/sqllite/ResetPassword/'
+            }
+            res {
+                srcDirs 'src/main/res', 'src/main/res/layout/ExoPlayer/', 'src/main/res/res/layout/Login/'
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.wear:wear:1.0.0'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Circle Image
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation "androidx.core:core-ktx:1.3.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.3'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.3'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+
+    implementation 'com.google.code.gson:gson:2.8.6'
+    compileOnly 'com.google.android.wearable:wearable:2.5.0'
+}
+repositories {
+    mavenCentral()
+}

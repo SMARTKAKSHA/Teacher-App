@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Intern Project</string>
+
+    <string name="selected_item">Selected item:</string>
+
+    <string name="course_promt">Select Courses</string>
+
+    <string-array name="course_arrays">
+        <item>Select Courses</item>
+        <item>Civil Engineering</item>
+        <item>Computer Science Engineering</item>
+        <item>Electrical</item>
+        <item>MBA</item>
+        <item>BBA</item>
+        <item>BCA</item>
+
+    </string-array>
+    <string name="concept_promt">Select Concept</string>
+
+    <string-array name="concept_arrays">
+        <item>Select Concept</item>
+        <item>Data Structure</item>
+        <item>Web Designing</item>
+        <item>DataBase</item>
+        <item>AI</item>
+        <item>ML</item>
+        <item>BlockChain</item>
+
+    </string-array>
+    <string name="sub_concept_promt">Select Sub Concepts</string>
+
+    <string-array name="sub_concept_arrays">
+        <item>Select Sub Concept</item>
+        <item>LinkedList</item>
+        <item>Tree</item>
+        <item>Stack</item>
+        <item>Array</item>
+        <item>Queue</item>
+
+    </string-array>
+    <string name="list_paragraphs">
+       A linked list is a linear data structure where each element is a separate object.
+Linked list elements are not stored at contiguous location; the elements are linked using pointers.
+
+Each node of a list is made up of two items - the data and a reference to the next node. The last node has a reference to null. The entry point into a linked list is called the head of the list. It should be noted that head is not a separate node, but the reference to the first node. If the list is empty then the head is a null reference.
+    </string>
+    <string name="title_activity_student_select_cohort">StudentSelectCohort</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+
+</resources>

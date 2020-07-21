@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+    <TableRow android:background="#0079D6" android:padding="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Session"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Synced" />
+
+    </TableRow>
+    <TableRow android:background="#DAE8FC" android:padding="5dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" Session1"
+            android:onClick="sync_session_1"
+            />
+        <TextView
+            android:id="@+id/sync1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Not Synced" />
+
+    </TableRow>
+    <TableRow android:background="#DAE8FC" android:padding="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" Session 2"
+            android:onClick="sync_session_2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Not Synced" />
+    </TableRow>
+    <TableRow android:background="#DAE8FC" android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="sync_session_3"
+            android:text="Session 3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Not Synced" />
+    </TableRow>
+</TableLayout>
