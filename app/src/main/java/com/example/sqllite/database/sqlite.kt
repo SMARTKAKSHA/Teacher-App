@@ -392,7 +392,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         var cursor: Cursor? = null
         try {
 
-            cursor = db.rawQuery("select * from Course" + " where CO_NAme =?", arrayOf(name))
+            cursor = db.rawQuery("select CO_id from Course" + " where CO_NAme =?", arrayOf(name))
 
         } catch (e: SQLiteException) {
 
@@ -424,7 +424,92 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         };
         return l_CN_Id
     }
+    //fetching sub concept id from concept table for manage curriculum part
+    fun getsubConceptID(name: String): String? {
 
+        val db = readableDatabase
+        var cursor: Cursor? = null
+        try {
+            cursor = db.rawQuery("select SC_id from subconcept" + " where SC_Name =?", arrayOf(name))
+        } catch (e: SQLiteException) {
+
+        }
+
+        var l_CN_Id: String? = null
+        if (cursor != null) {
+            cursor.moveToNext()
+            l_CN_Id = cursor.getString(0)
+        };
+        return l_CN_Id
+    }
+    //fetching content name from content table for manage curriculum part
+    fun displayContent(CO_Id: Int,CN_Id: Int,SC_Id: Int): ArrayList<String> {
+
+        val l_CONTENT = ArrayList<String>()
+        val db = writableDatabase
+        var cursor: Cursor? = null
+        try {
+            cursor = db.rawQuery("select CT_id from coursecontent where CO_id = $CO_Id and CN_id= $CN_Id and SC_id =$SC_Id", null)
+        } catch (e: SQLiteException) {
+
+        }
+
+        var l_name: String
+        if (cursor!!.moveToFirst()) {
+            while (cursor.isAfterLast == false) {
+
+                l_name= getlinkContent(cursor.getString(0))
+
+
+                l_CONTENT.add(l_name)
+                cursor.moveToNext()
+            }
+        }
+        return l_CONTENT;
+
+    }
+
+    //FOR FETCHING LINK FROM THE CONTENT TABLE
+    fun getlinkContent(ct_id: String): String
+    {
+        var cursor: Cursor? = null
+    val db = this.readableDatabase
+        try {
+            cursor = db.rawQuery("select CT_ContentLink from content where CT_id=$ct_id", null)
+        } catch (e: SQLiteException) {
+
+        }
+
+        var l_Content: String? = null
+        if (cursor != null) {
+            cursor.moveToNext()
+            l_Content = cursor.getString(0)
+        };
+        return l_Content!!
+
+
+    }
+
+    //FOR FETCHING CONTENT TYP EL FROM THE CONTENT TABLE
+    fun getContentType(ct_id: String): String
+    {
+        var cursor: Cursor? = null
+        val db = this.readableDatabase
+        try {
+            cursor = db.rawQuery("select CT_Type from content where CT_id=$ct_id", null)
+        } catch (e: SQLiteException) {
+
+        }
+
+        var l_Content: String? = null
+        if (cursor != null) {
+            cursor.moveToNext()
+            l_Content = cursor.getString(0)
+        };
+        return l_Content!!
+
+
+    }
 
     companion object {
         const val sql_DATABASE_NAME = "SMARTKAKSHA.db"

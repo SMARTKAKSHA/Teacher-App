@@ -5,16 +5,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Trial Intern"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchStudent"></activity>
+        <activity
+            android:name=".DownloadActivity"
+            android:label="DOWNLOAD"></activity>
+        <activity android:name=".SearchStudent" />
         <activity
             android:name=".StudentSelectCohort"
             android:label="@string/title_activity_student_select_cohort">
@@ -29,7 +33,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>https://github.com/SMARTKAKSHA/DOWNLOAD
+            </intent-filter>
         </activity>
         <activity
             android:name=".Home"
@@ -68,6 +72,9 @@
         <activity
             android:name=".SubConcept"
             android:label="Curriculum" />
+        <activity
+            android:name=".VIewContent"
+            android:label="Content" />
     </application>
 
 </manifest>
