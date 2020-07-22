@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -24,6 +25,7 @@ class Course : AppCompatActivity() {
         l_courseArray = db.displayCourse()
         var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, l_courseArray)
         listView.adapter = l_arrayAdapter
+
         listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
 
             var l_selectedCourse: String = l_courseArray.get(position)
@@ -31,6 +33,8 @@ class Course : AppCompatActivity() {
             intent = Intent(this, ConceptActivity::class.java)
             intent.putExtra("COURSE_ID", l_course_ID)
             startActivity(intent)
+            Toast.makeText(this@Course, l_course_ID ,Toast.LENGTH_LONG).show()
+
         }
     }
 }
