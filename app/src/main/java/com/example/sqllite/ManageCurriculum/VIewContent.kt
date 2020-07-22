@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class VIewContent : AppCompatActivity() {
@@ -22,6 +23,13 @@ class VIewContent : AppCompatActivity() {
 
         var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, l_content)
         listView.adapter = l_arrayAdapter
+        listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
+            var l_contentlink = l_content.get(position)
+            intent = Intent(this, DownloadActivity::class.java)
+            intent.putExtra("CT_LINK",l_contentlink)
+            startActivity(intent)
+            Toast.makeText(this@VIewContent, l_contentlink, Toast.LENGTH_LONG).show()
 
+        }
     }
 }

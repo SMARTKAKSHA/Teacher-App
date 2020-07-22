@@ -458,7 +458,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
 
-                l_name= getContentType(cursor.getString(0))
+                l_name= getlinkContent(cursor.getString(0))
 
 
                 l_CONTENT.add(l_name)
