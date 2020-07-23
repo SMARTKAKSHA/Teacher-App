@@ -28,11 +28,17 @@ class DownloadActivity : AppCompatActivity() {
     private var refid: Long = 0
     private var Download_Uri: Uri? = null
     var l_content_link: String? = null
+    var l_content_id: String? = null
+    var db: sqlite? = null
     var list: ArrayList<Long> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
         l_content_link = intent.getStringExtra("CT_LINK")
+        l_content_id = intent.getStringExtra("CT_ID")
+        db = sqlite(this)
+
+
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
         registerReceiver(onComplete,
@@ -56,8 +62,9 @@ class DownloadActivity : AppCompatActivity() {
 
         Log.e("OUT", "" + refid);
 
-        list.add(refid);
 
+        list.add(refid);
+        db?.updateContentTable("/storage/emulated/0/Download/document/42",l_content_id.toString())
     }
 
     fun isStoragePermissionGranted(): Boolean {

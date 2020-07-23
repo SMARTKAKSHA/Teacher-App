@@ -25,8 +25,10 @@ class VIewContent : AppCompatActivity() {
         listView.adapter = l_arrayAdapter
         listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
             var l_contentlink = l_content.get(position)
+            var l_ct_id: String? = db.getContentId(l_content.get(position))
             intent = Intent(this, DownloadActivity::class.java)
             intent.putExtra("CT_LINK",l_contentlink)
+            intent.putExtra("CT_ID",l_ct_id)
             startActivity(intent)
             Toast.makeText(this@VIewContent, l_contentlink, Toast.LENGTH_LONG).show()
 

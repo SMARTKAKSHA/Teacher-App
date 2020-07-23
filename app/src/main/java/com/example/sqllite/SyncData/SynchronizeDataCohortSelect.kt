@@ -1,6 +1,7 @@
 package com.example.sqllite
 
 import android.content.Intent
+import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -86,7 +87,57 @@ class SynchronizeDataCohortSelect : AppCompatActivity() {
     }
     fun Sync_Data(view: View?)
     {
+        fetch_courseid()
+        fetch_conceptid()
+        fetch_subconceptid()
+        fetch_contentid()
         val intent = Intent(this@SynchronizeDataCohortSelect, SynchronizeData::class.java)
         startActivity(intent)
+    }
+
+    fun fetch_courseid()//function for fetching course id from the local database as we have synced the session previously
+    {
+        val cursor1: Cursor = db!!.getCourseId(g_course_selected!!)
+        val stringBuilder1 = StringBuilder()
+        while (cursor1.moveToNext())
+        {
+            stringBuilder1.append(" " + cursor1.getString(0))
+            g_course_id = stringBuilder1.toString()
+        }
+    }
+
+    fun fetch_conceptid()//function for fetching concept id from the local database as we have synced the session previously
+    {
+        val cursor3: Cursor = db!!.getConceptId(g_course_id!!)
+        val stringBuilder3 = StringBuilder()
+        while (cursor3.moveToNext())
+        {
+            stringBuilder3.append(" " + cursor3.getString(0))
+            g_concept_id = stringBuilder3.toString()
+        }
+    }
+    fun fetch_subconceptid()//function for fetching subconcept id from the local database as we have synced the session previously
+    {
+        val cursor4: Cursor = db!!.getSubConceptId(g_concept_id!!, g_course_id!!)
+        val stringBuilder4 = StringBuilder()
+        while (cursor4.moveToNext())
+        {
+            stringBuilder4.append(" " + cursor4.getString(0))
+            g_subconcept_id = stringBuilder4.toString()
+        }
+    }
+
+    fun fetch_contentid()//function for fetching content id from the local database as we have synced the session previously
+    {
+        val cursor5: Cursor = db!!.getContentId(g_course_id!!, g_concept_id!!, g_subconcept_id!!)
+        if (cursor5.moveToFirst())
+        {
+            g_content_id = cursor5.getString(0)
+            while (cursor5.moveToNext())
+            {
+                g_content_id1= cursor5.getString(0)
+
+            }
+        }
     }
 }
