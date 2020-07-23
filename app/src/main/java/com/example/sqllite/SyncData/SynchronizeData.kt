@@ -205,7 +205,7 @@ class SynchronizeData : AppCompatActivity() {
                 l_CT_Duration=jo.getInt(l_CT_DURATION)
                 l_CT_InsertDate=jo.getString(l_CT_INSERTDATE)
 
-                mydb1?.insertData_into_Content(l_CT_id,l_CT_Name,l_CT_Type,l_CT_ContentLink,l_CT_Duration,l_CT_InsertDate)
+                mydb1?.insertData_into_Content(l_CT_id,l_CT_Name,l_CT_Type,l_CT_ContentLink,l_CT_Duration,l_CT_InsertDate,"null")
                 Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
             }
         }

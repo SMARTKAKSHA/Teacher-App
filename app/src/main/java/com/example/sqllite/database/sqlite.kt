@@ -22,7 +22,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     {
         db.execSQL("create table $sql_cohort (CH_id INTEGER ,CH_Name TEXT ,TC_id INTEGER ,CU_id INTEGER ,TP_id INTEGER ,CH_Semester INTEGER )")
         db.execSQL("create table $sql_course (CO_ID INTEGER ,CO_Name TEXT ,CO_Desc TEXT ,CO_Duration INTEGER ,CO_Image TEXT ,CO_Insertdate TEXT )")
-        db.execSQL("create table $sql_content (CT_ID INTEGER ,CT_Name TEXT ,CT_Type TEXT ,CT_ContentLink TEXT ,CT_Duration INTEGER ,CT_Insertdate TEXT )")
+        db.execSQL("create table $sql_content (CT_ID INTEGER ,CT_Name TEXT ,CT_Type TEXT ,CT_ContentLink TEXT ,CT_Duration INTEGER ,CT_Insertdate TEXT,CT_DOWNLOADLINK TEXT  )")
         db.execSQL("create table $sql_concept (CN_id INTEGER ,CN_Name TEXT,CN_Desc TEXt, CN_Duration INTEGER, CN_Image TEXT, CN_Insertdate TEXT, CO_id INTEGER)")
         db.execSQL("create table $sql_subconcept (SC_id INTEGER, SC_Name TEXT ,SC_Desc TEXT, SC_Insertdate TEXT, SC_Duration INTEGER,CN_id INTEGER, CO_id INTEGER)")
         db.execSQL("create table $sql_sessionplan (SP_id INTEGER, SP_Name TEXT ,SP_Duration INTEGER, SP_Sequence INTEGER,CO_id INTEGER)")
@@ -92,7 +92,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     }
 
     //function for inserting data into CONTENT  Table
-    fun insertData_into_Content(ct_id : Int?, ct_name: String?, ct_type : String?, ct_content_link : String?, ct_duration : Int?, ct_insertdate : String?): Boolean {
+    fun insertData_into_Content(ct_id : Int?, ct_name: String?, ct_type : String?, ct_content_link : String?, ct_duration : Int?, ct_insertdate : String?,ct_downloadlink: String?): Boolean {
         val sql_db1 = this.writableDatabase
         val l_contentValues = ContentValues()
         l_contentValues.put(sql_CT_id,  ct_id)
@@ -101,6 +101,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         l_contentValues.put(sql_CT_ContentLink, ct_content_link)
         l_contentValues.put(sql_CT_Duration, ct_duration)
         l_contentValues.put(sql_CT_Insertdate, ct_insertdate)
+        l_contentValues.put(sql_CT_DOWNLOADLINK, ct_downloadlink)
 
         val l_success1 = sql_db1.insert(sql_content, null, l_contentValues)
         return if (l_success1 == -1L)
@@ -511,6 +512,33 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
 
     }
 
+
+    //fetching sub concept id from concept table for manage curriculum part
+    fun getContentId(contentlink: String): String? {
+
+        val db = readableDatabase
+        var cursor: Cursor? = null
+        try {
+            cursor = db.rawQuery("select CT_id from content" + " where CT_ContentLink =?", arrayOf(contentlink))
+        } catch (e: SQLiteException) {
+
+        }
+
+        var l_CT_Id: String? = null
+        if (cursor != null) {
+            cursor.moveToNext()
+            l_CT_Id = cursor.getString(0)
+        };
+        return l_CT_Id
+    }
+
+
+    fun updateContentTable(CT_DownloadLink: String?, CT_ID: String){
+        val db = this.readableDatabase
+            db.execSQL("UPDATE $sql_content SET $sql_CT_DOWNLOADLINK =$CT_DownloadLink WHERE CT_ID =$CT_ID")
+        }
+
+
     companion object {
         const val sql_DATABASE_NAME = "SMARTKAKSHA.db"
         const val sql_cohort="cohort"
@@ -536,6 +564,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         const val sql_CT_ContentLink = "CT_ContentLink"
         const val sql_CT_Duration = "CT_Duration"
         const val sql_CT_Insertdate = "CT_Insertdate"
+        const val sql_CT_DOWNLOADLINK=  "CT_DOWNLOADLINK"
 
         const val sql_concept="concept"
         const val sql_CN_id = "CN_id"
