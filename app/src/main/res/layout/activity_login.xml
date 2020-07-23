@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1119dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="30dp">
 
@@ -52,6 +52,31 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="10dp" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <CheckBox
+        android:layout_gravity="end"
+        android:id="@+id/remeberme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REMEMBER ME"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="forget"
+        android:text="Forgotten your password?"
+        android:textStyle="bold"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorAccent"
+        tools:ignore="OnClick" />
+
+
+</LinearLayout>
 
         <Button
             android:id="@+id/button_login"
@@ -59,20 +84,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_background"
-            android:text="Login"
             android:onClick="login_main"
+            android:text="Login"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
-        <TextView
-            android:id="@+id/forgot_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="Forgotten your password?"
-            android:gravity="center"
-            android:onClick="forget"
-            android:textStyle="bold"
-            tools:ignore="OnClick" />
+
 
 
     </LinearLayout>

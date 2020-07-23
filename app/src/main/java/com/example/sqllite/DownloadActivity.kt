@@ -1,14 +1,16 @@
 package com.example.sqllite
 
 import android.Manifest
+import android.app.Dialog
 import android.app.DownloadManager
-import android.app.Notification
 import android.app.NotificationManager
+import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +23,7 @@ import androidx.core.app.NotificationCompat
 
 
 class DownloadActivity : AppCompatActivity() {
+
     private var downloadManager: DownloadManager? = null
     private var refid: Long = 0
     private var Download_Uri: Uri? = null
@@ -45,8 +48,8 @@ class DownloadActivity : AppCompatActivity() {
         val request = DownloadManager.Request(Download_Uri)
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
         request.setAllowedOverRoaming(false)
-        request.setTitle("Downloading ")
-        request.setDescription("Downloading ")
+        request.setTitle("SMARTKAKSHA")
+        request.setDescription("CONTENT")
         request.setVisibleInDownloadsUi(true)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/storage/emulated/0/Download/")
         refid = downloadManager!!.enqueue(request)
@@ -101,6 +104,10 @@ class DownloadActivity : AppCompatActivity() {
             // permission granted
         }
     }
+
+
+
+
 
 }
 
