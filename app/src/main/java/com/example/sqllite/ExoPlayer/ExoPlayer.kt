@@ -50,6 +50,7 @@ class ExoPlayer : AppCompatActivity() {
         g_ct_id = intent.getStringExtra("ct_id")
         g_ct_id1 = intent.getStringExtra("ct_id1")
 
+
         val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
         val l_stringBuilder1 = StringBuilder()
         while (cursor1.moveToNext()) {

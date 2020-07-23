@@ -64,6 +64,7 @@ class DownloadActivity : AppCompatActivity() {
 
 
         list.add(refid);
+        db?.updateContentTable("/storage/emulated/0/Download/",l_content_id.toString())
     }
 
     fun isStoragePermissionGranted(): Boolean {
