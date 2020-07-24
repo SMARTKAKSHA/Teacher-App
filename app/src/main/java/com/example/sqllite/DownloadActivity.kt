@@ -1,35 +1,42 @@
 package com.example.sqllite
 
+
+
 import android.Manifest
-import android.app.Dialog
 import android.app.DownloadManager
 import android.app.NotificationManager
-import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.webkit.MimeTypeMap
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import java.io.File
+import java.lang.Exception
+
 
 
 class DownloadActivity : AppCompatActivity() {
+
 
     private var downloadManager: DownloadManager? = null
     private var refid: Long = 0
     private var Download_Uri: Uri? = null
     var l_content_link: String? = null
+
     var l_content_id: String? = null
     var db: sqlite? = null
+    var keyword:String?="/exoplayer-test-media-0/"
     var list: ArrayList<Long> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,47 +46,71 @@ class DownloadActivity : AppCompatActivity() {
         db = sqlite(this)
 
 
-        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
         registerReceiver(onComplete,
                 IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
+var filepath= Environment.getExternalStorageDirectory();
+        var dir= File(filepath.absolutePath+"/SmartKaksha/")
+        dir.mkdir()
 
     }
 
 
-    fun download(view: View?){
+    fun download(view: View?) {
 
-        Download_Uri = Uri.parse(l_content_link)
-        val request = DownloadManager.Request(Download_Uri)
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-        request.setAllowedOverRoaming(false)
-        request.setTitle("SMARTKAKSHA")
-        request.setDescription("CONTENT")
-        request.setVisibleInDownloadsUi(true)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/storage/emulated/0/Download/")
-        refid = downloadManager!!.enqueue(request)
-
-        Log.e("OUT", "" + refid);
-
-
-        list.add(refid);
-        db?.updateContentTable("/storage/emulated/0/Download/document/42",l_content_id.toString())
-    }
-
-    fun isStoragePermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                true
+                var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!) + keyword!!.length)
+                downloadit(filename)
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-                false
+
             }
         } else { //permission is automatically granted on sdk<23 upon installation
-            true
+            var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!) + keyword!!.length)
+            downloadit(filename)
         }
+
     }
+    fun downloadit(filename: String) {
+        Download_Uri = Uri.parse(l_content_link)
+        val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        try{
+            if(manager!=null){
+                val request = DownloadManager.Request(Download_Uri)
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+
+                request.setAllowedOverRoaming(false)
+                request.setTitle(filename)
+                request.setDescription("CONTENT"+filename)
+                request.setAllowedOverMetered(true)
+                request.setAllowedOverRoaming(true)
+                request.allowScanningByMediaScanner()
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+                request.setMimeType(getMimeType(Download_Uri))
+                refid = manager.enqueue(request)
+
+                list.add(refid);
+Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
+                db?.updateContentTable(filename, l_content_id.toString())
+            }
+            else{
+                var intent= Intent(Intent.ACTION_VIEW,Download_Uri)
+                startActivity(intent)
+            }
+        }catch (e:Exception){
+            Toast.makeText(this@DownloadActivity,"Something went wrong!",Toast.LENGTH_SHORT).show()
+            Log.e("ERRO:MAIN","E: "+e.message)
+
+        }
+
+
+
+    }
+
 
     var onComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context, intent: Intent) {
@@ -105,16 +136,28 @@ class DownloadActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!) + keyword!!.length)
+            downloadit(filename)
 
             // permission granted
         }
+        else{
+            Toast.makeText(this@DownloadActivity,"Permission Denied",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+fun getMimeType(uri: Uri?): String? {
+        var resolver= contentResolver
+   var mimeTypeMap=MimeTypeMap.getSingleton()
+    return mimeTypeMap.getExtensionFromMimeType(resolver.getType(uri!!))
     }
 
 
 
-
-
 }
+
+
+
 
