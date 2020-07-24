@@ -31,7 +31,7 @@ class ExoPlayer : AppCompatActivity() {
     var g_ct_id: String?=null
     var g_ct_id1: String?=null
 
-    var g_link: String?= null
+    var g_link: String? = null
 
     var g_playerView: PlayerView? = null
     private var g_playWhenReady = true
@@ -50,27 +50,16 @@ class ExoPlayer : AppCompatActivity() {
         g_ct_id = intent.getStringExtra("ct_id")
         g_ct_id1 = intent.getStringExtra("ct_id1")
 
-        var ct_linkstatus= g_mydb3!!.checkingDownloadLink(g_ct_id!!)
-        if(ct_linkstatus== "null"){
-            val cursor1: Cursor = g_mydb3!!.getOnlinelink(g_ct_id!!)
-            val l_stringBuilder1 = StringBuilder()
-            while (cursor1.moveToNext()) {
-                l_stringBuilder1.append(" " + cursor1.getString(0))
-                g_link = l_stringBuilder1.toString()
-                Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
 
-            }
-        }else{
-            val cursor1: Cursor = g_mydb3!!.getDownloadlink(g_ct_id!!)
-            val l_stringBuilder1 = StringBuilder()
-            while (cursor1.moveToNext()) {
-                l_stringBuilder1.append(" " + cursor1.getString(0))
-                g_link = l_stringBuilder1.toString()
-                Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
+        val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
+        val l_stringBuilder1 = StringBuilder()
+        while (cursor1.moveToNext()) {
+            l_stringBuilder1.append(" " + cursor1.getString(0))
+            g_link = l_stringBuilder1.toString()
+            Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
 
-            }
+
         }
-
     }
 
 
