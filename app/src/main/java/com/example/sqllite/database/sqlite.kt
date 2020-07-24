@@ -258,24 +258,38 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     }
 
 //FOR FETCHING LINK FROM THE CONTENT TABLE
-    fun getlink(ct_id: String): Cursor {
-    var l_ct: String? = null
+    fun getOnlinelink(ct_id: String): Cursor {
+
     val l_ct_id = '"'.toString() + ct_id + '"'
     val l_db1 = this.readableDatabase
-    val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
-    l_ct = l_db1.rawQuery(l_strquery, null).toString()
 
-    if (l_ct == "null") {
-        val l_db1 = this.readableDatabase
         val l_strquery = "select CT_ContentLink from content where CT_id=$l_ct_id"
         return l_db1.rawQuery(l_strquery, null)
-    }
-    else{
+
+
+}
+
+    //FOR FETCHING LINK FROM THE CONTENT TABLE
+    fun getDownloadlink(ct_id: String): Cursor {
+
+        val l_ct_id = '"'.toString() + ct_id + '"'
+
         val l_db1 = this.readableDatabase
         val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
         return l_db1.rawQuery(l_strquery, null)
+
     }
-}
+
+
+    fun checkingDownloadLink(ct_id :String) :String{
+        var l_ct: String? = null
+        val l_db1 = this.readableDatabase
+
+        val l_ct_id = '"'.toString() + ct_id + '"'
+        val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
+        l_ct = l_db1.rawQuery(l_strquery, null).toString()
+        return  l_ct
+    }
 
     //FOR FETCHING COURSEID FROM THE COURSE TABLE
     fun getCourseId(course: String): Cursor {
