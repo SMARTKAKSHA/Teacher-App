@@ -95,7 +95,7 @@ var filepath= Environment.getExternalStorageDirectory();
 
                 list.add(refid);
 Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
-                db?.updateContentTable(filename, l_content_id.toString())
+                db?.updateContentTable(filename, l_content_id.toString(),"true")
             }
             else{
                 var intent= Intent(Intent.ACTION_VIEW,Download_Uri)

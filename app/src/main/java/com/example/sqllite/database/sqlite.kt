@@ -22,7 +22,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     {
         db.execSQL("create table $sql_cohort (CH_id INTEGER ,CH_Name TEXT ,TC_id INTEGER ,CU_id INTEGER ,TP_id INTEGER ,CH_Semester INTEGER )")
         db.execSQL("create table $sql_course (CO_ID INTEGER ,CO_Name TEXT ,CO_Desc TEXT ,CO_Duration INTEGER ,CO_Image TEXT ,CO_Insertdate TEXT )")
-        db.execSQL("create table $sql_content (CT_ID INTEGER ,CT_Name TEXT ,CT_Type TEXT ,CT_ContentLink TEXT ,CT_Duration INTEGER ,CT_Insertdate TEXT,CT_DOWNLOADLINK TEXT  )")
+        db.execSQL("create table $sql_content (CT_ID INTEGER ,CT_Name TEXT ,CT_Type TEXT ,CT_ContentLink TEXT ,CT_Duration INTEGER ,CT_Insertdate TEXT,CT_DOWNLOADLINK TEXT,CT_DownloadStatus Text)")
         db.execSQL("create table $sql_concept (CN_id INTEGER ,CN_Name TEXT,CN_Desc TEXt, CN_Duration INTEGER, CN_Image TEXT, CN_Insertdate TEXT, CO_id INTEGER)")
         db.execSQL("create table $sql_subconcept (SC_id INTEGER, SC_Name TEXT ,SC_Desc TEXT, SC_Insertdate TEXT, SC_Duration INTEGER,CN_id INTEGER, CO_id INTEGER)")
         db.execSQL("create table $sql_sessionplan (SP_id INTEGER, SP_Name TEXT ,SP_Duration INTEGER, SP_Sequence INTEGER,CO_id INTEGER)")
@@ -92,7 +92,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     }
 
     //function for inserting data into CONTENT  Table
-    fun insertData_into_Content(ct_id : Int?, ct_name: String?, ct_type : String?, ct_content_link : String?, ct_duration : Int?, ct_insertdate : String?,ct_downloadlink: String?): Boolean {
+    fun insertData_into_Content(ct_id : Int?, ct_name: String?, ct_type : String?, ct_content_link : String?, ct_duration : Int?, ct_insertdate : String?,ct_downloadlink: String?,ct_downloadstatus: String?): Boolean {
         val sql_db1 = this.writableDatabase
         val l_contentValues = ContentValues()
         l_contentValues.put(sql_CT_id,  ct_id)
@@ -102,6 +102,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         l_contentValues.put(sql_CT_Duration, ct_duration)
         l_contentValues.put(sql_CT_Insertdate, ct_insertdate)
         l_contentValues.put(sql_CT_DOWNLOADLINK, ct_downloadlink)
+        l_contentValues.put(sql_CT_DownloadStatus, ct_downloadstatus)
 
         val l_success1 = sql_db1.insert(sql_content, null, l_contentValues)
         return if (l_success1 == -1L)
@@ -258,38 +259,26 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     }
 
 //FOR FETCHING LINK FROM THE CONTENT TABLE
-    fun getOnlinelink(ct_id: String): Cursor {
-
-    val l_ct_id = '"'.toString() + ct_id + '"'
+    fun getlink(ct_id: String): Cursor {
+    var l_ct: String? = null
     val l_db1 = this.readableDatabase
+    val l_ct_id = '"'.toString() + ct_id + '"'
+    val l_strquery = "select CT_DownloadStatus from content where CT_id=$l_ct_id"
+    l_ct= l_db1.rawQuery(l_strquery, null).toString()
 
-        val l_strquery = "select CT_ContentLink from content where CT_id=$l_ct_id"
-        return l_db1.rawQuery(l_strquery, null)
 
+if(l_ct=="false") {
+    val l_strquery = "select CT_ContentLink from content where CT_id=$l_ct_id"
+    return l_db1.rawQuery(l_strquery, null)
 
 }
+    else
+{
+    val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
+    return l_db1.rawQuery(l_strquery, null)
+}
+}
 
-    //FOR FETCHING LINK FROM THE CONTENT TABLE
-    fun getDownloadlink(ct_id: String): Cursor {
-
-        val l_ct_id = '"'.toString() + ct_id + '"'
-
-        val l_db1 = this.readableDatabase
-        val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
-        return l_db1.rawQuery(l_strquery, null)
-
-    }
-
-
-    fun checkingDownloadLink(ct_id :String) :String{
-        var l_ct: String? = null
-        val l_db1 = this.readableDatabase
-
-        val l_ct_id = '"'.toString() + ct_id + '"'
-        val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
-        l_ct = l_db1.rawQuery(l_strquery, null).toString()
-        return  l_ct
-    }
 
     //FOR FETCHING COURSEID FROM THE COURSE TABLE
     fun getCourseId(course: String): Cursor {
@@ -558,9 +547,10 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     }
 
 
-    fun updateContentTable(CT_DownloadLink: String?, CT_ID: String){
+    fun updateContentTable(CT_DownloadLink: String?, CT_ID: String,CT_DownloadStatus:String){
         val db = this.readableDatabase
         db.execSQL("UPDATE "+ sql_content+" SET $sql_CT_DOWNLOADLINK = "+"'"+CT_DownloadLink+"' "+ "WHERE CT_ID = "+"'"+CT_ID+"'");
+        db.execSQL("UPDATE "+ sql_content+" SET $sql_CT_DownloadStatus = "+"'"+CT_DownloadStatus+"' "+ "WHERE CT_ID = "+"'"+CT_ID+"'");
 
         }
 
@@ -591,6 +581,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         const val sql_CT_Duration = "CT_Duration"
         const val sql_CT_Insertdate = "CT_Insertdate"
         const val sql_CT_DOWNLOADLINK=  "CT_DOWNLOADLINK"
+       const val  sql_CT_DownloadStatus="CT_DownloadStatus"
 
         const val sql_concept="concept"
         const val sql_CN_id = "CN_id"
