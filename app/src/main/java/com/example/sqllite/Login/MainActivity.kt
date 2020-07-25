@@ -34,12 +34,12 @@ class MainActivity : AppCompatActivity() {
         g_email = findViewById(R.id.email)
         g_password = findViewById(R.id.pass)
          remember= findViewById<CheckBox>(R.id.remeberme)
+
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 getPreferencesData()
 
     }
 
-     fun already_login(){}
 //setting the rememberd username and password
     private fun getPreferencesData() {
         var sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -54,7 +54,8 @@ getPreferencesData()
         if(sp.contains("pref_check")) {
             var check:Boolean = sp.getBoolean("pref_check",false)
             remember!!.setChecked(check)
-
+            val intent = Intent(this@MainActivity, TeacherHome::class.java)
+            startActivity(intent)
 
         }
 
