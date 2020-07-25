@@ -39,7 +39,7 @@ getPreferencesData()
 
     }
 
-    public fun already_login(){}
+     fun already_login(){}
 //setting the rememberd username and password
     private fun getPreferencesData() {
         var sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
