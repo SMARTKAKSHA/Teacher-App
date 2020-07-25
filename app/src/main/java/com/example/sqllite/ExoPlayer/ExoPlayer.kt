@@ -1,21 +1,30 @@
 package com.example.sqllite
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import java.io.File
+
 
 /*Created By Divyanshu Gupta
 This Activity is Created for PLAYING VIDEO(CLASSROOM SESSION) AND PERFORMING DIFFERENT FUNCTIONS LIKE
@@ -30,9 +39,7 @@ NOTE:- IN THIS ACTIVITY WE HAVE INTEGERATED A THIRD PARTY VIDEO PLAYER THAT IS E
 class ExoPlayer : AppCompatActivity() {
     var g_ct_id: String?=null
     var g_ct_id1: String?=null
-
     var g_link: String? = null
-
     var g_playerView: PlayerView? = null
     private var g_playWhenReady = true
     private var g_currentWindow = 0
@@ -58,10 +65,11 @@ class ExoPlayer : AppCompatActivity() {
             g_link = l_stringBuilder1.toString()
             Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
 
-
         }
-    }
 
+
+
+    }
 
 
     private fun initializePlayer() //INTIALIZING THE PLAYER
@@ -129,6 +137,12 @@ class ExoPlayer : AppCompatActivity() {
             g_player = null
         }
     }
+
+
+
+
+
+
 
 
     fun pause(view: View?) {}//onclick function for  pausing the session

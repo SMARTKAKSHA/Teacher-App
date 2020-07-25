@@ -260,24 +260,36 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
 
 //FOR FETCHING LINK FROM THE CONTENT TABLE
     fun getlink(ct_id: String): Cursor {
-    var l_ct: String? = null
+    var l_status: String?=null
     val l_db1 = this.readableDatabase
     val l_ct_id = '"'.toString() + ct_id + '"'
-    val l_strquery = "select CT_DownloadStatus from content where CT_id=$l_ct_id"
-    l_ct= l_db1.rawQuery(l_strquery, null).toString()
+    var cursor: Cursor? = null
+    try {
+        cursor = l_db1.rawQuery("select CT_DownloadStatus from content where CT_id=$l_ct_id", null)
+    } catch (e: SQLiteException) {
+
+    }
 
 
-if(l_ct=="false") {
-    val l_strquery = "select CT_ContentLink from content where CT_id=$l_ct_id"
+    if (cursor != null) {
+        cursor.moveToNext()
+        l_status= cursor.getString(0)
+    }
+
+
+if (l_status== "true") {
+    val l_strquery = "select  CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
     return l_db1.rawQuery(l_strquery, null)
 
 }
     else
 {
-    val l_strquery = "select CT_DOWNLOADLINK from content where CT_id=$l_ct_id"
+    val l_strquery = "select CT_ContentLink from content where CT_id=$l_ct_id"
     return l_db1.rawQuery(l_strquery, null)
 }
+
 }
+
 
 
     //FOR FETCHING COURSEID FROM THE COURSE TABLE
@@ -542,7 +554,7 @@ if(l_ct=="false") {
         if (cursor != null) {
             cursor.moveToNext()
             l_CT_Id = cursor.getString(0)
-        };
+        }
         return l_CT_Id
     }
 
