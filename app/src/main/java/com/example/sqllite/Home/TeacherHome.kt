@@ -31,6 +31,8 @@ class TeacherHome : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_home)
         g_mydb1 = sqlite(this)
+
+
     }
 
     //onclick function for starting classroom session1 and it will open the home  activity where user will enter the cohort and course

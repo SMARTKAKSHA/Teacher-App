@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_server.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -97,7 +98,7 @@ class Server : AppCompatActivity() {
             try {
                 serverSocket = ServerSocket(SERVER_PORT)
                 runOnUiThread {
-                    tvMessages!!.text = "Not connected"
+                    tvConnectionStatus!!.text = "Not connected"
                     tvIP!!.text = "IP: $SERVER_IP"
                     tvPort!!.text = "Port: $SERVER_PORT"
                 }
@@ -106,12 +107,11 @@ class Server : AppCompatActivity() {
 
                     output = PrintWriter(socket.getOutputStream())
                     input = BufferedReader(InputStreamReader(socket.getInputStream()))
-                    runOnUiThread { tvMessages!!.text = "Connected\n" }
+                    runOnUiThread { tvConnectionStatus!!.text = "Connected\n" }
                     Thread(Thread2()).start()
                     val intent = Intent(this@Server, ExoPlayer::class.java)
                     intent.putExtra("ct_id",g_content_id)
                     intent.putExtra("ct_id1",g_content_id1)
-
                     startActivity(intent)
                 } catch (e: IOException) {
                     e.printStackTrace()
