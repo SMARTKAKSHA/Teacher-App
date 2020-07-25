@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 getPreferencesData()
 
     }
-
+//
     public fun already_login(){}
 //setting the rememberd username and password
     private fun getPreferencesData() {
