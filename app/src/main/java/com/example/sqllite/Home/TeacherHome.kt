@@ -59,7 +59,8 @@ class TeacherHome : AppCompatActivity() {
     //onclick function for viewing student performance
     fun student_performance(view: View?)
     {
-
+        val intent = Intent(this, StudentSelectCohort::class.java)
+        startActivity(intent)
     }
 
     //creating option menu for logout
