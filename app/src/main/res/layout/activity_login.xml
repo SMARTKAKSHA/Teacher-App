@@ -38,9 +38,9 @@
             android:background="@drawable/edittext_background"
             android:ems="10"
             android:padding="10dp"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            />
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/pass"
@@ -49,9 +49,10 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_background"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            tools:ignore="Autofill" />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -60,7 +61,7 @@
         android:id="@+id/remeberme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="REMEMBER ME"
+        android:text="@string/remember_me"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
@@ -69,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="forget"
-        android:text="Forgotten your password?"
+        android:text="@string/forgotten_your_password"
         android:textStyle="bold"
         android:textAlignment="textEnd"
         android:textColor="@color/colorAccent"
@@ -85,7 +86,7 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_background"
             android:onClick="login_main"
-            android:text="Login"
+            android:text="@string/login"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 

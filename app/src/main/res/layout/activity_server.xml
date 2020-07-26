@@ -59,7 +59,8 @@
         android:layout_marginTop="191dp"
         android:layout_marginBottom="12dp"
         android:inputType="textMultiLine"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        tools:ignore="TextViewEdits" />
 
     <EditText
         android:id="@+id/etMessage"
@@ -67,18 +68,19 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_above="@+id/btnSend"
-        android:hint="Enter Message"
+        android:hint="@string/enter_message"
         android:background="@drawable/rounded_corners"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
-        android:inputType="text" />
+        android:inputType="text"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="SEND MESSAGE"
+        android:text="@string/send_message"
         android:background="@drawable/button_background"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"/>

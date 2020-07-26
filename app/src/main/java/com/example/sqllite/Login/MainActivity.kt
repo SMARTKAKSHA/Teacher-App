@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
@@ -270,17 +269,11 @@ getPreferencesData()
         return l_networkInfo != null && l_networkInfo.isConnected
     }
 
-
-
-
     companion object {
         const val g_SERVER_URL = "http:/10.0.2.2/poc/login.php"
         const val SERVER_URL_COHORT = "http:/10.0.2.2/poc/getCohort.php"
         const val SERVER_URL_COURSE = "http:/10.0.2.2/poc/getCourse.php"
     }
-
-
-
 
 }
 

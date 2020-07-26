@@ -3,13 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 <LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="350dp"
@@ -35,7 +33,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
 
-            android:text="Amrit Kumar" />
+            android:text="@string/student_name" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +48,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginRight="30dp"
 
-            android:text="Student Id" />
+            android:text="@string/student_id" />
 
         <TextView
             style="@style/CustomText"
@@ -60,7 +58,7 @@
             android:layout_alignParentStart="true"
 
 
-            android:text="---------" />
+            android:text='@string/emptyy' />
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +74,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginRight="30dp"
 
-            android:text="Course" />
+            android:text="@string/course" />
 
         <TextView
             android:id="@+id/course_textview"
@@ -86,7 +84,7 @@
             android:layout_alignParentStart="true"
 
 
-            android:text="---------" />
+            android:text="@string/emptyy" />
 
 
     </LinearLayout>
@@ -105,7 +103,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginRight="30dp"
 
-            android:text="Batch" />
+            android:text="@string/cohort" />
 
         <TextView
             style="@style/CustomText"
@@ -131,7 +129,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginRight="30dp"
 
-            android:text="DOB" />
+            android:text="@string/dob" />
 
         <TextView
             style="@style/CustomText"
@@ -141,7 +139,7 @@
             android:layout_alignParentStart="true"
 
 
-            android:text="dd/mm/yyyy" />
+            android:text="@string/dd_mm_yyyy" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -157,7 +155,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginRight="30dp"
 
-            android:text="Address" />
+            android:text="@string/address" />
 
         <TextView
             style="@style/CustomText"
@@ -167,7 +165,7 @@
             android:layout_alignParentStart="true"
 
 
-            android:text="---------" />
+            android:text="@string/emptyy" />
     </LinearLayout>
 
 </LinearLayout>

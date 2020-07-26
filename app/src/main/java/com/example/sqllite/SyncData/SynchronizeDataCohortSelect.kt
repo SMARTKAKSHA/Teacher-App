@@ -18,9 +18,7 @@ class SynchronizeDataCohortSelect : AppCompatActivity() {
 
     var g_course_id: String?= null
     var g_concept_id: String?= null
-    var g_content_id: String? = null
-    var g_content_id1: String? = null
-    var g_subconcept_id: String?= null
+
 
     var g_course_selected: String?= null
     var g_allCohorts: Spinner? = null

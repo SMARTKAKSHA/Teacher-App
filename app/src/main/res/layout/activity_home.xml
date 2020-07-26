@@ -34,7 +34,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="100dp"
             android:layout_marginBottom="50dp"
-            android:text="Select Cohort: "
+            android:text="@string/select_cohort"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,7 +48,7 @@
             android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toTopOf="@+id/spinner_course"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView"></Spinner>
+            app:layout_constraintStart_toEndOf="@+id/textView" />
 
         <TextView
             android:id="@+id/textView2"
@@ -56,13 +56,12 @@
             android:layout_height="30dp"
             android:layout_marginStart="100dp"
             android:layout_marginBottom="50dp"
-            android:text="Select Course: "
+            android:text="@string/select_course"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintStart_toStartOf="parent" />
 
 
         <Spinner
-
             android:id="@+id/spinner_course"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -71,7 +70,7 @@
             android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView2"></Spinner>
+            app:layout_constraintStart_toEndOf="@+id/textView2" />
 
         <Button
             android:id="@+id/button2"
@@ -82,7 +81,7 @@
             android:layout_marginBottom="50dp"
             android:background="@drawable/button_background"
             android:onClick="start_session"
-            android:text="Start_Session"
+            android:text="@string/start_session"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
