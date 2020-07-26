@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         g_email = findViewById(R.id.email)
         g_password = findViewById(R.id.pass)
         remember= findViewById<CheckBox>(R.id.remeberme)
-
+//preferences
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         getPreferencesData()
 
