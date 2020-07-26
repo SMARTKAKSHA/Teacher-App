@@ -17,16 +17,11 @@
     <string name="re_enter_new_password">Re-Enter New Password</string>
     <string name="enter_message">Enter Message</string>
     <string name="send_message">SEND MESSAGE</string>
-    <string name="session">Session</string>
     <string name="completed">Completed</string>
-    <string name="synced">Synced</string>
-    <string name="session_1">Session 1</string>
     <string name="pending_session">Pending Session</string>
-    <string name="not_synced">Not Synced</string>
-    <string name="session_2">Session 2</string>
     <string name="session_3">Session 3</string>
     <string name="conduct_test_exam">Conduct Test/Exam</string>
-    <string name="select_cohort">Select Cohort:</string>
+
     <string name="next">Next</string>
     <string name="select_subconcept">Select SubConcept</string>
     <string name="session">Session</string>
