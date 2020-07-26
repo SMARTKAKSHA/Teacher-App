@@ -8,36 +8,52 @@
 
     <TextView
         android:id="@+id/tvIP"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_corners"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorAccent"
+
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tvPort"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/tvIP"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        android:background="@drawable/rounded_corners"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvConnectionStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/tvPort"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        android:background="@drawable/rounded_corners"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/SP_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPort"
-        android:layout_marginTop="84dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/tvConnectionStatus"
+        android:background="@drawable/rounded_corners"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvMessages"
         android:layout_width="match_parent"
-        android:layout_height="331dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/etMessage"
         android:layout_below="@+id/tvConnectionStatus"
         android:layout_marginTop="191dp"
@@ -49,8 +65,12 @@
         android:id="@+id/etMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_above="@+id/btnSend"
         android:hint="Enter Message"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         android:inputType="text" />
 
     <Button
@@ -58,6 +78,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="SEND" />
+        android:text="SEND MESSAGE"
+        android:background="@drawable/button_background"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

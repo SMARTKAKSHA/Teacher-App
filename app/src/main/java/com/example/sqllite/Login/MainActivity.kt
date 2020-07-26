@@ -36,11 +36,11 @@ class MainActivity : AppCompatActivity() {
         remember= findViewById<CheckBox>(R.id.remeberme)
 //preferences
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        getPreferencesData()
+getPreferencesData()
 
     }
 
-    //setting the rememberd username and password
+//setting the rememberd username and password
     private fun getPreferencesData() {
         var sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         if(sp.contains("pref_username")) {
@@ -54,8 +54,7 @@ class MainActivity : AppCompatActivity() {
         if(sp.contains("pref_check")) {
             var check:Boolean = sp.getBoolean("pref_check",false)
             remember!!.setChecked(check)
-            val intent = Intent(this@MainActivity, TeacherHome::class.java)
-            startActivity(intent)
+
 
         }
 
@@ -154,3 +153,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+
