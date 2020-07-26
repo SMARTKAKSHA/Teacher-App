@@ -19,7 +19,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import android.content.Intent
 
-
+/*
+Created by Amrit and Divyanshu
+ */
 
 class SearchStudent : AppCompatActivity() {
 

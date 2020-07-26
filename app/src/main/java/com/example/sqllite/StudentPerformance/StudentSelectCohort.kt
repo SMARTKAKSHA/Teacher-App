@@ -11,24 +11,29 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.ArrayList
-
+/*
+Created by Divyanshu Gupta
+ */
 class StudentSelectCohort : AppCompatActivity() {
 
     var g_cohortss: List<String> = ArrayList()        //list to be set to spinner
     var g_allCohorts: Spinner? = null
     var db: sqlite? = null
     var g_adapter: ArrayAdapter<String>? = null
-
-
+    var g_course: List<String> = ArrayList()
+    var g_allCourse: Spinner? = null
+    var g_course_selected: String?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_select_cohort)
         db = sqlite(this)
 
         g_allCohorts = findViewById<View>(com.example.sqllite.R.id.spinner_cohorts) as Spinner
-
+        g_allCourse=findViewById<View>(com.example.sqllite.R.id.spinner_course) as Spinner
         //showing cohort using spinner
         prepareCohort()
+        prepareCourse()
+
     }
     //prepare  data for spinner(cohort) setting values to spinner
     fun prepareCohort()
@@ -46,6 +51,29 @@ class StudentSelectCohort : AppCompatActivity() {
                 Toast.makeText(applicationContext, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
             }
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+    }
+
+
+    //prepare  data for spinner(course) setting values to spinner
+    fun prepareCourse()
+    {
+        g_course = db!!.getAllCourse()
+        //adapter for spinner
+        g_adapter = ArrayAdapter(this@StudentSelectCohort, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, g_course)
+        //attach adapter to spinner
+        g_allCourse!!.adapter = g_adapter
+
+        //handle click of spinner item
+        g_allCourse!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                // clicked item will be shown as spinner
+                Toast.makeText(applicationContext, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
+                g_course_selected= parent.getItemAtPosition(position).toString()
+
+            }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 

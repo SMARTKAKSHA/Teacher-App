@@ -3,6 +3,7 @@ package com.example.sqllite
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -10,7 +11,9 @@ import com.android.volley.toolbox.StringRequest
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-
+/*
+Created by Amrit and Divyanshu
+ */
 
 class StudentInfo : AppCompatActivity() {
     var g_student_name: TextView? = null
@@ -22,6 +25,12 @@ class StudentInfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_info)
+
+        //hide actionbar
+
+        //hide actionbar
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.hide()
         g_student_name = findViewById(R.id.name_textView)
         g_student_batch = findViewById(R.id.batch_textview)
         g_student_course = findViewById(R.id.course_textview)

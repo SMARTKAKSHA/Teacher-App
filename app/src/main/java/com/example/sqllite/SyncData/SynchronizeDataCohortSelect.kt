@@ -11,11 +11,12 @@ import android.widget.Spinner
 import android.widget.Toast
 import java.util.ArrayList
 
+/*
+Created by Divyanshu Gupta
+ */
 class SynchronizeDataCohortSelect : AppCompatActivity() {
 
     var g_course_id: String?= null
-    var g_sessionplan_id: String?= null
-    var g_sessionplan_name: String?= null
     var g_concept_id: String?= null
     var g_content_id: String? = null
     var g_content_id1: String? = null

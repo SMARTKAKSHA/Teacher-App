@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        //hide actionbar
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.hide()
         g_email = findViewById(R.id.email)
         g_password = findViewById(R.id.pass)
         remember= findViewById<CheckBox>(R.id.remeberme)
@@ -54,7 +58,8 @@ getPreferencesData()
         if(sp.contains("pref_check")) {
             var check:Boolean = sp.getBoolean("pref_check",false)
             remember!!.setChecked(check)
-
+            val intent = Intent(this@MainActivity, TeacherHome::class.java)
+            startActivity(intent)
 
         }
 
