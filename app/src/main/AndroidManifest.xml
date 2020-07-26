@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SynchronizeDataCohortSelect"></activity>
+
+        <activity android:name=".SynchronizeDataCohortSelect" />
         <activity
             android:name=".DownloadActivity"
             android:label="DOWNLOAD" />
@@ -76,6 +78,9 @@
         <activity
             android:name=".VIewContent"
             android:label="Content" />
+        <activity android:name=".StudentInfo"
+            android:label="StudentPerformance" />
+
     </application>
 
 </manifest>
