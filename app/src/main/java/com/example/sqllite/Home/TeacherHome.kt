@@ -45,7 +45,7 @@ class TeacherHome : AppCompatActivity() {
     //onclick function for syncing data from  cloud to local database
     fun sync_data(view: View?)
     {
-        val intent = Intent(this@TeacherHome, SynchronizeData::class.java)
+        val intent = Intent(this@TeacherHome, SynchronizeDataCohortSelect::class.java)
         startActivity(intent)
     }
 

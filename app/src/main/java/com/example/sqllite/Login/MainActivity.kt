@@ -14,7 +14,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -27,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     var g_email: EditText? = null
     var g_password: EditText? = null
     var remember:CheckBox?=null
+    var mydb1: sqlite? = null
+
+    val g_JSON_ARRAY = "result"
     private val PREFS_NAME = "PrefsFile"
     private var preferences:SharedPreferences?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         //hide actionbar
         val actionBar: ActionBar? = supportActionBar
         actionBar!!.hide()
+
+        mydb1 = sqlite(this)
         g_email = findViewById(R.id.email)
         g_password = findViewById(R.id.pass)
         remember= findViewById<CheckBox>(R.id.remeberme)
@@ -80,13 +87,17 @@ getPreferencesData()
                     val Response = jsonObject.getString("response")
                     if (Response == "Login Success")//the php code will return the response that is login success if user and password are correct in server database
                     {
-
+                        getCohortData()
+                        getCourseData()
                         //checking whether remember checkox is checked or not
                         if(remember!!.isChecked){
+
                             val boolIsChecked = remember!!.isChecked
                             val editor = preferences!!.edit()
                             editor.putString("pref_username",l_email_user)
                             editor.putString("pref_password",l_password_user)
+                            editor.putBoolean("pref_sync_cohort_&_course",true)
+
                             editor.putBoolean("pref_check",boolIsChecked)
                             editor.apply()
                             Toast.makeText(this@MainActivity,"Setting have been saved",Toast.LENGTH_LONG).show()
@@ -129,6 +140,117 @@ getPreferencesData()
     }
 
 
+    fun getCohortData()
+    {
+        val url: String = SERVER_URL_COHORT
+        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+
+
+            override fun onResponse(response: String?) {
+                response?.let { showJSON_for_cohort(it) }
+            }
+        },
+                object : Response.ErrorListener {
+                    override fun onErrorResponse(error: VolleyError) {
+                        Toast.makeText(this@MainActivity, error.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                })
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+    }
+
+    private fun showJSON_for_cohort(response: String) {
+        val l_CH_ID = "CH_id"
+        val l_CH_NAME = "CH_Name"
+        val l_TC_ID = "TC_id"
+        val l_CU_ID = "CU_id"
+        val l_TP_ID = "TP_id"
+        val l_CH_SEMESTER = "CH_Semester"
+        try
+        {
+            val jsonObject = JSONObject(response)
+            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
+            var l_CH_id:Int?=null
+            var l_CH_Name:String?= null
+            var l_TC_id:Int?=null
+            var l_CU_id:Int?=null
+            var l_TP_id:Int?=null
+            var l_CH_Semester:Int?= null
+
+            for (i in 0 until result.length()) {
+                val jo = result.getJSONObject(i)
+                l_CH_id=jo.getInt(l_CH_ID)
+                l_CH_Name=jo.getString(l_CH_NAME)
+                l_TC_id=jo.getInt(l_TC_ID)
+                l_CU_id=jo.getInt(l_CU_ID)
+                l_TP_id=jo.getInt(l_TP_ID)
+                l_CH_Semester=jo.getInt(l_CH_SEMESTER)
+
+                mydb1?.insertData_into_Cohort(l_CH_id,l_CH_Name,l_TC_id,l_CU_id,l_TP_id,l_CH_Semester)
+            }
+        }
+        catch (e: JSONException)
+        {
+            e.printStackTrace()
+        }
+    }
+
+
+    fun getCourseData() {
+
+        val url: String = SERVER_URL_COURSE
+        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+
+
+            override fun onResponse(response: String?) {
+                response?.let { showJSON_for_course(it) }
+            }
+        },
+                object : Response.ErrorListener {
+                    override fun onErrorResponse(error: VolleyError) {
+                        Toast.makeText(this@MainActivity, error.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                })
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+    }
+
+    private fun showJSON_for_course(response: String) {
+        val l_CO_ID = "CO_id"
+        val l_CO_NAME = "CO_Name"
+        val l_CO_DESC = "CO_Desc"
+        val l_CO_DURATION = "CO_Duration"
+        val l_CO_IMAGE = "CO_Image"
+        val l_CO_INSERTDATE = "CO_Insertdate"
+        try {
+            val jsonObject = JSONObject(response)
+            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
+
+            var l_CO_id: Int? = null
+            var l_CO_Name: String? = null
+            var l_CO_Desc: String? = null
+            var l_CO_Duration: Int? = null
+            var l_CO_Image: String? = null
+            var l_CO_InsertDate: String? = null
+
+
+            for (i in 0 until result.length()) {
+                val jo = result.getJSONObject(i)
+
+                l_CO_id = jo.getInt(l_CO_ID)
+                l_CO_Name = jo.getString(l_CO_NAME)
+                l_CO_Desc = jo.getString(l_CO_DESC)
+                l_CO_Duration = jo.getInt(l_CO_DURATION)
+                l_CO_Image = jo.getString(l_CO_IMAGE)
+                l_CO_InsertDate = jo.getString(l_CO_INSERTDATE)
+
+                mydb1?.insertData_into_Course(l_CO_id, l_CO_Name, l_CO_Desc, l_CO_Duration, l_CO_Image, l_CO_InsertDate)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
+
     //onclick function for resetting the password this function takes you to the reset password activity
     fun forget(view: View?)
     {
@@ -150,8 +272,11 @@ getPreferencesData()
 
 
 
+
     companion object {
         const val g_SERVER_URL = "http:/10.0.2.2/poc/login.php"
+        const val SERVER_URL_COHORT = "http:/10.0.2.2/poc/getCohort.php"
+        const val SERVER_URL_COURSE = "http:/10.0.2.2/poc/getCourse.php"
     }
 
 

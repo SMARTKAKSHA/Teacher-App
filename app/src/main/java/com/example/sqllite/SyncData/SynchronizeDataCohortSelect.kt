@@ -86,12 +86,10 @@ class SynchronizeDataCohortSelect : AppCompatActivity() {
         }
 
     }
-    fun Sync_Data(view: View?)
+    fun Next(view: View?)
     {
         fetch_courseid()
         fetch_conceptid()
-        fetch_subconceptid()
-        fetch_contentid()
         val intent = Intent(this@SynchronizeDataCohortSelect, SynchronizeData::class.java)
         startActivity(intent)
     }
@@ -117,28 +115,7 @@ class SynchronizeDataCohortSelect : AppCompatActivity() {
             g_concept_id = stringBuilder3.toString()
         }
     }
-    fun fetch_subconceptid()//function for fetching subconcept id from the local database as we have synced the session previously
-    {
-        val cursor4: Cursor = db!!.getSubConceptId(g_concept_id!!, g_course_id!!)
-        val stringBuilder4 = StringBuilder()
-        while (cursor4.moveToNext())
-        {
-            stringBuilder4.append(" " + cursor4.getString(0))
-            g_subconcept_id = stringBuilder4.toString()
-        }
-    }
 
-    fun fetch_contentid()//function for fetching content id from the local database as we have synced the session previously
-    {
-        val cursor5: Cursor = db!!.getContentId(g_course_id!!, g_concept_id!!, g_subconcept_id!!)
-        if (cursor5.moveToFirst())
-        {
-            g_content_id = cursor5.getString(0)
-            while (cursor5.moveToNext())
-            {
-                g_content_id1= cursor5.getString(0)
 
-            }
-        }
-    }
+
 }

@@ -48,7 +48,6 @@ class StudentSelectCohort : AppCompatActivity() {
         g_allCohorts!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 // clicked item will be shown as spinner
-                Toast.makeText(applicationContext, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -70,7 +69,6 @@ class StudentSelectCohort : AppCompatActivity() {
         g_allCourse!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 // clicked item will be shown as spinner
-                Toast.makeText(applicationContext, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
                 g_course_selected= parent.getItemAtPosition(position).toString()
 
             }

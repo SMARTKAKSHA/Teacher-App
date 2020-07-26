@@ -31,8 +31,7 @@ class SynchronizeData : AppCompatActivity() {
     //onclick function for syncing the session
     fun sync_session_1(view: View?)
     {
-        getCohortData()
-        getCourseData()
+
         getContent()
         getConcept()
         getSubConcept()
@@ -46,116 +45,7 @@ class SynchronizeData : AppCompatActivity() {
     fun sync_session_2(view: View?) {}
     fun sync_session_3(view: View?) {}
 
-    fun getCohortData()
-    {
-        val url: String = SERVER_URL_COHORT
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
 
-
-            override fun onResponse(response: String?) {
-                response?.let { showJSON_for_cohort(it) }
-            }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON_for_cohort(response: String) {
-        val l_CH_ID = "CH_id"
-        val l_CH_NAME = "CH_Name"
-        val l_TC_ID = "TC_id"
-        val l_CU_ID = "CU_id"
-        val l_TP_ID = "TP_id"
-        val l_CH_SEMESTER = "CH_Semester"
-        try
-        {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-            var l_CH_id:Int?=null
-            var l_CH_Name:String?= null
-            var l_TC_id:Int?=null
-            var l_CU_id:Int?=null
-            var l_TP_id:Int?=null
-            var l_CH_Semester:Int?= null
-
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-                l_CH_id=jo.getInt(l_CH_ID)
-                l_CH_Name=jo.getString(l_CH_NAME)
-                l_TC_id=jo.getInt(l_TC_ID)
-                l_CU_id=jo.getInt(l_CU_ID)
-                l_TP_id=jo.getInt(l_TP_ID)
-                l_CH_Semester=jo.getInt(l_CH_SEMESTER)
-
-                mydb1?.insertData_into_Cohort(l_CH_id,l_CH_Name,l_TC_id,l_CU_id,l_TP_id,l_CH_Semester)
-            }
-        }
-        catch (e: JSONException)
-        {
-            e.printStackTrace()
-        }
-    }
-
-
-    fun getCourseData() {
-
-        val url: String = SERVER_URL_COURSE
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
-
-
-            override fun onResponse(response: String?) {
-                response?.let { showJSON_for_course(it) }
-            }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON_for_course(response: String) {
-        val l_CO_ID = "CO_id"
-        val l_CO_NAME = "CO_Name"
-        val l_CO_DESC = "CO_Desc"
-        val l_CO_DURATION = "CO_Duration"
-        val l_CO_IMAGE = "CO_Image"
-        val l_CO_INSERTDATE = "CO_Insertdate"
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-
-            var l_CO_id: Int? = null
-            var l_CO_Name: String? = null
-            var l_CO_Desc: String? = null
-            var l_CO_Duration: Int? = null
-            var l_CO_Image: String? = null
-            var l_CO_InsertDate: String? = null
-
-
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-
-                l_CO_id = jo.getInt(l_CO_ID)
-                l_CO_Name = jo.getString(l_CO_NAME)
-                l_CO_Desc = jo.getString(l_CO_DESC)
-                l_CO_Duration = jo.getInt(l_CO_DURATION)
-                l_CO_Image = jo.getString(l_CO_IMAGE)
-                l_CO_InsertDate = jo.getString(l_CO_INSERTDATE)
-
-                mydb1?.insertData_into_Course(l_CO_id, l_CO_Name, l_CO_Desc, l_CO_Duration, l_CO_Image, l_CO_InsertDate)
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-    }
 
 
     fun getContent() {
@@ -522,8 +412,7 @@ class SynchronizeData : AppCompatActivity() {
         const val SERVER_URL_SUBCONCEPT = "http:/10.0.2.2/poc/getSubConcept.php"
         const val SERVER_URL_SESSIONPLAN = "http:/10.0.2.2/poc/getSessionPlan.php"
         const val SERVER_URL_SESSIONSECTION = "http:/10.0.2.2/poc/getSessionSection.php"
-        const val SERVER_URL_COHORT = "http:/10.0.2.2/poc/getCohort.php"
-        const val SERVER_URL_COURSE = "http:/10.0.2.2/poc/getCourse.php"
+
         const val SERVER_URL_COURSECONTENT = "http:/10.0.2.2/poc/getCourseContent.php"
     }
 }
