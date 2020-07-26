@@ -195,7 +195,7 @@ class Home : AppCompatActivity() {
         startActivity(intent)
     }
 
-
+ 
 }
 
 //end of class
