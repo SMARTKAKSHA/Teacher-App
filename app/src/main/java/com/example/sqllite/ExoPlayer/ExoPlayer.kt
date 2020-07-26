@@ -11,9 +11,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
+import android.widget.MediaController
+import android.widget.TextView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
@@ -23,7 +27,9 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import kotlinx.android.synthetic.main.activity_video_playeer.*
 import java.io.File
+import java.net.URI
 
 
 /*Created By Divyanshu Gupta
@@ -40,24 +46,23 @@ class ExoPlayer : AppCompatActivity() {
     var g_ct_id: String?=null
     var g_ct_id1: String?=null
     var g_link: String? = null
+    var t1: TextView?=null
     var g_playerView: PlayerView? = null
     private var g_playWhenReady = true
     private var g_currentWindow = 0
     private var g_playbackPosition: Long = 0
     private var g_player: SimpleExoPlayer? = null
     var g_mydb3: sqlite? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_playeer)
-        g_playerView = findViewById(R.id.video_view)
+    g_playerView = findViewById(R.id.video_view)
         g_mydb3 = sqlite(this)
 
         val intent = intent
         g_ct_id = intent.getStringExtra("ct_id")
         g_ct_id1 = intent.getStringExtra("ct_id1")
-
-
+t1= findViewById<TextView>(R.id.t1)
         val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
         val l_stringBuilder1 = StringBuilder()
         while (cursor1.moveToNext()) {
@@ -66,7 +71,8 @@ class ExoPlayer : AppCompatActivity() {
             Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
 
         }
-
+var file= File(Environment.getExternalStorageDirectory().absolutePath+"/Download",g_link)
+t1!!.setText(file.toString())
 
 
     }
@@ -140,11 +146,6 @@ class ExoPlayer : AppCompatActivity() {
 
 
 
-
-
-
-
-
     fun pause(view: View?) {}//onclick function for  pausing the session
     fun pop(view: View?) {}//onclick function for  starting popup quiz
     fun stop(view: View?) {}//onclick function for  stopping the session
@@ -156,3 +157,5 @@ class ExoPlayer : AppCompatActivity() {
         startActivity(l_intent)
     }
 }
+
+
