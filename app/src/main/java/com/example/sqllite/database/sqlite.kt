@@ -292,6 +292,8 @@ if (l_status== "true") {
 
 
 
+
+
     //FOR FETCHING COURSEID FROM THE COURSE TABLE
     fun getCourseId(course: String): Cursor {
         val l_course = '"'.toString() + course + '"'

@@ -147,7 +147,7 @@ class Home : AppCompatActivity() {
 
     fun fetch_subconceptid()//function for fetching subconcept id from the local database as we have synced the session previously
     {
-        val cursor4: Cursor = db!!.getSubConceptId(g_concept_id!!, g_course_id!!)
+        val cursor4: Cursor = db!!.getSubConceptId(g_concept_id!!,g_course_id!!)
         val stringBuilder4 = StringBuilder()
         while (cursor4.moveToNext())
         {

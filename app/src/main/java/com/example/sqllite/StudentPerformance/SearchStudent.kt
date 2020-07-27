@@ -74,7 +74,7 @@ class SearchStudent : AppCompatActivity() {
 
     fun getStudentData()
     {
-        val url: String = SearchStudent.SERVER_URL_STUDENT
+        val url: String = SERVER_URL_STUDENT
         val stringRequest = StringRequest(url, object : Response.Listener<String?> {
 
 

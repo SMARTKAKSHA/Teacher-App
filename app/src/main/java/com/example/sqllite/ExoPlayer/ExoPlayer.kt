@@ -1,23 +1,15 @@
 package com.example.sqllite
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.database.Cursor
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
-import android.widget.MediaController
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
@@ -27,9 +19,7 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlinx.android.synthetic.main.activity_video_playeer.*
 import java.io.File
-import java.net.URI
 
 
 /*Created By Divyanshu Gupta
@@ -46,6 +36,7 @@ class ExoPlayer : AppCompatActivity() {
     var g_ct_id: String?=null
     var g_ct_id1: String?=null
     var g_link: String? = null
+    var g_download_status: String? = null
     var t1: TextView?=null
     var file:File?=null
     var g_playerView: PlayerView? = null
@@ -64,18 +55,16 @@ class ExoPlayer : AppCompatActivity() {
         g_ct_id = intent.getStringExtra("ct_id")
         g_ct_id1 = intent.getStringExtra("ct_id1")
 t1= findViewById<TextView>(R.id.t1)
-        val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
-        val l_stringBuilder1 = StringBuilder()
-        while (cursor1.moveToNext()) {
-            l_stringBuilder1.append(" " + cursor1.getString(0))
-            g_link = l_stringBuilder1.toString()
-            Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
-
-        }
- file= File(Environment.getExternalStorageDirectory().absolutePath+"/Download/Jazz_in_Paris.mp3")
-t1!!.setText(file.toString())
 
 
+                    val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
+                val l_stringBuilder1 = StringBuilder()
+                while (cursor1.moveToNext()) {
+                    l_stringBuilder1.append(" " + cursor1.getString(0))
+                    g_link = l_stringBuilder1.toString()
+                    Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()}
+
+        t1!!.setText(g_link)
     }
 
 
@@ -83,7 +72,7 @@ t1!!.setText(file.toString())
     {
         g_player = ExoPlayerFactory.newSimpleInstance(this)
         g_playerView!!.player = g_player
-        val uri = Uri.parse(file.toString())
+        val uri = Uri.parse(g_link)
         val mediaSource = buildMediaSource(uri)
         g_player!!.playWhenReady = g_playWhenReady
         g_player!!.seekTo(g_currentWindow, g_playbackPosition)

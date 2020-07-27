@@ -33,7 +33,7 @@ class DownloadActivity : AppCompatActivity() {
     private var refid: Long = 0
     private var Download_Uri: Uri? = null
     var l_content_link: String? = null
-
+    var file:File?=null
     var l_content_id: String? = null
     var db: sqlite? = null
     var keyword:String?="/exoplayer-test-media-0/"
@@ -69,7 +69,7 @@ var filepath= Environment.getExternalStorageDirectory();
 
             }
         } else { //permission is automatically granted on sdk<23 upon installation
-            var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!)+keyword!!.length)
+            var filename =l_content_link!!.substring(l_content_link!!.indexOf(keyword!!)+keyword!!.length)
             downloadit(filename)
         }
 
@@ -89,13 +89,14 @@ var filepath= Environment.getExternalStorageDirectory();
                 request.setAllowedOverRoaming(true)
                 request.allowScanningByMediaScanner()
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,filename)
                 request.setMimeType(getMimeType(Download_Uri))
                 refid = manager.enqueue(request)
 
                 list.add(refid);
 Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
-                db?.updateContentTable(filename, l_content_id.toString(),"true")
+                file = File(Environment.getExternalStorageDirectory().absolutePath + "/Download/"+filename)
+                db?.updateContentTable(file.toString(),l_content_id.toString(),"true")
             }
             else{
                 var intent= Intent(Intent.ACTION_VIEW,Download_Uri)

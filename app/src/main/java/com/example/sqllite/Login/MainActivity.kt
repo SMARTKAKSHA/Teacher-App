@@ -68,7 +68,13 @@ getPreferencesData()
 
         }
 
-
+    if(sp.contains("pref_sync_cohort_&_course")){
+                Toast.makeText(this,"Welcome User",Toast.LENGTH_SHORT).show()
+            }
+    else{
+        getCohortData()
+        getCourseData()
+    }
     }
 
 
@@ -85,8 +91,7 @@ getPreferencesData()
                     val Response = jsonObject.getString("response")
                     if (Response == "Login Success")//the php code will return the response that is login success if user and password are correct in server database
                     {
-                        getCohortData()
-                        getCourseData()
+
                         //checking whether remember checkox is checked or not
                         if(remember!!.isChecked){
 

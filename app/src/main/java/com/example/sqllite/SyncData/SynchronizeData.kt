@@ -6,12 +6,16 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.Request.Method.POST
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
+import java.lang.reflect.Method
+import java.util.HashMap
 
 /*Created  By Divyanshu Gupta
 This is the Synchronize Data activity for synchronizing data from server to local database
@@ -21,11 +25,16 @@ class SynchronizeData : AppCompatActivity() {
     var mydb1: sqlite? = null
     var g_syncstatus:TextView? = null
     val g_JSON_ARRAY = "result"
+    var g_course_id: String?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mydb1 = sqlite(this)
         setContentView(R.layout.activity_synchronize_data)
         g_syncstatus = findViewById<View>(R.id.sync1) as TextView?
+
+        val intent = intent
+        g_course_id = intent.getStringExtra("co_id")
     }
 
     //onclick function for syncing the session
@@ -51,7 +60,7 @@ class SynchronizeData : AppCompatActivity() {
     fun getContent() {
 
         val url: String = SERVER_URL_CONTENT
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+        val stringRequest = StringRequest(url,object : Response.Listener<String?> {
 
 
             override fun onResponse(response: String?) {
@@ -63,6 +72,7 @@ class SynchronizeData : AppCompatActivity() {
                         Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
                     }
                 })
+
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
     }

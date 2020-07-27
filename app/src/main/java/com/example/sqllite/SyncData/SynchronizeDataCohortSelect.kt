@@ -17,9 +17,6 @@ Created by Divyanshu Gupta
 class SynchronizeDataCohortSelect : AppCompatActivity() {
 
     var g_course_id: String?= null
-    var g_concept_id: String?= null
-
-
     var g_course_selected: String?= null
     var g_allCohorts: Spinner? = null
     var g_allCourse: Spinner? = null
@@ -87,8 +84,8 @@ class SynchronizeDataCohortSelect : AppCompatActivity() {
     fun Next(view: View?)
     {
         fetch_courseid()
-        fetch_conceptid()
         val intent = Intent(this@SynchronizeDataCohortSelect, SynchronizeData::class.java)
+        intent.putExtra("co_id",g_course_id)
         startActivity(intent)
     }
 
@@ -103,16 +100,6 @@ class SynchronizeDataCohortSelect : AppCompatActivity() {
         }
     }
 
-    fun fetch_conceptid()//function for fetching concept id from the local database as we have synced the session previously
-    {
-        val cursor3: Cursor = db!!.getConceptId(g_course_id!!)
-        val stringBuilder3 = StringBuilder()
-        while (cursor3.moveToNext())
-        {
-            stringBuilder3.append(" " + cursor3.getString(0))
-            g_concept_id = stringBuilder3.toString()
-        }
-    }
 
 
 
