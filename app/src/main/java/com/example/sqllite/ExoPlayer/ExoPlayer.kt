@@ -47,6 +47,7 @@ class ExoPlayer : AppCompatActivity() {
     var g_ct_id1: String?=null
     var g_link: String? = null
     var t1: TextView?=null
+    var file:File?=null
     var g_playerView: PlayerView? = null
     private var g_playWhenReady = true
     private var g_currentWindow = 0
@@ -71,7 +72,7 @@ t1= findViewById<TextView>(R.id.t1)
             Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()
 
         }
-var file= File(Environment.getExternalStorageDirectory().absolutePath+"/Download",g_link)
+ file= File(Environment.getExternalStorageDirectory().absolutePath+"/Download/Jazz_in_Paris.mp3")
 t1!!.setText(file.toString())
 
 
@@ -82,7 +83,7 @@ t1!!.setText(file.toString())
     {
         g_player = ExoPlayerFactory.newSimpleInstance(this)
         g_playerView!!.player = g_player
-        val uri = Uri.parse(g_link)
+        val uri = Uri.parse(file.toString())
         val mediaSource = buildMediaSource(uri)
         g_player!!.playWhenReady = g_playWhenReady
         g_player!!.seekTo(g_currentWindow, g_playbackPosition)

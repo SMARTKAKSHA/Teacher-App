@@ -64,8 +64,7 @@ getPreferencesData()
         if(sp.contains("pref_check")) {
             var check:Boolean = sp.getBoolean("pref_check",false)
             remember!!.setChecked(check)
-            val intent = Intent(this@MainActivity, TeacherHome::class.java)
-            startActivity(intent)
+
 
         }
 

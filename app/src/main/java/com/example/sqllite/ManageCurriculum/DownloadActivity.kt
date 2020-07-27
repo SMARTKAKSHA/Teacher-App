@@ -69,7 +69,7 @@ var filepath= Environment.getExternalStorageDirectory();
 
             }
         } else { //permission is automatically granted on sdk<23 upon installation
-            var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!) + keyword!!.length)
+            var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!)+keyword!!.length)
             downloadit(filename)
         }
 
