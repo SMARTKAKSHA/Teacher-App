@@ -8,9 +8,9 @@ import android.widget.ListView
 import android.widget.Toast
 
 class CourseContent : AppCompatActivity() {
-    var  g_course_id: String?= null
-    var g_concept_id: String?= null
-    var g_subconcept_id: String?= null
+    var g_course_id: String? = null
+    var g_concept_id: String? = null
+    var g_subconcept_id: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_content)
@@ -22,7 +22,7 @@ class CourseContent : AppCompatActivity() {
         val l_subconcept_ID = intent.getStringExtra("sc_id")
 
         var l_content: ArrayList<String>
-        l_content = db.displayContent(l_course_ID,l_concept_ID,l_subconcept_ID)
+        l_content = db.displayContent(l_course_ID, l_concept_ID, l_subconcept_ID)
 
 
         var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, l_content)
@@ -30,17 +30,26 @@ class CourseContent : AppCompatActivity() {
         listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
             var l_content_link = l_content.get(position)
             var l_ct_id: String? = db.getContentId(l_content.get(position))
-            var l_content_type:String?=db.getContentType(l_content.get(position))
+            var l_content_type: String? = db.getContentType(l_content.get(position))
 
-            if(l_content_type=="VIDEO"||l_content_type=="AUDIO"){
-            intent = Intent(this, ExoPlayer::class.java)
-            intent.putExtra("CT_ID",l_ct_id)
+            if (l_content_type == "VIDEO" || l_content_type == "AUDIO") {
+                intent = Intent(this, ExoPlayer::class.java)
+                intent.putExtra("CT_ID", l_ct_id)
 
-            startActivity(intent)
-            Toast.makeText(this@CourseContent, l_content_type, Toast.LENGTH_LONG).show()
+                startActivity(intent)
+                Toast.makeText(this@CourseContent, l_content_type, Toast.LENGTH_LONG).show()
+            } else if (l_content_type == "PDF") {
+                intent = Intent(this, PdfViewer::class.java)
+                intent.putExtra("CT_ID", l_ct_id)
+
+                startActivity(intent)
+                Toast.makeText(this@CourseContent, l_content_type, Toast.LENGTH_LONG).show()
+
             }
-            else{            Toast.makeText(this@CourseContent, "This media is not supported", Toast.LENGTH_LONG).show()
+            else{
+                Toast.makeText(this@CourseContent, "This media is not supported", Toast.LENGTH_LONG).show()
             }
+
         }
     }
 }
