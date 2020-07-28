@@ -94,6 +94,7 @@ class Home : AppCompatActivity() {
 
 
 
+
     fun fetch_courseid()//function for fetching course id from the local database as we have synced the session previously
     {
         val cursor1: Cursor = db!!.getCourseId(g_course_selected!!)
