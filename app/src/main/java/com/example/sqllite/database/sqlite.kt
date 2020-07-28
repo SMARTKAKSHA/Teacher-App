@@ -49,6 +49,8 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         onCreate(db)
     }
 
+
+
     //function for inserting data into COHORT  Table
     fun insertData_into_Cohort(ch_id : Int?, ch_name: String?, tc_id : Int?, cu_id : Int?, tp_id : Int?, ch_semester : Int?): Boolean
     {
@@ -317,6 +319,8 @@ if (l_status== "true") {
         val l_strquery = "select CN_id from concept where CO_id=$l_co_id"
         return l_db1.rawQuery(l_strquery, null)
     }
+
+
 
     //FOR FETCHING  SUBCONCEPTID FROM THE SUBCONCEPT TABLE
     fun getSubConceptId(cn_id: String,co_id: String?): Cursor {

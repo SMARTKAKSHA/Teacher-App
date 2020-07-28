@@ -1,20 +1,17 @@
 package com.example.sqllite
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
-import com.android.volley.Request.Method.POST
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
-import java.lang.reflect.Method
 import java.util.HashMap
 
 /*Created  By Divyanshu Gupta
@@ -35,8 +32,8 @@ class SynchronizeData : AppCompatActivity() {
 
         val intent = intent
         g_course_id = intent.getStringExtra("co_id")
-    }
 
+    }
     //onclick function for syncing the session
     fun sync_session_1(view: View?)
     {

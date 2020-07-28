@@ -1,19 +1,15 @@
 package com.example.sqllite
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.example.sqllite.R
-import org.json.JSONException
-import org.json.JSONObject
+
 
 /*Created  By Divyanshu Gupta
 This is the TeacherHome  activity it is loaded just after the Login
@@ -81,9 +77,9 @@ class TeacherHome : AppCompatActivity() {
     //onclick for logging out from the teacher's account
     private fun logout()
     {
+        (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()// for clearing app data
         val intent = Intent(this@TeacherHome, MainActivity::class.java)
         startActivity(intent)
+
     }
-
-
 }

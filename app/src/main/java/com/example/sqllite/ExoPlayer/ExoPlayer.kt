@@ -5,7 +5,6 @@ import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -14,7 +13,6 @@ import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -38,8 +36,9 @@ class ExoPlayer : AppCompatActivity() {
     var g_link: String? = null
     var g_download_status: String? = null
     var t1: TextView?=null
-    var file:File?=null
+    var file: File?=null
     var g_playerView: PlayerView? = null
+    var position :Int?=1
     private var g_playWhenReady = true
     private var g_currentWindow = 0
     private var g_playbackPosition: Long = 0
@@ -56,8 +55,7 @@ class ExoPlayer : AppCompatActivity() {
         g_ct_id1 = intent.getStringExtra("ct_id1")
 t1= findViewById<TextView>(R.id.t1)
 
-
-                    val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
+                val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
                 val l_stringBuilder1 = StringBuilder()
                 while (cursor1.moveToNext()) {
                     l_stringBuilder1.append(" " + cursor1.getString(0))
@@ -65,6 +63,7 @@ t1= findViewById<TextView>(R.id.t1)
                     Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()}
 
         t1!!.setText(g_link)
+
     }
 
 
