@@ -29,10 +29,11 @@ This Activity is Created for hosting the session through this activity the conne
  */
 @SuppressLint("SetTextI18n")
 class Server : AppCompatActivity() {
-    var g_content_id:String?=null
-    var g_content_id1:String?=null
-    var g_session_name:String?=null
+    var  g_course_id: String?= null
 
+    var g_concept_id: String?= null
+    var g_subconcept_id: String?= null
+    var g_session_name: String?= null
     var serverSocket: ServerSocket? = null
     var thread: Thread? = null
     var tvIP: TextView? = null
@@ -50,8 +51,10 @@ class Server : AppCompatActivity() {
 
         val intent = intent
 
-        g_content_id= intent.getStringExtra("ct_id")
-        g_content_id1= intent.getStringExtra("ct_id1")
+
+        g_course_id = intent.getStringExtra("co_id")
+        g_concept_id = intent.getStringExtra("cn_id")
+        g_subconcept_id = intent.getStringExtra("sc_id")
         g_session_name= intent.getStringExtra("sp_name")
 
 
@@ -109,9 +112,10 @@ class Server : AppCompatActivity() {
                     input = BufferedReader(InputStreamReader(socket.getInputStream()))
                     runOnUiThread { tvConnectionStatus!!.text = "Connected\n" }
                     Thread(Thread2()).start()
-                    val intent = Intent(this@Server, ExoPlayer::class.java)
-                    intent.putExtra("ct_id",g_content_id)
-                    intent.putExtra("ct_id1",g_content_id1)
+                    val intent = Intent(this@Server, CourseContent::class.java)
+                    intent.putExtra("co_id", g_course_id)
+                    intent.putExtra("sc_id", g_subconcept_id)
+                    intent.putExtra("cn_id", g_concept_id)
                     startActivity(intent)
                 } catch (e: IOException) {
                     e.printStackTrace()

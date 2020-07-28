@@ -31,38 +31,40 @@ NOTE:- IN THIS ACTIVITY WE HAVE INTEGERATED A THIRD PARTY VIDEO PLAYER THAT IS E
 */
 
 class ExoPlayer : AppCompatActivity() {
-    var g_ct_id: String?=null
-    var g_ct_id1: String?=null
+
     var g_link: String? = null
-    var g_download_status: String? = null
+
+    var g_content_id: String? = null
+
+
     var t1: TextView?=null
-    var file: File?=null
     var g_playerView: PlayerView? = null
-    var position :Int?=1
     private var g_playWhenReady = true
     private var g_currentWindow = 0
     private var g_playbackPosition: Long = 0
     private var g_player: SimpleExoPlayer? = null
     var g_mydb3: sqlite? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_playeer)
-    g_playerView = findViewById(R.id.video_view)
+        g_playerView = findViewById(R.id.video_view)
         g_mydb3 = sqlite(this)
 
         val intent = intent
-        g_ct_id = intent.getStringExtra("ct_id")
-        g_ct_id1 = intent.getStringExtra("ct_id1")
-t1= findViewById<TextView>(R.id.t1)
+        g_content_id = intent.getStringExtra("CT_ID")
 
-                val cursor1: Cursor = g_mydb3!!.getlink(g_ct_id!!)
-                val l_stringBuilder1 = StringBuilder()
-                while (cursor1.moveToNext()) {
-                    l_stringBuilder1.append(" " + cursor1.getString(0))
-                    g_link = l_stringBuilder1.toString()
-                    Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()}
 
-        t1!!.setText(g_link)
+            t1= findViewById<TextView>(R.id.t1)
+
+                    val cursor1: Cursor = g_mydb3!!.getlink(g_content_id!!)
+                    val l_stringBuilder1 = StringBuilder()
+                    while (cursor1.moveToNext()) {
+                        l_stringBuilder1.append(" " + cursor1.getString(0))
+                        g_link = l_stringBuilder1.toString()
+                        Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()}
+
+             t1!!.setText(g_link)
 
     }
 
@@ -139,12 +141,7 @@ t1= findViewById<TextView>(R.id.t1)
     fun pop(view: View?) {}//onclick function for  starting popup quiz
     fun stop(view: View?) {}//onclick function for  stopping the session
 
-    fun nextvideo(view: View?) //onclick function for  playing next video
-    {
-        val l_intent = Intent(this@ExoPlayer, ExoPlayer::class.java)
-        l_intent.putExtra("ct_id",g_ct_id1)
-        startActivity(l_intent)
-    }
+
 }
 
 
