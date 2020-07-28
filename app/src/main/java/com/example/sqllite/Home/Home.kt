@@ -105,7 +105,7 @@ class Home : AppCompatActivity() {
         fetch_contentid()
 
         val intent = Intent(this@Home, SessionSelect::class.java)
-        intent.putExtra("ct_id",g_concept_id)
+        intent.putExtra("ct_id",g_content_id)
         intent.putExtra("ct_id1",g_content_id1)
         intent.putExtra("sp_name",g_sessionplan_name)
         startActivity(intent)
