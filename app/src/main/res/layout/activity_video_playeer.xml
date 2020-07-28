@@ -36,12 +36,14 @@
         android:layout_gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/button_background"
         android:gravity="center"
         android:onClick="stop"
         android:text="@string/stop_session"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/t1" />
 
@@ -53,11 +55,13 @@
         android:layout_marginStart="91dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/button_background"
         android:onClick="pop"
         android:text="@string/pop_up_quiz"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button7"
         app:layout_constraintTop_toBottomOf="@+id/t1" />
@@ -67,10 +71,10 @@
         android:layout_width="140dp"
         android:layout_height="26dp"
         android:layout_gravity="center"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="50dp"
 
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="135dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginBottom="49dp"
         android:background="@drawable/button_background"
         android:onClick="stop"
         android:text="@string/pause_session"
@@ -78,23 +82,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button10"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="140dp"
-        android:layout_height="26dp"
-        android:layout_gravity="center"
 
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/button_background"
-        android:onClick="nextvideo"
-        android:text="@string/next_video"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

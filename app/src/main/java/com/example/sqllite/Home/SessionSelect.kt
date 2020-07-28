@@ -22,9 +22,10 @@ This is the session select activity in which user will select the session he wan
  */
 
 class SessionSelect : AppCompatActivity() {
-    var g_content_id: String?= null
+    var  g_course_id: String?= null
     var g_session_name: String?= null
-    var g_content_id1: String?= null
+    var g_concept_id: String?= null
+    var g_subconcept_id: String?= null
     var g_mydb1: sqlite? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -34,8 +35,9 @@ class SessionSelect : AppCompatActivity() {
         g_mydb1 = sqlite(this)
 
         val intent = intent
-        g_content_id = intent.getStringExtra("ct_id")
-        g_content_id1 = intent.getStringExtra("ct_id1")
+        g_course_id = intent.getStringExtra("co_id")
+        g_concept_id = intent.getStringExtra("cn_id")
+        g_subconcept_id = intent.getStringExtra("sc_id")
         g_session_name= intent.getStringExtra("sp_name")
 
     }
@@ -44,8 +46,9 @@ class SessionSelect : AppCompatActivity() {
     fun start_session1(view: View?)
     {
         val intent = Intent(this@SessionSelect, Server::class.java)
-        intent.putExtra("ct_id", g_content_id)
-        intent.putExtra("ct_id1", g_content_id1)
+        intent.putExtra("co_id", g_course_id)
+        intent.putExtra("sc_id", g_subconcept_id)
+        intent.putExtra("cn_id", g_concept_id)
         intent.putExtra("sp_name", g_session_name)
 
         startActivity(intent)

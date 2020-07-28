@@ -476,7 +476,7 @@ if (l_status== "true") {
         return l_CN_Id
     }
     //fetching content name from content table for manage curriculum part
-    fun displayContent(CO_Id: Int,CN_Id: Int,SC_Id: Int): ArrayList<String> {
+    fun displayContent(CO_Id: String,CN_Id: String,SC_Id: String): ArrayList<String> {
 
         val l_CONTENT = ArrayList<String>()
         val db = writableDatabase
@@ -502,6 +502,7 @@ if (l_status== "true") {
 
     }
 
+
     //FOR FETCHING LINK FROM THE CONTENT TABLE
     fun getlinkContent(ct_id: String): String
     {
@@ -523,27 +524,28 @@ if (l_status== "true") {
 
     }
 
-    //FOR FETCHING CONTENT TYP EL FROM THE CONTENT TABLE
-    fun getContentType(ct_id: String): String
-    {
+
+
+
+
+    //fetching sub concept id from concept table for manage curriculum part
+    fun getContentType(contentlink: String): String? {
+
+        val db = readableDatabase
         var cursor: Cursor? = null
-        val db = this.readableDatabase
         try {
-            cursor = db.rawQuery("select CT_Type from content where CT_id=$ct_id", null)
+            cursor = db.rawQuery("select CT_Type from content" + " where CT_ContentLink =?", arrayOf(contentlink))
         } catch (e: SQLiteException) {
 
         }
 
-        var l_Content: String? = null
+        var l_CT_Type: String? = null
         if (cursor != null) {
             cursor.moveToNext()
-            l_Content = cursor.getString(0)
-        };
-        return l_Content!!
-
-
+            l_CT_Type = cursor.getString(0)
+        }
+        return l_CT_Type
     }
-
 
     //fetching sub concept id from concept table for manage curriculum part
     fun getContentId(contentlink: String): String? {

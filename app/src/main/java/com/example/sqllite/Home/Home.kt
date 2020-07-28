@@ -24,8 +24,7 @@ class Home : AppCompatActivity() {
     var g_sessionplan_id: String?= null
     var g_sessionplan_name: String?= null
     var g_concept_id: String?= null
-    var g_content_id: String? = null
-    var g_content_id1: String? = null
+
     var g_subconcept_id: String?= null
 
     var g_course_selected: String?= null
@@ -95,21 +94,6 @@ class Home : AppCompatActivity() {
 
 
 
-    //onClick Function for starting the session
-    fun start_session(view: View?)
-    {
-        fetch_courseid()
-        fetch_sessionid()
-        fetch_conceptid()
-        fetch_subconceptid()
-        fetch_contentid()
-
-        val intent = Intent(this@Home, SessionSelect::class.java)
-        intent.putExtra("ct_id",g_content_id)
-        intent.putExtra("ct_id1",g_content_id1)
-        intent.putExtra("sp_name",g_sessionplan_name)
-        startActivity(intent)
-    }
 
     fun fetch_courseid()//function for fetching course id from the local database as we have synced the session previously
     {
@@ -156,20 +140,24 @@ class Home : AppCompatActivity() {
         }
     }
 
-    fun fetch_contentid()//function for fetching content id from the local database as we have synced the session previously
+
+
+    //onClick Function for starting the session
+    fun start_session(view: View?)
     {
-        val cursor5: Cursor = db!!.getContentId(g_course_id!!, g_concept_id!!, g_subconcept_id!!)
-        if (cursor5.moveToFirst())
-        {
-            g_content_id = cursor5.getString(0)
-            while (cursor5.moveToNext())
-            {
-                g_content_id1= cursor5.getString(0)
+        fetch_courseid()
+        fetch_sessionid()
+        fetch_conceptid()
+        fetch_subconceptid()
 
-            }
-        }
+
+        val intent = Intent(this@Home, SessionSelect::class.java)
+        intent.putExtra("cn_id",g_concept_id)
+        intent.putExtra("sc_id",g_subconcept_id)
+        intent.putExtra("co_id",g_course_id)
+        intent.putExtra("sp_name",g_sessionplan_name)
+        startActivity(intent)
     }
-
 
     //creating option menu for logout
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

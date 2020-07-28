@@ -11,15 +11,16 @@ class VIewContent : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_v_iew_content)
+
+
+        var listView = findViewById<ListView>(R.id.listview)
+        var db = sqlite(this)
         val l_concept_ID = intent.getStringExtra("CN_ID")
         val l_course_ID = intent.getStringExtra("CO_ID")
         val l_subconcept_ID = intent.getStringExtra("SC_ID")
 
-        var listView = findViewById<ListView>(R.id.listview)
-        var db = sqlite(this)
-
         var l_content: ArrayList<String>
-        l_content = db.displayContent(Integer.parseInt(l_course_ID),Integer.parseInt(l_concept_ID),Integer.parseInt(l_subconcept_ID))
+        l_content = db.displayContent(l_course_ID,l_concept_ID,l_subconcept_ID)
 
         var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, l_content)
         listView.adapter = l_arrayAdapter

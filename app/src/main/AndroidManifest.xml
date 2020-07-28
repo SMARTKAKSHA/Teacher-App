@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".CourseContent"></activity>
         <activity android:name=".SynchronizeDataCohortSelect" />
         <activity
             android:name=".DownloadActivity"
@@ -24,10 +24,7 @@
         <activity android:name=".SearchStudent" />
         <activity
             android:name=".StudentSelectCohort"
-            android:label="@string/title_activity_student_select_cohort">
-        </activity>
-
-
+            android:label="@string/title_activity_student_select_cohort"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,9 +72,9 @@
         <activity
             android:name=".VIewContent"
             android:label="Content" />
-        <activity android:name=".StudentInfo"
+        <activity
+            android:name=".StudentInfo"
             android:label="StudentPerformance" />
-
     </application>
 
 </manifest>
