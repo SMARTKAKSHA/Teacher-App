@@ -38,15 +38,23 @@ class CourseContent : AppCompatActivity() {
 
                 startActivity(intent)
                 Toast.makeText(this@CourseContent, l_content_type, Toast.LENGTH_LONG).show()
-            } else if (l_content_type == "PDF") {
-                intent = Intent(this, PdfViewer::class.java)
+            } else if (l_content_type == "WEBSITE") {
+                intent = Intent(this, WebView::class.java)
                 intent.putExtra("CT_ID", l_ct_id)
 
                 startActivity(intent)
                 Toast.makeText(this@CourseContent, l_content_type, Toast.LENGTH_LONG).show()
 
             }
+            else if(l_content_type == "PDF"){
+                intent = Intent(this, PdfViewer::class.java)
+                intent.putExtra("CT_ID", l_ct_id)
+
+                startActivity(intent)
+                Toast.makeText(this@CourseContent, l_content_type, Toast.LENGTH_LONG).show()
+            }
             else{
+
                 Toast.makeText(this@CourseContent, "This media is not supported", Toast.LENGTH_LONG).show()
             }
 
