@@ -345,6 +345,13 @@ if (l_status== "true") {
         return l_db1.rawQuery(l_strquery, null)
     }
 
+    fun getCurriculumId(co_id: String): Cursor {
+        val l_co_id = '"'.toString() + co_id + '"'
+        val l_db1 = this.readableDatabase
+        val l_strquery = "select CU_id from curriculumdetails where CU_Id=$l_co_id"
+        return l_db1.rawQuery(l_strquery, null)
+    }
+
     //FOR FETCHING SESSIONID FROM THE SESSIONPLAN TABLE
     fun getSessionId(co_id: String): Cursor {
         val l_co_id = '"'.toString() + co_id + '"'
@@ -352,6 +359,7 @@ if (l_status== "true") {
         val l_strquery = "select SP_id,SP_Name from sessionplan where CO_id=$l_co_id"
         return l_db1.rawQuery(l_strquery, null)
     }
+
 
     //FOR FETCHING CONCEPTID FROM THE CONCEPT TABLE
     fun getConceptId(co_id: String): Cursor {

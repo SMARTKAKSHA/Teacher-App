@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -30,10 +31,13 @@ This Activity is Created for hosting the session through this activity the conne
 @SuppressLint("SetTextI18n")
 class Server : AppCompatActivity() {
     var  g_course_id: String?= null
-
+    var  g_curriculum_id: String?= null
+    var counter = 0
     var g_concept_id: String?= null
     var g_subconcept_id: String?= null
     var g_session_name: String?= null
+    var g_session_id: String?= null
+
     var serverSocket: ServerSocket? = null
     var thread: Thread? = null
     var tvIP: TextView? = null
@@ -52,10 +56,14 @@ class Server : AppCompatActivity() {
         val intent = intent
 
 
+
         g_course_id = intent.getStringExtra("co_id")
         g_concept_id = intent.getStringExtra("cn_id")
         g_subconcept_id = intent.getStringExtra("sc_id")
         g_session_name= intent.getStringExtra("sp_name")
+        g_session_id= intent.getStringExtra("sp_id")
+        g_curriculum_id = intent.getStringExtra("cu_id")
+
 
 
         tvIP = findViewById(R.id.tvIP)
@@ -65,7 +73,8 @@ class Server : AppCompatActivity() {
         btnSend = findViewById(R.id.btnSend)
         g_SP_NAME = findViewById(R.id.SP_name)
 
-        g_SP_NAME!!.text = g_session_name
+        startTimeCounter()
+        g_SP_NAME!!.text = g_session_name+" "+ g_session_id+"cu_id="+g_curriculum_id
         try {
             SERVER_IP = localIpAddress
         } catch (e: UnknownHostException) {
@@ -75,9 +84,10 @@ class Server : AppCompatActivity() {
         thread!!.start()
         btnSend?.setOnClickListener(View.OnClickListener {
             message = etMessage?.getText().toString().trim { it <= ' ' }
-            if (!message!!.isEmpty()) {
-                Thread(Thread3(message!!)).start()
+            if (message!!.isEmpty()) {
+                Toast.makeText(this,"YOU CAN'T SEND EMPTY MESSAGES",Toast.LENGTH_SHORT).show()
             }
+            else{Thread(Thread3(message!!)).start()}
         })
     }
 
@@ -145,8 +155,9 @@ class Server : AppCompatActivity() {
         }
     }
 
-    internal inner class Thread3(private val message: String) : Runnable {
+    internal inner class Thread3( val message: String) : Runnable {
         override fun run() {
+            output!!.write(g_curriculum_id+"/"+g_course_id+"/"+g_concept_id+"/"+g_subconcept_id+"/"+g_session_id)
             output!!.write(message)
             output!!.flush()
             runOnUiThread {
@@ -157,6 +168,23 @@ class Server : AppCompatActivity() {
 
     }
 
+    fun startTimeCounter() {
+        val countTime: TextView = findViewById(R.id.countTime)
+        object : CountDownTimer(50000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                countTime.text = counter.toString()
+                counter++
+            }
+            override fun onFinish() {
+                countTime.text = "Finished"
+                val intent = Intent(this@Server, CourseContent::class.java)
+                intent.putExtra("co_id", g_course_id)
+                intent.putExtra("sc_id", g_subconcept_id)
+                intent.putExtra("cn_id", g_concept_id)
+                startActivity(intent)
+            }
+        }.start()
+    }
     companion object {
         var SERVER_IP = ""
         const val SERVER_PORT = 8080

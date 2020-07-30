@@ -85,4 +85,18 @@
         android:textColor="@color/colorWhite"
         android:textStyle="bold"/>
 
+    <TextView
+
+        android:id="@+id/countTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/SP_name"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="77dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="32sp" />/>
+
 </RelativeLayout>
