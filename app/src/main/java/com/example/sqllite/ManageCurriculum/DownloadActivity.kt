@@ -22,8 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import java.io.File
-import java.lang.Exception
-
+import java.nio.file.Path
 
 
 class DownloadActivity : AppCompatActivity() {
@@ -50,9 +49,6 @@ class DownloadActivity : AppCompatActivity() {
         registerReceiver(onComplete,
                 IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-var filepath= Environment.getExternalStorageDirectory();
-        var dir= File(filepath.absolutePath+"/SmartKaksha/")
-        dir.mkdir()
 
     }
 
@@ -92,11 +88,12 @@ var filepath= Environment.getExternalStorageDirectory();
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,filename)
                 request.setMimeType(getMimeType(Download_Uri))
                 refid = manager.enqueue(request)
-
                 list.add(refid);
 Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
-                file = File(Environment.getExternalStorageDirectory().absolutePath + "/Download/"+filename)
-                db?.updateContentTable(file.toString(),l_content_id.toString(),"true")
+               file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path+File.separator+filename)
+
+
+                db?.updateContentTable("/Internal storage/Download/"+filename,l_content_id.toString(),"true")
             }
             else{
                 var intent= Intent(Intent.ACTION_VIEW,Download_Uri)

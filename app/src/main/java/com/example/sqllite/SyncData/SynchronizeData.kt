@@ -1,5 +1,6 @@
 package com.example.sqllite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -50,7 +51,6 @@ class SynchronizeData : AppCompatActivity() {
 
     fun sync_session_2(view: View?) {}
     fun sync_session_3(view: View?) {}
-
 
 
 
@@ -414,12 +414,12 @@ class SynchronizeData : AppCompatActivity() {
 
     companion object
     {
-        const val SERVER_URL_CONTENT = "http:/10.0.2.2/poc/getContent.php"
-        const val SERVER_URL_CONCEPT = "http:/10.0.2.2/poc/getConcept.php"
-        const val SERVER_URL_SUBCONCEPT = "http:/10.0.2.2/poc/getSubConcept.php"
-        const val SERVER_URL_SESSIONPLAN = "http:/10.0.2.2/poc/getSessionPlan.php"
-        const val SERVER_URL_SESSIONSECTION = "http:/10.0.2.2/poc/getSessionSection.php"
+        const val SERVER_URL_CONTENT = "http:/192.168.29.71/poc/getContent.php"
+        const val SERVER_URL_CONCEPT = "http:/192.168.29.71/poc/getConcept.php"
+        const val SERVER_URL_SUBCONCEPT = "http:/192.168.29.71/poc/getSubConcept.php"
+        const val SERVER_URL_SESSIONPLAN = "http:/192.168.29.71/poc/getSessionPlan.php"
+        const val SERVER_URL_SESSIONSECTION = "http:/192.168.29.71/poc/getSessionSection.php"
 
-        const val SERVER_URL_COURSECONTENT = "http:/10.0.2.2/poc/getCourseContent.php"
+        const val SERVER_URL_COURSECONTENT = "http:/192.168.29.71/poc/getCourseContent.php"
     }
 }

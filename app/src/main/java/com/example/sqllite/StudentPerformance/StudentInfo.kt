@@ -44,7 +44,7 @@ class StudentInfo : AppCompatActivity() {
     fun fetchDetails() {
 
 
-        val SERVER_URL_STUDENT = "http://10.0.2.2/poc/getSelectedStudentDetails.php"
+        val SERVER_URL_STUDENT = "http://192.168.29.71/poc/getSelectedStudentDetails.php"
 
         val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_STUDENT, Response.Listener { response ->
             try {

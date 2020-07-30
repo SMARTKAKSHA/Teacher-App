@@ -499,8 +499,11 @@ if (l_status== "true") {
             }
         }
         return l_CONTENT;
+        }
 
-    }
+
+
+
 
 
     //FOR FETCHING LINK FROM THE CONTENT TABLE
@@ -518,7 +521,7 @@ if (l_status== "true") {
         if (cursor != null) {
             cursor.moveToNext()
             l_Content = cursor.getString(0)
-        };
+        }
         return l_Content!!
 
 
