@@ -38,21 +38,71 @@ class SynchronizeData : AppCompatActivity() {
     //onclick function for syncing the session
     fun sync_session_1(view: View?)
     {
-
+        getCurriculum()
         getContent()
         getConcept()
         getSubConcept()
         getSessionPlan()
         getSessionSection()
         getCourseContent()
-
+        getCurriculumDetails()
         g_syncstatus?.setText("Synced")
     }
 
     fun sync_session_2(view: View?) {}
     fun sync_session_3(view: View?) {}
 
+    fun getCurriculum() {
 
+        val url: String = SERVER_URL_CURRICULUM
+        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+
+
+            override fun onResponse(response: String?) {
+                response?.let { showJSON_for_curriculum(it) }
+            }
+        },
+                object : Response.ErrorListener {
+                    override fun onErrorResponse(error: VolleyError) {
+                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                })
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+    }
+
+    private fun showJSON_for_curriculum(response: String) {
+        val l_CU_ID = "CU_id"
+        val l_CU_NAME = "CU_Name"
+        val l_CU_DESC = "CU_Desc"
+        val l_CU_IMAGE = "CU_Image"
+        val l_CU_INSERTDATE = "CU_Insertdate"
+        try {
+            val jsonObject = JSONObject(response)
+            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
+
+            var l_CU_id: Int? = null
+            var l_CU_Name: String? = null
+            var l_CU_Desc: String? = null
+            var l_CU_Image: String? = null
+            var l_CU_InsertDate: String? = null
+
+
+            for (i in 0 until result.length()) {
+                val jo = result.getJSONObject(i)
+
+                l_CU_id = jo.getInt(l_CU_ID)
+                l_CU_Name = jo.getString(l_CU_NAME)
+                l_CU_Desc = jo.getString(l_CU_DESC)
+                l_CU_Image = jo.getString(l_CU_IMAGE)
+                l_CU_InsertDate = jo.getString(l_CU_INSERTDATE)
+
+                mydb1?.insertData_into_Curriculum(l_CU_id, l_CU_Name, l_CU_Desc, l_CU_Image, l_CU_InsertDate)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
 
     fun getContent() {
 
@@ -107,7 +157,6 @@ class SynchronizeData : AppCompatActivity() {
                 l_CT_DownloadLink=jo.getString(l_CT_DOWNLOADLINK)
                 l_CT_DownloadStatus=jo.getString(l_CT_DOWNLOADSTATUS)
                 mydb1?.insertData_into_Content(l_CT_id,l_CT_Name,l_CT_Type,l_CT_ContentLink,l_CT_Duration,l_CT_InsertDate,l_CT_DownloadLink,l_CT_DownloadStatus)
-                Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
             }
         }
         catch (e: JSONException) {
@@ -167,7 +216,6 @@ class SynchronizeData : AppCompatActivity() {
                 l_CO_CN_id=jo.getInt(l_CO_CN_ID)
 
                 mydb1?.insertData_into_Concept(l_CN_id,l_CN_Name,l_CN_Desc,l_CN_Duration,l_CN_Image,l_CN_Insertdate,l_CO_CN_id)
-                Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
             }
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -230,7 +278,6 @@ class SynchronizeData : AppCompatActivity() {
 
 
                 mydb1?.insertData_into_SubConcept(l_SC_id,l_SC_Name,l_SC_Desc,l_SC_Insertdate,l_SC_Duration,l_CN_SC_id,l_CO_SC_id)
-                Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
             }
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -283,7 +330,6 @@ class SynchronizeData : AppCompatActivity() {
                 l_CO_SP_id=jo.getInt(l_CO_SP_ID)
 
                 mydb1?.insertData_into_SessionPlan(l_SP_id,l_SP_Name,l_SP_Duration,l_SP_Sequence,l_CO_SP_id)
-                Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
             }
         }
         catch (e: JSONException) {
@@ -349,7 +395,6 @@ class SynchronizeData : AppCompatActivity() {
 
 
                 mydb1?.insertData_into_SessionSection(l_SS_id,l_SS_Content,l_SS_ContentType,l_SS_Seqnum,l_SS_Duration,l_SP_SS_id,l_SC_SS_id,l_CO_SS_id,l_CT_SS_id)
-                Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
             }
         }
         catch (e: JSONException) {
@@ -402,7 +447,62 @@ class SynchronizeData : AppCompatActivity() {
                 l_CT_id=jo.getInt(l_CT_CC_ID)
 
                 mydb1?.insertData_into_CourseContent(l_CO_id,l_CN_id,l_SC_id,l_CT_id)
-                Toast.makeText(this@SynchronizeData,"Synced",Toast.LENGTH_LONG).show()
+
+            }
+        }
+        catch (e: JSONException)
+        {
+            e.printStackTrace()
+        }
+    }
+
+    fun getCurriculumDetails() {
+
+        val url: String = SERVER_URL_CURRICULUMDETAILS
+        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+
+
+            override fun onResponse(response: String?) {
+                response?.let { showJSON8(it) }
+            }
+        },
+                object : Response.ErrorListener {
+                    override fun onErrorResponse(error: VolleyError) {
+                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                })
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+    }
+
+    private fun showJSON8(response: String) {
+
+        val l_CD_CU_ID = "CU_id"
+        val l_CD_CO_ID = "CO_id"
+        val l_CD_CO_SEQNO = "CO_SeqNo"
+        val l_CD_CO_SEMESTER = "CO_Semester"
+        val l_CD_CO_YEAR = "CO_Year"
+
+        try {
+            val jsonObject = JSONObject(response)
+            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
+            var l_CU_id:Int?=null
+            var l_CO_id:Int?=null
+            var l_CO_SeqNo:Int?=null
+            var l_CO_Semester:Int?=null
+            var l_CO_Year:Int?=null
+
+
+            for (i in 0 until result.length())
+            {
+                val jo = result.getJSONObject(i)
+                l_CU_id=jo.getInt(l_CD_CU_ID)
+                l_CO_id=jo.getInt(l_CD_CO_ID)
+                l_CO_SeqNo=jo.getInt(l_CD_CO_SEQNO)
+                l_CO_Semester=jo.getInt(l_CD_CO_SEMESTER)
+                l_CO_Year=jo.getInt(l_CD_CO_YEAR)
+
+                mydb1?.insertData_into_CurriculumDetails(l_CU_id,l_CO_id,l_CO_SeqNo,l_CO_Semester,l_CO_Year)
 
             }
         }
@@ -421,5 +521,8 @@ class SynchronizeData : AppCompatActivity() {
         const val SERVER_URL_SESSIONSECTION = "http:/192.168.29.71/poc/getSessionSection.php"
 
         const val SERVER_URL_COURSECONTENT = "http:/192.168.29.71/poc/getCourseContent.php"
+        const val SERVER_URL_CURRICULUM = "http:/192.168.29.71/poc/getCurriculum.php"
+        const val SERVER_URL_CURRICULUMDETAILS = "http:/192.168.29.71/poc/getCurriculumDetails.php"
+
     }
 }

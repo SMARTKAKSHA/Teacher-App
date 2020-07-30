@@ -29,6 +29,8 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
 
         db.execSQL("create table $sql_sessionsection (SS_id INTEGER, SS_Content TEXT ,SS_ContentType TEXT, SS_Seqnum INTEGER, SS_Duration INTEGER,SP_id INTEGER,SC_id INTEGER,CO_id INTEGER,CT_id INTEGER)")
         db.execSQL("create table $sql_coursecontent (CO_id INTEGER, CN_id INTEGER,SC_id INTEGER,CT_id INTEGER)")
+        db.execSQL("create table $sql_curriculum (CU_id INTEGER ,CU_Name TEXT ,CU_Desc TEXT ,CU_Image TEXT ,CU_Insertdate TEXT )")
+        db.execSQL("create table $sql_curriculum_details (CU_id INTEGER, CO_id INTEGER,CO_SeqNo INTEGER,CO_Semester INTEGER,CO_Year INTEGER)")
 
 
     }//END OF onCreate Function
@@ -43,7 +45,9 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         db.execSQL("DROP TABLE IF EXISTS $sql_sessionplan")
         db.execSQL("DROP TABLE IF EXISTS $sql_sessionsection")
         db.execSQL("DROP TABLE IF EXISTS $sql_coursecontent")
+        db.execSQL("DROP TABLE IF EXISTS $sql_curriculum")
 
+        db.execSQL("DROP TABLE IF EXISTS $sql_curriculum_details")
 
 
         onCreate(db)
@@ -85,6 +89,25 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         l_contentValues.put(sql_CO_Insertdate, co_insertdate)
 
         val l_success1 = sql_db1.insert(sql_course, null, l_contentValues)
+        return if (l_success1 == -1L) //if above statement is successfully completed with no error
+        {
+            false
+        } else {
+            true
+        }
+    }
+
+    fun insertData_into_Curriculum(cu_id : Int?, cu_name: String?, cu_desc : String?,cu_image : String?, cu_insertdate : String?): Boolean
+    {
+        val sql_db1 = this.writableDatabase
+        val l_contentValues = ContentValues()
+        l_contentValues.put(sql_CU_Id,  cu_id)
+        l_contentValues.put(sql_CU_Name, cu_name)
+        l_contentValues.put(sql_CU_Desc, cu_desc)
+        l_contentValues.put(sql_CU_Image, cu_image)
+        l_contentValues.put(sql_CU_Insertdate, cu_insertdate)
+
+        val l_success1 = sql_db1.insert(sql_curriculum, null, l_contentValues)
         return if (l_success1 == -1L) //if above statement is successfully completed with no error
         {
             false
@@ -221,6 +244,24 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
         }
     }
 
+    fun insertData_into_CurriculumDetails(cu_id : Int?, co_id : Int?, co_seqno : Int?, co_semester : Int?, co_year : Int?): Boolean
+    {
+        val sql_db1 = this.writableDatabase
+        val l_contentValues = ContentValues()
+        l_contentValues.put(sql_CD_CU_id,  cu_id)
+        l_contentValues.put(sql_CD_CO_id, co_id)
+        l_contentValues.put(sql_CD_CO_SEQNO, co_seqno)
+        l_contentValues.put(sql_CD_CO_SEMESTER, co_semester)
+        l_contentValues.put(sql_CD_CO_YEAR, co_year)
+
+        val l_success1 = sql_db1.insert(sql_curriculum_details, null, l_contentValues)
+        return if (l_success1 == -1L)
+        {
+            false
+        } else {
+            true
+        }
+    }
 
     //feching all COHORTS from cohort table
     open fun getAllCohorts(): MutableList<String> {
@@ -647,6 +688,22 @@ if (l_status== "true") {
         const val sql_CN_CC_id = "CN_id"
         const val sql_SC_CC_id = "SC_id"
         const val sql_CT_CC_id = "CT_id"
+
+
+        const val sql_curriculum="curriculum"
+        const val sql_CU_Id = "CU_id"
+        const val sql_CU_Name = "CU_Name"
+        const val sql_CU_Desc = "CU_Desc"
+        const val sql_CU_Image = "CU_Image"
+        const val sql_CU_Insertdate = "CU_Insertdate"
+
+        const val sql_curriculum_details="curriculumdetails"
+        const val sql_CD_CU_id = "CU_id"
+        const val sql_CD_CO_id = "CO_id"
+        const val sql_CD_CO_SEQNO = "CO_SeqNo"
+        const val sql_CD_CO_SEMESTER = "CO_Semester"
+        const val sql_CD_CO_YEAR = "CO_Year"
+
     }
 
 }
