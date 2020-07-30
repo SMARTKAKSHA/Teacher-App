@@ -24,6 +24,7 @@ class Home : AppCompatActivity() {
     var g_sessionplan_id: String?= null
     var g_sessionplan_name: String?= null
     var g_concept_id: String?= null
+    var g_curriculum_id: String?= null
 
     var g_subconcept_id: String?= null
 
@@ -140,6 +141,16 @@ class Home : AppCompatActivity() {
         }
     }
 
+    fun fetch_curriculumid()//function for fetching subconcept id from the local database as we have synced the session previously
+    {
+        val cursor4: Cursor = db!!.getCurriculumId(g_course_id!!)
+        val stringBuilder4 = StringBuilder()
+        while (cursor4.moveToNext())
+        {
+            stringBuilder4.append(" " + cursor4.getString(0))
+            g_curriculum_id = stringBuilder4.toString()
+        }
+    }
 
 
     //onClick Function for starting the session
@@ -149,13 +160,16 @@ class Home : AppCompatActivity() {
         fetch_sessionid()
         fetch_conceptid()
         fetch_subconceptid()
-
+fetch_curriculumid()
 
         val intent = Intent(this@Home, SessionSelect::class.java)
         intent.putExtra("cn_id",g_concept_id)
         intent.putExtra("sc_id",g_subconcept_id)
         intent.putExtra("co_id",g_course_id)
         intent.putExtra("sp_name",g_sessionplan_name)
+        intent.putExtra("sp_id",g_sessionplan_id)
+        intent.putExtra("cu_id",g_curriculum_id)
+
         startActivity(intent)
     }
 
