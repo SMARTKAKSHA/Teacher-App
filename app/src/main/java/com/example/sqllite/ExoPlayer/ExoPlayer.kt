@@ -1,7 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.sqllite
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -11,13 +12,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.extractor.ExtractorsFactory
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.BandwidthMeter
 import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import java.io.File
 
 
 /*Created By Divyanshu Gupta
@@ -36,7 +44,6 @@ class ExoPlayer : AppCompatActivity() {
 
     var g_content_id: String? = null
 
-
     var t1: TextView?=null
     var g_playerView: PlayerView? = null
     private var g_playWhenReady = true
@@ -44,7 +51,7 @@ class ExoPlayer : AppCompatActivity() {
     private var g_playbackPosition: Long = 0
     private var g_player: SimpleExoPlayer? = null
     var g_mydb3: sqlite? = null
-
+    var extractoryFactory:ExtractorsFactory?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_playeer)
@@ -66,6 +73,8 @@ class ExoPlayer : AppCompatActivity() {
 
              t1!!.setText(g_link)
 
+
+        extractoryFactory= DefaultExtractorsFactory()
     }
 
 
@@ -82,8 +91,8 @@ class ExoPlayer : AppCompatActivity() {
 
     private fun buildMediaSource(uri: Uri): MediaSource {
         val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(this, "exoplayer-codelab")
-        return ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(uri)
+        return ProgressiveMediaSource.Factory(dataSourceFactory,extractoryFactory)
+                .createMediaSource(Uri.parse(g_link))
     }
 
     public override fun onStart() {
@@ -143,5 +152,7 @@ class ExoPlayer : AppCompatActivity() {
 
 
 }
+
+
 
 

@@ -274,9 +274,9 @@ getPreferencesData()
     }
 
     companion object {
-        const val g_SERVER_URL = "http:/10.0.2.2/poc/login.php"
-        const val SERVER_URL_COHORT = "http:/10.0.2.2/poc/getCohort.php"
-        const val SERVER_URL_COURSE = "http:/10.0.2.2/poc/getCourse.php"
+        const val g_SERVER_URL = "http:/192.168.29.71/poc/login.php"
+        const val SERVER_URL_COHORT = "http:/192.168.29.71/poc/getCohort.php"
+        const val SERVER_URL_COURSE = "http:/192.168.29.71/poc/getCourse.php"
     }
 
 }
