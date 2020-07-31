@@ -3,27 +3,20 @@
 package com.example.sqllite
 
 import android.annotation.SuppressLint
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.extractor.ExtractorsFactory
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.upstream.BandwidthMeter
 import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 
@@ -39,8 +32,10 @@ NOTE:- IN THIS ACTIVITY WE HAVE INTEGERATED A THIRD PARTY VIDEO PLAYER THAT IS E
 */
 
 class ExoPlayer : AppCompatActivity() {
+    var VIDEO: ArrayList<String>? = null
 
     var g_link: String? = null
+    var g_link2: String? = null
 
     var g_content_id: String? = null
 
@@ -59,18 +54,20 @@ class ExoPlayer : AppCompatActivity() {
         g_mydb3 = sqlite(this)
 
         val intent = intent
-        g_content_id = intent.getStringExtra("CT_ID")
+      //  g_content_id = intent.getStringExtra("video")
 
-
+        VIDEO= intent.getStringArrayListExtra("video")
+       g_link=VIDEO!!.get(0)
+        g_link2=VIDEO!!.get(0)
             t1= findViewById<TextView>(R.id.t1)
 
-                    val cursor1: Cursor = g_mydb3!!.getlink(g_content_id!!)
+                /*    val cursor1: Cursor = g_mydb3!!.getlink(g_content_id!!)
                     val l_stringBuilder1 = StringBuilder()
                     while (cursor1.moveToNext()) {
                         l_stringBuilder1.append(" " + cursor1.getString(0))
                         g_link = l_stringBuilder1.toString()
                         Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()}
-
+*/
              t1!!.setText(g_link)
 
 
@@ -83,16 +80,22 @@ class ExoPlayer : AppCompatActivity() {
         g_player = ExoPlayerFactory.newSimpleInstance(this)
         g_playerView!!.player = g_player
         val uri = Uri.parse(g_link)
-        val mediaSource = buildMediaSource(uri)
+        val uri2 = Uri.parse(g_link2)
+
+        val mediaSource = buildMediaSource(uri,uri2)
         g_player!!.playWhenReady = g_playWhenReady
         g_player!!.seekTo(g_currentWindow, g_playbackPosition)
         g_player!!.prepare(mediaSource, false, false)
     }
 
-    private fun buildMediaSource(uri: Uri): MediaSource {
+    private fun buildMediaSource(uri: Uri,uri2: Uri): MediaSource {
+
         val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(this, "exoplayer-codelab")
-        return ProgressiveMediaSource.Factory(dataSourceFactory,extractoryFactory)
-                .createMediaSource(Uri.parse(g_link))
+        var firstsource= ProgressiveMediaSource.Factory(dataSourceFactory,extractoryFactory)
+                .createMediaSource(uri)
+        var secondsource= ProgressiveMediaSource.Factory(dataSourceFactory,extractoryFactory)
+                .createMediaSource(uri2)
+        return ConcatenatingMediaSource(firstsource, secondsource)//create a playlist
     }
 
     public override fun onStart() {

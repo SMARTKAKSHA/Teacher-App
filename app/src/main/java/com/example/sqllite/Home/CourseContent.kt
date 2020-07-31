@@ -11,6 +11,13 @@ class CourseContent : AppCompatActivity() {
     var g_course_id: String? = null
     var g_concept_id: String? = null
     var g_subconcept_id: String? = null
+    var alist: ArrayList<String>? = null
+    var WEBSITE=ArrayList<String>(10)
+    var PDF=ArrayList<String>(10)
+    var VIDEO=  ArrayList<String>(10)
+    var AUDIO=  ArrayList<String>(10)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_content)
@@ -24,6 +31,69 @@ class CourseContent : AppCompatActivity() {
         var l_content: ArrayList<String>
         l_content = db.displayContent(l_course_ID, l_concept_ID, l_subconcept_ID)
 
+        alist = ArrayList()
+        alist!!.add("VIDEO")
+        alist!!.add("PDF")
+        alist!!.add("AUDIO")
+        alist!!.add("WEBSITE")
+
+      /*  var l_videocontent: ArrayList<String>
+        l_videocontent = db.displayVideoContent(l_course_ID, l_concept_ID, l_subconcept_ID)
+        for (i in 0 until l_videocontent!!.size) {
+            var link= l_videocontent.get(i)
+        VIDEO.add(i,link)
+        }*/
+
+        for (i in 0 until l_content!!.size) {
+            var link= l_content.get(i)
+            var l_content_type: String? = db.getContentType(link)
+         if (l_content_type == "VIDEO") {
+
+
+                VIDEO!!.add(link)
+
+            }
+            else if (l_content_type == "WEBSITE") {
+                WEBSITE!!.add(link)
+
+            }
+            else if(l_content_type == "PDF"){
+                PDF!!.add(link)
+            }
+          else if(l_content_type == "AUDIO"){
+              AUDIO!!.add(link)
+          }
+
+        }
+
+
+        var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alist!!)
+        listView.adapter = l_arrayAdapter
+        listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
+            var type= alist!!.get(position)
+
+            if(type=="VIDEO"){
+                intent = Intent(this, ExoPlayer::class.java)
+                intent.putExtra("video",VIDEO)
+                startActivity(intent)
+            }
+            else if(type=="PDF"){
+                intent = Intent(this, PdfContent::class.java)
+                intent.putExtra("pdf",PDF)
+                startActivity(intent)
+            }
+            else if(type=="WEBSITE"){
+                intent = Intent(this, WebContent::class.java)
+                intent.putExtra("web",WEBSITE)
+                startActivity(intent)
+            }
+            else if(type=="AUDIO"){
+                intent = Intent(this, ExoPlayer::class.java)
+                intent.putExtra("video",AUDIO)
+                startActivity(intent)
+            }
+        }
+/*
 
         var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, l_content)
         listView.adapter = l_arrayAdapter
@@ -59,5 +129,7 @@ class CourseContent : AppCompatActivity() {
             }
 
         }
+
+ */
     }
 }
