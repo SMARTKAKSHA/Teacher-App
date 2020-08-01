@@ -1,11 +1,10 @@
 package com.example.sqllite
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class CourseContent : AppCompatActivity() {
     var g_course_id: String? = null
@@ -37,21 +36,16 @@ class CourseContent : AppCompatActivity() {
         alist!!.add("AUDIO")
         alist!!.add("WEBSITE")
 
-      /*  var l_videocontent: ArrayList<String>
-        l_videocontent = db.displayVideoContent(l_course_ID, l_concept_ID, l_subconcept_ID)
-        for (i in 0 until l_videocontent!!.size) {
-            var link= l_videocontent.get(i)
-        VIDEO.add(i,link)
-        }*/
 
-        for (i in 0 until l_content!!.size) {
+
+
+
+        var size= l_content.size
+        for (i in 0 until size) {
             var link= l_content.get(i)
             var l_content_type: String? = db.getContentType(link)
-         if (l_content_type == "VIDEO") {
-
-
-                VIDEO!!.add(link)
-
+        if (l_content_type == "VIDEO") {
+                VIDEO!!.add(i,link)
             }
             else if (l_content_type == "WEBSITE") {
                 WEBSITE!!.add(link)

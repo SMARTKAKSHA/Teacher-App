@@ -1,6 +1,5 @@
 package com.example.sqllite
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -25,6 +24,8 @@ class SynchronizeData : AppCompatActivity() {
     val g_JSON_ARRAY = "result"
     var g_course_id: String?= null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mydb1 = sqlite(this)
@@ -38,71 +39,119 @@ class SynchronizeData : AppCompatActivity() {
     //onclick function for syncing the session
     fun sync_session_1(view: View?)
     {
-        getCurriculum()
-        getContent()
-        getConcept()
-        getSubConcept()
-        getSessionPlan()
+        getCurriculumDetail()
+        getSessionPlans()
         getSessionSection()
+        getConcepts()
+        getContent()
         getCourseContent()
-        getCurriculumDetails()
+
         g_syncstatus?.setText("Synced")
     }
+
+
 
     fun sync_session_2(view: View?) {}
     fun sync_session_3(view: View?) {}
 
-    fun getCurriculum() {
+    fun getCurriculumDetail(){
+        val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_CURRICULUMDETAILS, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val Response = jsonObject.getJSONArray("response")
 
-        val url: String = SERVER_URL_CURRICULUM
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+                val l_CD_CU_ID = "CU_id"
+                val l_CD_CO_ID = "CO_id"
+                val l_CD_CO_SEQNO = "CO_SeqNo"
+                val l_CD_CO_SEMESTER = "CO_Semester"
+                val l_CD_CO_YEAR = "CO_Year"
 
 
-            override fun onResponse(response: String?) {
-                response?.let { showJSON_for_curriculum(it) }
-            }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
+                    var l_CU_id:Int?=null
+                    var l_CO_id:Int?=null
+                    var l_CO_SeqNo:Int?=null
+                    var l_CO_Semester:Int?=null
+                    var l_CO_Year:Int?=null
+
+
+                    for (i in 0 until Response.length())
+                    {
+                        val jo = Response.getJSONObject(i)
+                        l_CU_id=jo.getInt(l_CD_CU_ID)
+                        l_CO_id=jo.getInt(l_CD_CO_ID)
+                        l_CO_SeqNo=jo.getInt(l_CD_CO_SEQNO)
+                        l_CO_Semester=jo.getInt(l_CD_CO_SEMESTER)
+                        l_CO_Year=jo.getInt(l_CD_CO_YEAR)
+
+                        mydb1?.insertData_into_CurriculumDetails(l_CU_id,l_CO_id,l_CO_SeqNo,l_CO_Semester,l_CO_Year)
+                        getCurriculum(l_CU_id)
                     }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON_for_curriculum(response: String) {
-        val l_CU_ID = "CU_id"
-        val l_CU_NAME = "CU_Name"
-        val l_CU_DESC = "CU_Desc"
-        val l_CU_IMAGE = "CU_Image"
-        val l_CU_INSERTDATE = "CU_Insertdate"
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-
-            var l_CU_id: Int? = null
-            var l_CU_Name: String? = null
-            var l_CU_Desc: String? = null
-            var l_CU_Image: String? = null
-            var l_CU_InsertDate: String? = null
-
-
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-
-                l_CU_id = jo.getInt(l_CU_ID)
-                l_CU_Name = jo.getString(l_CU_NAME)
-                l_CU_Desc = jo.getString(l_CU_DESC)
-                l_CU_Image = jo.getString(l_CU_IMAGE)
-                l_CU_InsertDate = jo.getString(l_CU_INSERTDATE)
-
-                mydb1?.insertData_into_Curriculum(l_CU_id, l_CU_Name, l_CU_Desc, l_CU_Image, l_CU_InsertDate)
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
+            catch (e: JSONException)
+            {
+                e.printStackTrace()
+            }
+        }, Response.ErrorListener { Toast.makeText(this@SynchronizeData, "Connect to Internet & try again", Toast.LENGTH_LONG).show() }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                //sending the user email and password for verification to the php file
+                params["co_id"] = g_course_id!!
+                return params
+            }
         }
+        MySingleton.getInstance(this@SynchronizeData)!!.addToRequestQue(stringRequest)
     }
+
+    fun getCurriculum(cu_id: Int?){
+        val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_CURRICULUM, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val Response = jsonObject.getJSONArray("response")
+
+                val l_CU_ID = "CU_id"
+                val l_CU_NAME = "CU_Name"
+                val l_CU_DESC = "CU_Desc"
+                val l_CU_IMAGE = "CU_Image"
+                val l_CU_INSERTDATE = "CU_Insertdate"
+
+                var l_CU_id: Int? = null
+                var l_CU_Name: String? = null
+                var l_CU_Desc: String? = null
+                var l_CU_Image: String? = null
+                var l_CU_InsertDate: String? = null
+
+
+                for (i in 0 until Response.length()) {
+                    val jo = Response.getJSONObject(i)
+
+                    l_CU_id = jo.getInt(l_CU_ID)
+                    l_CU_Name = jo.getString(l_CU_NAME)
+                    l_CU_Desc = jo.getString(l_CU_DESC)
+                    l_CU_Image = jo.getString(l_CU_IMAGE)
+                    l_CU_InsertDate = jo.getString(l_CU_INSERTDATE)
+
+                    mydb1?.insertData_into_Curriculum(l_CU_id, l_CU_Name, l_CU_Desc, l_CU_Image, l_CU_InsertDate)
+
+                }
+            }
+            catch (e: JSONException)
+            {
+                e.printStackTrace()
+            }
+        }, Response.ErrorListener { Toast.makeText(this@SynchronizeData, "Connect to Internet & try again", Toast.LENGTH_LONG).show() }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                //sending the user email and password for verification to the php file
+                params["cu_id"] = cu_id.toString()
+                return params
+            }
+        }
+        MySingleton.getInstance(this@SynchronizeData)!!.addToRequestQue(stringRequest)
+    }
+
+
 
     fun getContent() {
 
@@ -165,177 +214,163 @@ class SynchronizeData : AppCompatActivity() {
     }
 
 
-    fun getConcept() {
+    fun getConcepts(){
+        val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_CONCEPT, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val Response = jsonObject.getJSONArray("response")
 
-        val url: String = SERVER_URL_CONCEPT
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
+                val l_CN_ID = "CN_id"
+                val l_CN_NAME= "CN_Name"
+                val l_CN_DESC = "CN_Desc"
+                val l_CN_DURATION = "CN_Duration"
+                val l_CN_IMAGE = "CN_Image"
+                val l_CN_INSERTDATE= "CN_Insertdate"
+                val l_CO_CN_ID="CO_id"
 
+                var l_CN_id:Int
+                var l_CN_Name:String?=null
+                var l_CN_Desc:String?=null
+                var l_CN_Duration:Int?=null
+                var l_CN_Image:String?=null
+                var l_CN_Insertdate:String?=null
+                var l_CO_CN_id:Int?=null
 
-            override fun onResponse(response: String?) {
-                response?.let { showJSON(it) }
+                for (i in 0 until Response.length()) {
+                    val jo = Response.getJSONObject(i)
+                    l_CN_id=jo.getInt(l_CN_ID)
+                    l_CN_Name=jo.getString(l_CN_NAME)
+                    l_CN_Desc=jo.getString(l_CN_DESC)
+                    l_CN_Duration=jo.getInt(l_CN_DURATION)
+                    l_CN_Image=jo.getString(l_CN_IMAGE)
+                    l_CN_Insertdate=jo.getString(l_CN_INSERTDATE)
+                    l_CO_CN_id=jo.getInt(l_CO_CN_ID)
+
+                    mydb1?.insertData_into_Concept(l_CN_id,l_CN_Name,l_CN_Desc,l_CN_Duration,l_CN_Image,l_CN_Insertdate,l_CO_CN_id)
+                    getSubConcepts(l_CN_ID)
+                }
+
             }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON(response: String)
-    {
-        val l_CN_ID = "CN_id"
-        val l_CN_NAME= "CN_Name"
-        val l_CN_DESC = "CN_Desc"
-        val l_CN_DURATION = "CN_Duration"
-        val l_CN_IMAGE = "CN_Image"
-        val l_CN_INSERTDATE= "CN_Insertdate"
-        val l_CO_CN_ID="CO_id"
-
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-            var l_CN_id:Int?=null
-            var l_CN_Name:String?=null
-            var l_CN_Desc:String?=null
-            var l_CN_Duration:Int?=null
-            var l_CN_Image:String?=null
-            var l_CN_Insertdate:String?=null
-            var l_CO_CN_id:Int?=null
-
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-                l_CN_id=jo.getInt(l_CN_ID)
-                l_CN_Name=jo.getString(l_CN_NAME)
-                l_CN_Desc=jo.getString(l_CN_DESC)
-                l_CN_Duration=jo.getInt(l_CN_DURATION)
-                l_CN_Image=jo.getString(l_CN_IMAGE)
-                l_CN_Insertdate=jo.getString(l_CN_INSERTDATE)
-                l_CO_CN_id=jo.getInt(l_CO_CN_ID)
-
-                mydb1?.insertData_into_Concept(l_CN_id,l_CN_Name,l_CN_Desc,l_CN_Duration,l_CN_Image,l_CN_Insertdate,l_CO_CN_id)
+            catch (e: JSONException)
+            {
+                e.printStackTrace()
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
-    }
-
-
-    fun getSubConcept() {
-
-        val url: String = SERVER_URL_SUBCONCEPT
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
-
-
-            override fun onResponse(response: String?) {
-                response?.let { showJSON2(it) }
-            }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON2(response: String) {
-
-        val l_SC_ID = "SC_id"
-        val l_SC_NAME= "SC_Name"
-        val l_SC_DESC = "SC_Desc"
-        val l_SC_INSERTDATE= "SC_Insertdate"
-        val l_SC_DURATION = "SC_Duration"
-        val l_CN_SC_ID="CN_id"
-        val l_CO_SC_ID="CO_id"
-
-
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-            var l_SC_id:Int?=null
-            var l_SC_Name:String?=null
-            var l_SC_Desc:String?=null
-            var l_SC_Insertdate:String?=null
-            var l_SC_Duration:Int?=null
-            var l_CN_SC_id:Int?=null
-            var l_CO_SC_id:Int?=null
-
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-                l_SC_id=jo.getInt(l_SC_ID)
-                l_SC_Name=jo.getString(l_SC_NAME)
-                l_SC_Desc=jo.getString(l_SC_DESC)
-                l_SC_Insertdate=jo.getString(l_SC_INSERTDATE)
-                l_SC_Duration=jo.getInt(l_SC_DURATION)
-                l_CN_SC_id=jo.getInt(l_CN_SC_ID)
-
-                l_CO_SC_id=jo.getInt(l_CO_SC_ID)
-
-
-                mydb1?.insertData_into_SubConcept(l_SC_id,l_SC_Name,l_SC_Desc,l_SC_Insertdate,l_SC_Duration,l_CN_SC_id,l_CO_SC_id)
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
-    }
-
-    fun getSessionPlan() {
-
-        val url: String = SERVER_URL_SESSIONPLAN
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
-
-
-            override fun onResponse(response: String?) {
-                response?.let { showJSON3(it) }
-            }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON3(response: String) {
-        val l_SP_ID = "SP_id"
-        val l_SP_NAME= "SP_Name"
-        val l_SP_DURATION = "SP_Duration"
-        val l_SP_SEQUENCE= "SP_Sequence"
-        val l_CO_SP_ID = "CO_id"
-
-
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-            var l_SP_id:Int?=null
-            var l_SP_Name:String?= null
-            var l_SP_Duration:Int?=null
-            var l_SP_Sequence:Int?=null
-            var l_CO_SP_id:Int?=null
-
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-                l_SP_id=jo.getInt(l_SP_ID)
-                l_SP_Name=jo.getString(l_SP_NAME)
-                l_SP_Duration=jo.getInt(l_SP_DURATION)
-                l_SP_Sequence=jo.getInt(l_SP_SEQUENCE)
-                l_CO_SP_id=jo.getInt(l_CO_SP_ID)
-
-                mydb1?.insertData_into_SessionPlan(l_SP_id,l_SP_Name,l_SP_Duration,l_SP_Sequence,l_CO_SP_id)
+        }, Response.ErrorListener { Toast.makeText(this@SynchronizeData, "Connect to Internet & try again", Toast.LENGTH_LONG).show() }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                //sending the user email and password for verification to the php file
+                params["co_id"] = g_course_id!!
+                return params
             }
         }
-        catch (e: JSONException) {
-            e.printStackTrace()
-        }
+        MySingleton.getInstance(this@SynchronizeData)!!.addToRequestQue(stringRequest)
     }
+
+    fun getSubConcepts(cn_id: String){
+        val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_SUBCONCEPT, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val Response = jsonObject.getJSONArray("response")
+
+                val l_SC_ID = "SC_id"
+                val l_SC_NAME= "SC_Name"
+                val l_SC_DESC = "SC_Desc"
+                val l_SC_INSERTDATE= "SC_Insertdate"
+                val l_SC_DURATION = "SC_Duration"
+                val l_CN_SC_ID="CN_id"
+                val l_CO_SC_ID="CO_id"
+
+                var l_SC_id:Int?=null
+                var l_SC_Name:String?=null
+                var l_SC_Desc:String?=null
+                var l_SC_Insertdate:String?=null
+                var l_SC_Duration:Int?=null
+                var l_CN_SC_id:Int?=null
+                var l_CO_SC_id:Int?=null
+
+                for (i in 0 until Response.length()) {
+                    val jo = Response.getJSONObject(i)
+                    l_SC_id=jo.getInt(l_SC_ID)
+                    l_SC_Name=jo.getString(l_SC_NAME)
+                    l_SC_Desc=jo.getString(l_SC_DESC)
+                    l_SC_Insertdate=jo.getString(l_SC_INSERTDATE)
+                    l_SC_Duration=jo.getInt(l_SC_DURATION)
+                    l_CN_SC_id=jo.getInt(l_CN_SC_ID)
+
+                    l_CO_SC_id=jo.getInt(l_CO_SC_ID)
+
+
+                    mydb1?.insertData_into_SubConcept(l_SC_id,l_SC_Name,l_SC_Desc,l_SC_Insertdate,l_SC_Duration,l_CN_SC_id,l_CO_SC_id)
+                }
+
+            }
+            catch (e: JSONException)
+            {
+                e.printStackTrace()
+            }
+        }, Response.ErrorListener { Toast.makeText(this@SynchronizeData, "Connect to Internet & try again", Toast.LENGTH_LONG).show() }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                //sending the user email and password for verification to the php file
+                params["co_id"] = g_course_id!!
+                params["cn_id"] = cn_id
+
+                return params
+            }
+        }
+        MySingleton.getInstance(this@SynchronizeData)!!.addToRequestQue(stringRequest)
+    }
+
+
+    fun getSessionPlans(){
+        val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_SESSIONPLAN, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val Response = jsonObject.getJSONArray("response")
+
+                val l_SP_ID = "SP_id"
+                val l_SP_NAME= "SP_Name"
+                val l_SP_DURATION = "SP_Duration"
+                val l_SP_SEQUENCE= "SP_Sequence"
+                val l_CO_SP_ID = "CO_id"
+
+
+                var l_SP_id:Int?=null
+                var l_SP_Name:String?= null
+                var l_SP_Duration:Int?=null
+                var l_SP_Sequence:Int?=null
+                var l_CO_SP_id:Int?=null
+
+                for (i in 0 until Response.length()) {
+                    val jo = Response.getJSONObject(i)
+                    l_SP_id=jo.getInt(l_SP_ID)
+                    l_SP_Name=jo.getString(l_SP_NAME)
+                    l_SP_Duration=jo.getInt(l_SP_DURATION)
+                    l_SP_Sequence=jo.getInt(l_SP_SEQUENCE)
+                    l_CO_SP_id=jo.getInt(l_CO_SP_ID)
+
+                    mydb1?.insertData_into_SessionPlan(l_SP_id,l_SP_Name,l_SP_Duration,l_SP_Sequence,l_CO_SP_id)
+                }
+
+            }
+            catch (e: JSONException)
+            {
+                e.printStackTrace()
+            }
+        }, Response.ErrorListener { Toast.makeText(this@SynchronizeData, "Connect to Internet & try again", Toast.LENGTH_LONG).show() }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                //sending the user email and password for verification to the php file
+                params["co_id"] = g_course_id!!
+                return params
+            }
+        }
+        MySingleton.getInstance(this@SynchronizeData)!!.addToRequestQue(stringRequest)
+    }
+
 
     fun getSessionSection() {
 
@@ -456,73 +491,18 @@ class SynchronizeData : AppCompatActivity() {
         }
     }
 
-    fun getCurriculumDetails() {
-
-        val url: String = SERVER_URL_CURRICULUMDETAILS
-        val stringRequest = StringRequest(url, object : Response.Listener<String?> {
-
-
-            override fun onResponse(response: String?) {
-                response?.let { showJSON8(it) }
-            }
-        },
-                object : Response.ErrorListener {
-                    override fun onErrorResponse(error: VolleyError) {
-                        Toast.makeText(this@SynchronizeData, error.message.toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
-        val requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(stringRequest)
-    }
-
-    private fun showJSON8(response: String) {
-
-        val l_CD_CU_ID = "CU_id"
-        val l_CD_CO_ID = "CO_id"
-        val l_CD_CO_SEQNO = "CO_SeqNo"
-        val l_CD_CO_SEMESTER = "CO_Semester"
-        val l_CD_CO_YEAR = "CO_Year"
-
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-            var l_CU_id:Int?=null
-            var l_CO_id:Int?=null
-            var l_CO_SeqNo:Int?=null
-            var l_CO_Semester:Int?=null
-            var l_CO_Year:Int?=null
-
-
-            for (i in 0 until result.length())
-            {
-                val jo = result.getJSONObject(i)
-                l_CU_id=jo.getInt(l_CD_CU_ID)
-                l_CO_id=jo.getInt(l_CD_CO_ID)
-                l_CO_SeqNo=jo.getInt(l_CD_CO_SEQNO)
-                l_CO_Semester=jo.getInt(l_CD_CO_SEMESTER)
-                l_CO_Year=jo.getInt(l_CD_CO_YEAR)
-
-                mydb1?.insertData_into_CurriculumDetails(l_CU_id,l_CO_id,l_CO_SeqNo,l_CO_Semester,l_CO_Year)
-
-            }
-        }
-        catch (e: JSONException)
-        {
-            e.printStackTrace()
-        }
-    }
 
     companion object
     {
         const val SERVER_URL_CONTENT = "http:/192.168.29.71/poc/getContent.php"
-        const val SERVER_URL_CONCEPT = "http:/192.168.29.71/poc/getConcept.php"
-        const val SERVER_URL_SUBCONCEPT = "http:/192.168.29.71/poc/getSubConcept.php"
-        const val SERVER_URL_SESSIONPLAN = "http:/192.168.29.71/poc/getSessionPlan.php"
+        const val SERVER_URL_CONCEPT = "http:/192.168.29.71/poc/getConcept2.php"
+        const val SERVER_URL_SUBCONCEPT = "http:/192.168.29.71/poc/getSubConcept2.php"
+        const val SERVER_URL_SESSIONPLAN = "http:/192.168.29.71/poc/getSessionPlan2.php"
         const val SERVER_URL_SESSIONSECTION = "http:/192.168.29.71/poc/getSessionSection.php"
 
         const val SERVER_URL_COURSECONTENT = "http:/192.168.29.71/poc/getCourseContent.php"
-        const val SERVER_URL_CURRICULUM = "http:/192.168.29.71/poc/getCurriculum.php"
-        const val SERVER_URL_CURRICULUMDETAILS = "http:/192.168.29.71/poc/getCurriculumDetails.php"
+        const val SERVER_URL_CURRICULUM = "http:/192.168.29.71/poc/getCurriculum2.php"
+        const val SERVER_URL_CURRICULUMDETAILS = "http:/192.168.29.71/poc/getCurriculumDetails2.php"
 
     }
 }
