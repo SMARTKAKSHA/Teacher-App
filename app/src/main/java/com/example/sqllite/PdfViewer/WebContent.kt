@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import com.example.sqllite.R
+import com.example.sqllite.WebView
+import com.example.sqllite.sqlite
 
 class WebContent : AppCompatActivity() {
     var WEBSITE: ArrayList<String>? = null
@@ -21,10 +24,9 @@ class WebContent : AppCompatActivity() {
 
         listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
             var l_content_link = WEBSITE!!.get(position)
-            var l_ct_id: String? = db.getContentId(WEBSITE!!.get(position))
             intent = Intent(this, WebView::class.java)
 
-            intent.putExtra("CT_ID", l_ct_id)
+            intent.putExtra("CT_LINK", l_content_link)
 
             startActivity(intent)
         }

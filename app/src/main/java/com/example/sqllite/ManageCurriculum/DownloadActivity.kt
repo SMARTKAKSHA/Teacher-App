@@ -93,7 +93,7 @@ Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show
                file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path+File.separator+filename)
 
 
-                db?.updateContentTable("/Internal storage/Download/"+filename,l_content_id.toString(),"true")
+                db?.updateContentTable("/Internal storage/Download/"+filename,l_content_id.toString())
             }
             else{
                 var intent= Intent(Intent.ACTION_VIEW,Download_Uri)
