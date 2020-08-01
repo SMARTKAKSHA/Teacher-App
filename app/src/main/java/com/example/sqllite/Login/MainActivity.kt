@@ -32,7 +32,11 @@ class MainActivity : AppCompatActivity() {
 
     val g_JSON_ARRAY = "result"
     private val PREFS_NAME = "PrefsFile"
+    private val PREFS_NAME2 = "CohortSync"
+
     private var preferences:SharedPreferences?=null
+    private var preferences2:SharedPreferences?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -46,7 +50,9 @@ class MainActivity : AppCompatActivity() {
         remember= findViewById<CheckBox>(R.id.remeberme)
 //preferences
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-getPreferencesData()
+        preferences2 = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
+
+        getPreferencesData()
 
     }
 
@@ -67,11 +73,14 @@ getPreferencesData()
 
 
         }
+    var sp2 = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
 
-    if(sp.contains("pref_sync_cohort_&_course")){
+    var check:Boolean = sp2.getBoolean("pref_sync_cohort_&_course",false)
+
+    if(check==true){
                 Toast.makeText(this,"Welcome User",Toast.LENGTH_SHORT).show()
             }
-    else{
+    else if(check==false){
         getCohortData()
         getCourseData()
     }
@@ -139,7 +148,9 @@ getPreferencesData()
             }
             MySingleton.getInstance(this@MainActivity)!!.addToRequestQue(stringRequest)
         }
-
+        val editor = preferences2!!.edit()
+        editor.putBoolean("pref_sync_cohort_&_course",true)
+        editor.apply()
     }
 
 
