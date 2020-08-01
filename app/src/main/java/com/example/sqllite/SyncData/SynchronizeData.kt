@@ -1,5 +1,7 @@
 package com.example.sqllite
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -23,7 +25,9 @@ class SynchronizeData : AppCompatActivity() {
     var g_syncstatus:TextView? = null
     val g_JSON_ARRAY = "result"
     var g_course_id: String?= null
-
+    var check:Boolean?=null
+    private var preferences: SharedPreferences?=null
+    private val PREFS_NAME = "File"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,19 +38,39 @@ class SynchronizeData : AppCompatActivity() {
 
         val intent = intent
         g_course_id = intent.getStringExtra("co_id")
+        preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        var sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
+        check = sp.getBoolean("content_sync",false)
     }
     //onclick function for syncing the session
     fun sync_session_1(view: View?)
     {
-        getCurriculumDetail()
-        getSessionPlans()
-        getSessionSection()
-        getConcepts()
-        getContent()
-        getCourseContent()
 
-        g_syncstatus?.setText("Synced")
+
+        if(check==true) {
+            getCurriculumDetail()
+            getSessionPlans()
+            getConcepts()
+
+
+        }
+     else if(check==false){
+            getCurriculumDetail()
+            getSessionPlans()
+            getSessionSection()
+            getConcepts()
+            getContent()
+            getCourseContent()
+            val editor = preferences!!.edit()
+            editor.putBoolean("content_sync", true)
+
+            editor.apply()
+
+            g_syncstatus?.setText("Synced")
+        }
+
+
     }
 
 
@@ -183,35 +207,40 @@ class SynchronizeData : AppCompatActivity() {
         val l_CT_DOWNLOADLINK="CT_DownloadLink"
         val l_CT_DOWNLOADSTATUS="CT_DownloadStatus"
 
-        try {
-            val jsonObject = JSONObject(response)
-            val result = jsonObject.getJSONArray(g_JSON_ARRAY)
-            var l_CT_id:Int?=null
-            var l_CT_Name:String?= null
-            var l_CT_Type:String?=null
-            var l_CT_ContentLink:String?=null
-            var l_CT_Duration:Int?=null
-            var l_CT_InsertDate:String?= null
-            var l_CT_DownloadLink:String?= null
-            var l_CT_DownloadStatus:String?= null
 
-            for (i in 0 until result.length()) {
-                val jo = result.getJSONObject(i)
-                l_CT_id=jo.getInt(l_CT_ID)
-                l_CT_Name=jo.getString(l_CT_NAME)
-                l_CT_Type=jo.getString(l_CT_TYPE)
-                l_CT_ContentLink=jo.getString(l_CT_CONTENTLINK)
-                l_CT_Duration=jo.getInt(l_CT_DURATION)
-                l_CT_InsertDate=jo.getString(l_CT_INSERTDATE)
-                l_CT_DownloadLink=jo.getString(l_CT_DOWNLOADLINK)
-                l_CT_DownloadStatus=jo.getString(l_CT_DOWNLOADSTATUS)
-                mydb1?.insertData_into_Content(l_CT_id,l_CT_Name,l_CT_Type,l_CT_ContentLink,l_CT_Duration,l_CT_InsertDate,l_CT_DownloadLink,l_CT_DownloadStatus)
-            }
+    try {
+        val jsonObject = JSONObject(response)
+        val result = jsonObject.getJSONArray(g_JSON_ARRAY)
+        var l_CT_id: Int? = null
+        var l_CT_Name: String? = null
+        var l_CT_Type: String? = null
+        var l_CT_ContentLink: String? = null
+        var l_CT_Duration: Int? = null
+        var l_CT_InsertDate: String? = null
+        var l_CT_DownloadLink: String? = null
+        var l_CT_DownloadStatus: String? = null
+
+        for (i in 0 until result.length()) {
+            val jo = result.getJSONObject(i)
+            l_CT_id = jo.getInt(l_CT_ID)
+            l_CT_Name = jo.getString(l_CT_NAME)
+            l_CT_Type = jo.getString(l_CT_TYPE)
+            l_CT_ContentLink = jo.getString(l_CT_CONTENTLINK)
+            l_CT_Duration = jo.getInt(l_CT_DURATION)
+            l_CT_InsertDate = jo.getString(l_CT_INSERTDATE)
+            l_CT_DownloadLink = jo.getString(l_CT_DOWNLOADLINK)
+            l_CT_DownloadStatus = jo.getString(l_CT_DOWNLOADSTATUS)
+            mydb1?.insertData_into_Content(l_CT_id, l_CT_Name, l_CT_Type, l_CT_ContentLink, l_CT_Duration, l_CT_InsertDate, l_CT_DownloadLink, l_CT_DownloadStatus)
+
+
         }
-        catch (e: JSONException) {
-            e.printStackTrace()
-        }
+    } catch (e: JSONException) {
+        e.printStackTrace()
     }
+
+        }
+
+
 
 
     fun getConcepts(){
