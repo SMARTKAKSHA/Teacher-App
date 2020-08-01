@@ -23,10 +23,10 @@ class PdfContent : AppCompatActivity() {
 
         listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
             var l_content_link = PDF!!.get(position)
-            var l_ct_id: String? = db.getContentId(PDF!!.get(position))
+         //   var l_ct_id: String? = db.getContentId(PDF!!.get(position))
             intent = Intent(this, PdfViewer::class.java)
 
-            intent.putExtra("CT_ID", l_ct_id)
+            intent.putExtra("CT_LINK", l_content_link)
 
             startActivity(intent)
         }

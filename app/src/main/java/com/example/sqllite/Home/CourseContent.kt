@@ -7,9 +7,6 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 
 class CourseContent : AppCompatActivity() {
-    var g_course_id: String? = null
-    var g_concept_id: String? = null
-    var g_subconcept_id: String? = null
     var alist: ArrayList<String>? = null
     var WEBSITE=ArrayList<String>(10)
     var PDF=ArrayList<String>(10)
@@ -45,7 +42,7 @@ class CourseContent : AppCompatActivity() {
             var link= l_content.get(i)
             var l_content_type: String? = db.getContentType(link)
         if (l_content_type == "VIDEO") {
-                VIDEO!!.add(i,link)
+                VIDEO!!.add(link)
             }
             else if (l_content_type == "WEBSITE") {
                 WEBSITE!!.add(link)

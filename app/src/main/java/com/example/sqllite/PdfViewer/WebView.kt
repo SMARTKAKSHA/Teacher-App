@@ -15,8 +15,6 @@ import android.widget.Toast
 
 class WebView : AppCompatActivity() {
     var g_link: String? = null
-    var g_content_id: String? = null
-    var g_mydb3: sqlite? = null
     var webView: WebView?=null
     var MAX_PROGRESS= 100
     var Progressbar: ProgressBar?=null
@@ -28,15 +26,8 @@ class WebView : AppCompatActivity() {
 
         Progressbar!!.setVisibility(View.VISIBLE)//displa the progressbar
 
-        g_content_id = intent.getStringExtra("CT_ID")
-        g_mydb3 = sqlite(this)
+        g_link = intent.getStringExtra("CT_LINK")
 
-        val cursor1: Cursor = g_mydb3!!.getlink(g_content_id!!)
-        val l_stringBuilder1 = StringBuilder()
-        while (cursor1.moveToNext()) {
-            l_stringBuilder1.append(" " + cursor1.getString(0))
-            g_link = l_stringBuilder1.toString()
-            Toast.makeText(this, g_link, Toast.LENGTH_SHORT).show()}
 // Get the web view settings instance
         val settings = webView!!.settings;
 

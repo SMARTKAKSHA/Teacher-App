@@ -18,8 +18,6 @@ import es.voghdev.pdfviewpager.library.util.FileUtil
 
 class PdfViewer : AppCompatActivity(), DownloadFile.Listener {
     var g_link: String? = null
-    var g_content_id: String? = null
-    var g_mydb3: sqlite? = null
 
     var root: LinearLayout? = null
     var remotePDFViewPager: RemotePDFViewPager? = null
@@ -31,15 +29,9 @@ class PdfViewer : AppCompatActivity(), DownloadFile.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_viewer)
 
-        g_content_id = intent.getStringExtra("CT_ID")
-        g_mydb3 = sqlite(this)
+        g_link = intent.getStringExtra("CT_LINK")
 
-        val cursor1: Cursor = g_mydb3!!.getlink(g_content_id!!)
-        val l_stringBuilder1 = StringBuilder()
-        while (cursor1.moveToNext()) {
-            l_stringBuilder1.append(" " + cursor1.getString(0))
-            g_link = l_stringBuilder1.toString()
-            Toast.makeText(this, g_link, Toast.LENGTH_SHORT).show()}
+
 
         root = findViewById<View>(R.id.remote_pdf_root) as LinearLayout
 
