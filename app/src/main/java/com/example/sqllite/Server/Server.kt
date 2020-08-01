@@ -1,35 +1,25 @@
 package com.example.sqllite
 
-import android.annotation.SuppressLint
-import android.content.Context
+import android.R
 import android.content.Intent
-import android.database.Cursor
-import android.net.wifi.WifiManager
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_server.*
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.net.InetAddress
+import androidx.core.content.ContextCompat
+import java.io.*
 import java.net.ServerSocket
 import java.net.Socket
-import java.net.UnknownHostException
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import java.text.SimpleDateFormat
+import java.util.*
 
-/*Created By Divyanshu Gupta
-This Activity is Created for hosting the session through this activity the connection b/w teacher and studemt will be established(classroom session)
- */
-@SuppressLint("SetTextI18n")
 class Server : AppCompatActivity() {
+
     var  g_course_id: String?= null
     var  g_curriculum_id: String?= null
     var counter = 0
@@ -37,21 +27,25 @@ class Server : AppCompatActivity() {
     var g_subconcept_id: String?= null
     var g_session_name: String?= null
     var g_session_id: String?= null
-
-    var serverSocket: ServerSocket? = null
-    var thread: Thread? = null
-    var tvIP: TextView? = null
     var g_SP_NAME: TextView? = null
 
-    var tvPort: TextView? = null
-    var tvMessages: TextView? = null
-    var etMessage: EditText? = null
-    var btnSend: Button? = null
-    var message: String? = null
+    //initializes all the private properties
+    //For any server the ServerSocket and the Socket corresponding to the temp client
+    // to be activated must be initialized
+    private var serverSocket: ServerSocket? = null
+    private var tempClientSocket: Socket?=null
 
+    //here it sets the Thread initially to null
+    var serverThread: Thread? = null
+
+    //the msgList is initialized corresponding to the Linearlayout
+    private var msgList: LinearLayout? = null
+    private var handler: Handler? = null
+    private var greenColor = 0
+    private var edMessage: EditText? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_server)
+        setContentView(com.example.sqllite.R.layout.activity_server)
 
         val intent = intent
 
@@ -65,114 +59,177 @@ class Server : AppCompatActivity() {
         g_curriculum_id = intent.getStringExtra("cu_id")
 
 
+        //This sets the initial content view that would be displayed
+        title = "Server-Side Endpoint"
 
-        tvIP = findViewById(R.id.tvIP)
-        tvPort = findViewById(R.id.tvPort)
-        tvMessages = findViewById(R.id.tvMessages)
-        etMessage = findViewById(R.id.etMessage)
-        btnSend = findViewById(R.id.btnSend)
-        g_SP_NAME = findViewById(R.id.SP_name)
+        //initializes the identifier greenColor to be used anywhere within this file
+        greenColor = ContextCompat.getColor(this,com.example.sqllite.R.color.green)
 
-        startTimeCounter()
-        g_SP_NAME!!.text = g_session_name+" "+ g_session_id+"cu_id="+g_curriculum_id
+        //initializes a new handler for message queueing
+        handler = Handler()
+        msgList = findViewById(com.example.sqllite.R.id.msgList)
+        edMessage = findViewById(com.example.sqllite.R.id.edMessage)
+    }
+
+    //method to implement the different Textviews widget and display the message on
+    //the Scrollview LinearLayout...
+    fun textView(message: String?, color: Int, value: Boolean): TextView {
+
+        //it checks if the message is empty then displays empty message
+        var message = message
+        if (null == message || message.trim { it <= ' ' }.isEmpty()) {
+            message = "<Empty Message>"
+        }
+        val tv = TextView(this)
+        tv.setTextColor(color)
+        tv.text = "$message [$time]"
+        tv.textSize = 20f
+        tv.setPadding(0, 5, 0, 0)
+        if (value) {
+            tv.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
+        }
+        return tv
+    }
+
+    //showMessage method to handle posting of mesage to the textView
+    fun showMessage(message: String?, color: Int, value: Boolean) {
+        handler!!.post { msgList!!.addView(textView(message, color, value)) }
+    }
+
+    //onClick method to handle clicking events whether to start up the  server or
+    //send a message to the client
+    fun onClick(view: View) {
+        if (view.id == com.example.sqllite.R.id.start_server) {
+            msgList!!.removeAllViews()
+            showMessage(g_session_name, Color.BLACK, false)
+
+            //this initiates the serverthread defined later and starts the thread
+            serverThread = Thread(ServerThread())
+            serverThread!!.start()
+            startTimeCounter()
+            view.visibility = View.GONE
+            return
+        }
+        if (view.id == com.example.sqllite.R.id.send_data) {
+            val msg = edMessage!!.text.toString().trim { it <= ' ' }
+            showMessage("Teacher : $msg", Color.BLUE, false)
+            if (msg.length > 0) {
+                sendMessage(msg)
+            }
+            edMessage!!.setText("")
+            return
+        }
+    }
+
+    //method implemented to send message to the client
+    private fun sendMessage(message: String) {
         try {
-            SERVER_IP = localIpAddress
-        } catch (e: UnknownHostException) {
+            if (null != tempClientSocket) {
+                Thread(Runnable {
+                    var out: PrintWriter? = null
+                    try {
+                        out = PrintWriter(BufferedWriter(
+                                OutputStreamWriter(tempClientSocket!!.getOutputStream())),
+                                true)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                    out!!.println(message)
+                }).start()
+            }
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-        thread = Thread(Thread1())
-        thread!!.start()
-        btnSend?.setOnClickListener(View.OnClickListener {
-            message = etMessage?.getText().toString().trim { it <= ' ' }
-            if (message!!.isEmpty()) {
-                Toast.makeText(this,"YOU CAN'T SEND EMPTY MESSAGES",Toast.LENGTH_SHORT).show()
-            }
-            else{Thread(Thread3(message!!)).start()}
-        })
     }
 
-    @get:Throws(UnknownHostException::class)
-    private val localIpAddress: String
-        private get() {
-            val wifiManager = (applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
-            val wifiInfo = wifiManager.connectionInfo
-            val ipInt = wifiInfo.ipAddress
-            return InetAddress.getByAddress(
-                    ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(ipInt).array())
-                    .hostAddress
-        }
-
-    private var output: PrintWriter? = null
-    private var input: BufferedReader? = null
-
-    internal inner class Thread1 : Runnable {
+    /* serverthread method implemented here to activate the server network */
+    internal inner class ServerThread : Runnable {
         override fun run() {
-            val socket: Socket
+            var socket: Socket?
             try {
                 serverSocket = ServerSocket(SERVER_PORT)
-                runOnUiThread {
-                    tvConnectionStatus!!.text = "Not connected"
-                    tvIP!!.text = "IP: $SERVER_IP"
-                    tvPort!!.text = "Port: $SERVER_PORT"
-                }
-                try {
-                    socket = serverSocket!!.accept()
 
-                    output = PrintWriter(socket.getOutputStream())
-                    input = BufferedReader(InputStreamReader(socket.getInputStream()))
-                    runOnUiThread { tvConnectionStatus!!.text = "Connected\n" }
-                    Thread(Thread2()).start()
-                    val intent = Intent(this@Server, CourseContent::class.java)
-                    intent.putExtra("co_id", g_course_id)
-                    intent.putExtra("sc_id", g_subconcept_id)
-                    intent.putExtra("cn_id", g_concept_id)
-                    startActivity(intent)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+                //deactivates the visibility of the button
+//               Button button = (Button) findViewById(R.id.start_server);
+//               button.setVisibility(View.GONE);
             } catch (e: IOException) {
                 e.printStackTrace()
+                showMessage("Error Starting Server : " + e.message, Color.RED, false)
             }
-        }
-    }
 
-    private inner class Thread2 : Runnable {
-        override fun run() {
-            while (true) {
-                try {
-                    val message = input!!.readLine()
-                    if (message != null) {
-                        runOnUiThread { tvMessages!!.append("client:$message\n") }
-                    } else {
-                        thread = Thread(Thread1())
-                        thread!!.start()
-                        return
+            //communicates to client and displays error if communication fails
+            if (null != serverSocket) {
+                while (!Thread.currentThread().isInterrupted) {
+                    try {
+                        socket = serverSocket!!.accept()
+                        val commThread = CommunicationThread(socket)
+                        Thread(commThread).start()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        showMessage("Error Communicating to Client :" + e.message, Color.RED, false)
                     }
-                } catch (e: IOException) {
-                    e.printStackTrace()
                 }
             }
         }
     }
 
-    internal inner class Thread3( val message: String) : Runnable {
+    /* communicationThread class that implements the runnable class to communicate with the client */
+    internal inner class CommunicationThread(private val clientSocket: Socket) : Runnable {
+        private var input: BufferedReader? = null
         override fun run() {
-            output!!.write(g_curriculum_id+"/"+g_course_id+"/"+g_concept_id+"/"+g_subconcept_id+"/"+g_session_id)
-            output!!.write(message)
-            output!!.flush()
-            runOnUiThread {
-                tvMessages!!.append("server: $message\n")
-                etMessage!!.setText("")
+            while (!Thread.currentThread().isInterrupted) {
+                try {
+
+                    //checks to see if the client is still connected and displays disconnected if disconnected
+                    var read = input!!.readLine()
+                    if (null == read || "Disconnect".contentEquals(read)) {
+                        Thread.interrupted()
+                        read = "Offline...."
+                        showMessage("Client : $read", greenColor, true)
+                        break
+                    }
+                    showMessage("Client : $read", greenColor, true)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
             }
         }
 
+        init {
+            tempClientSocket = clientSocket
+            try {
+                input = BufferedReader(InputStreamReader(clientSocket.getInputStream()))
+            } catch (e: IOException) {
+                e.printStackTrace()
+                showMessage("Error Connecting to Client!!", Color.RED, false)
+            }
+            showMessage("Connected to Client!!", greenColor, true)
+            sendMessage(g_curriculum_id+"/"+g_course_id+"/"+g_concept_id+"/"+g_subconcept_id+"/"+g_session_id+"/"+g_session_name)
+        }
+    }
+
+    //getTime method implemented to format the date into H:m:s
+    val time: String
+        get() {
+            val sdf = SimpleDateFormat("HH:mm:ss")
+            return sdf.format(Date())
+        }
+
+    //personally described onDestroy method to disconnect from the network on destroy of the activity
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != serverThread) {
+            sendMessage("Disconnect")
+            serverThread!!.interrupt()
+            serverThread = null
+        }
     }
 
     fun startTimeCounter() {
-        val countTime: TextView = findViewById(R.id.countTime)
+        val countTime: TextView = findViewById(com.example.sqllite.R.id.countTime)
         object : CountDownTimer(50000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                countTime.text = counter.toString()
+                countTime.text = g_session_name+" Starts in "+counter.toString()
                 counter++
             }
             override fun onFinish() {
@@ -185,8 +242,16 @@ class Server : AppCompatActivity() {
             }
         }.start()
     }
+
+    fun Start_Session(view: View?){
+        val intent = Intent(this@Server, CourseContent::class.java)
+        intent.putExtra("co_id", g_course_id)
+        intent.putExtra("sc_id", g_subconcept_id)
+        intent.putExtra("cn_id", g_concept_id)
+        startActivity(intent)
+    }
     companion object {
-        var SERVER_IP = ""
-        const val SERVER_PORT = 8080
+        //the SERVER_PORT is initialized which must correspond to the port of the client
+        const val SERVER_PORT = 5050
     }
 }
