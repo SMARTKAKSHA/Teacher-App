@@ -40,7 +40,7 @@ class StudentInfo : AppCompatActivity() {
         fetchDetails()
     }
 
-//fetchDetails() function fetch details of student from server
+//fetchDetails() function fetch details of student from server__
     fun fetchDetails() {
 
 
