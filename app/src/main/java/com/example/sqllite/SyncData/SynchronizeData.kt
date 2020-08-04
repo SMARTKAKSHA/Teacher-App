@@ -204,8 +204,7 @@ class SynchronizeData : AppCompatActivity() {
         val l_CT_CONTENTLINK= "CT_ContentLink"
         val l_CT_DURATION = "CT_Duration"
         val l_CT_INSERTDATE= "CT_InsertDate"
-        val l_CT_DOWNLOADLINK="CT_DownloadLink"
-        val l_CT_DOWNLOADSTATUS="CT_DownloadStatus"
+
 
 
     try {
@@ -217,8 +216,7 @@ class SynchronizeData : AppCompatActivity() {
         var l_CT_ContentLink: String? = null
         var l_CT_Duration: Int? = null
         var l_CT_InsertDate: String? = null
-        var l_CT_DownloadLink: String? = null
-        var l_CT_DownloadStatus: String? = null
+
 
         for (i in 0 until result.length()) {
             val jo = result.getJSONObject(i)
@@ -228,9 +226,8 @@ class SynchronizeData : AppCompatActivity() {
             l_CT_ContentLink = jo.getString(l_CT_CONTENTLINK)
             l_CT_Duration = jo.getInt(l_CT_DURATION)
             l_CT_InsertDate = jo.getString(l_CT_INSERTDATE)
-            l_CT_DownloadLink = jo.getString(l_CT_DOWNLOADLINK)
-            l_CT_DownloadStatus = jo.getString(l_CT_DOWNLOADSTATUS)
-            mydb1?.insertData_into_Content(l_CT_id, l_CT_Name, l_CT_Type, l_CT_ContentLink, l_CT_Duration, l_CT_InsertDate, l_CT_DownloadLink, l_CT_DownloadStatus)
+
+            mydb1?.insertData_into_Content(l_CT_id, l_CT_Name, l_CT_Type, l_CT_ContentLink, l_CT_Duration, l_CT_InsertDate)
 
 
         }
