@@ -117,7 +117,7 @@ class sqlite(context: Context?) : SQLiteOpenHelper(context, sql_DATABASE_NAME, n
     }
 
     //function for inserting data into CONTENT  Table
-    fun insertData_into_Content(ct_id : Int?, ct_name: String?, ct_type : String?, ct_content_link : String?, ct_duration : Int?, ct_insertdate : String?,ct_downloadlink: String?,ct_downloadstatus: String?): Boolean {
+    fun insertData_into_Content(ct_id : Int?, ct_name: String?, ct_type : String?, ct_content_link : String?, ct_duration : Int?, ct_insertdate : String?): Boolean {
         val sql_db1 = this.writableDatabase
         val l_contentValues = ContentValues()
         l_contentValues.put(sql_CT_id,  ct_id)
@@ -584,8 +584,7 @@ fun getlink(ct_id: String): Cursor {
 
     fun updateContentTable(CT_DownloadLink: String?, CT_ID: String){
         val db = this.readableDatabase
-        db.execSQL("UPDATE "+ sql_content+" SET $sql_CT_ContentLink = "+"'"+CT_DownloadLink+"' "+ "WHERE CT_ID = "+"'"+CT_ID+"'");
-
+        db.execSQL("UPDATE "+ sql_content+" SET $sql_CT_ContentLink = "+"'"+CT_DownloadLink+"' "+ "WHERE CT_ID = "+"'"+CT_ID+"'")
         }
 
 

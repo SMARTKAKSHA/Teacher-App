@@ -33,15 +33,21 @@ class CourseContent : AppCompatActivity() {
         alist!!.add("AUDIO")
         alist!!.add("WEBSITE")
 
+      /*  var l_videocontent: ArrayList<String>
+        l_videocontent = db.fetchVideoContent(l_course_ID, l_concept_ID, l_subconcept_ID)
 
+        for (i in 0 until l_videocontent.size) {
+            var link = l_videocontent.get(i)
 
-
+            VIDEO!!.add(i,link)
+        }
+*/
 
         var size= l_content.size
         for (i in 0 until size) {
             var link= l_content.get(i)
             var l_content_type: String? = db.getContentType(link)
-        if (l_content_type == "VIDEO") {
+       if (l_content_type == "VIDEO") {
                 VIDEO!!.add(link)
             }
             else if (l_content_type == "WEBSITE") {
