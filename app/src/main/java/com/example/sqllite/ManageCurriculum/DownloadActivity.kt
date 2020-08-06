@@ -90,10 +90,10 @@ class DownloadActivity : AppCompatActivity() {
                 refid = manager.enqueue(request)
                 list.add(refid);
 Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
-               file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path+File.separator+filename)
+               file = File(Environment.getExternalStorageDirectory().absolutePath+"/Download/",filename)
 
 
-                db?.updateContentTable("/Internal storage/Download/"+filename,l_content_id.toString())
+                db?.updateContentTable(file.toString(),l_content_id.toString())
             }
             else{
                 var intent= Intent(Intent.ACTION_VIEW,Download_Uri)
