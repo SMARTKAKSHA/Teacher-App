@@ -69,6 +69,14 @@ class Server : AppCompatActivity() {
         handler = Handler()
         msgList = findViewById(com.example.sqllite.R.id.msgList)
         edMessage = findViewById(com.example.sqllite.R.id.edMessage)
+
+        msgList!!.removeAllViews()
+        showMessage(g_session_name, Color.BLACK, false)
+
+        //this initiates the serverthread defined later and starts the thread
+        serverThread = Thread(ServerThread())
+        serverThread!!.start()
+        startTimeCounter()
     }
 
     //method to implement the different Textviews widget and display the message on
@@ -99,17 +107,7 @@ class Server : AppCompatActivity() {
     //onClick method to handle clicking events whether to start up the  server or
     //send a message to the client
     fun onClick(view: View) {
-        if (view.id == com.example.sqllite.R.id.start_server) {
-            msgList!!.removeAllViews()
-            showMessage(g_session_name, Color.BLACK, false)
 
-            //this initiates the serverthread defined later and starts the thread
-            serverThread = Thread(ServerThread())
-            serverThread!!.start()
-            startTimeCounter()
-            view.visibility = View.GONE
-            return
-        }
         if (view.id == com.example.sqllite.R.id.send_data) {
             val msg = edMessage!!.text.toString().trim { it <= ' ' }
             showMessage("Teacher : $msg", Color.BLUE, false)
@@ -227,7 +225,7 @@ class Server : AppCompatActivity() {
 
     fun startTimeCounter() {
         val countTime: TextView = findViewById(com.example.sqllite.R.id.countTime)
-        object : CountDownTimer(50000, 1000) {
+        object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 countTime.text = g_session_name+" Starts in "+counter.toString()
                 counter++
@@ -244,6 +242,7 @@ class Server : AppCompatActivity() {
     }
 
     fun Start_Session(view: View?){
+
         val intent = Intent(this@Server, CourseContent::class.java)
         intent.putExtra("co_id", g_course_id)
         intent.putExtra("sc_id", g_subconcept_id)

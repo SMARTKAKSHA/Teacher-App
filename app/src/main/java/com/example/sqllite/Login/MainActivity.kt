@@ -1,9 +1,12 @@
 package com.example.sqllite
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
@@ -11,6 +14,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -51,12 +56,39 @@ class MainActivity : AppCompatActivity() {
 //preferences
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         preferences2 = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
-
+isReadStoragePermissionGranted()
         getPreferencesData()
 
     }
 
-//setting the rememberd username and password
+    fun isReadStoragePermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                true
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 3)
+                false
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            true
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            3 -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                }
+            }
+        }
+    }
+
+
+    //setting the rememberd username and password
     private fun getPreferencesData() {
         var sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         if(sp.contains("pref_username")) {
