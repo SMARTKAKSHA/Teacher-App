@@ -8,3 +8,4 @@ SMARTKAKSHA APP
   1) Take Online Lectures
   2) Manage Currciulum
   3) View Student Performance
+  4) Attendance
