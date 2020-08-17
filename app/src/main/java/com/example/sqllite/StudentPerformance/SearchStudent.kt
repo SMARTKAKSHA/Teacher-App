@@ -133,7 +133,7 @@ class SearchStudent : AppCompatActivity() {
 
 
     companion object {
-        const val SERVER_URL_STUDENT = "http://192.168.29.71/poc/getStudentDetails.php"
+        const val SERVER_URL_STUDENT = "http://192.168.43.91/android_db/getStudentDetails.php"
 
 
     }

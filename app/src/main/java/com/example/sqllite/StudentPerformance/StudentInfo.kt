@@ -8,9 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+
+import com.example.sqllite.StudentPerformance.MyListAdapter
+import kotlinx.android.synthetic.main.activity_student_info.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
+
 /*
 Created by Amrit and Divyanshu
  */
@@ -22,6 +27,12 @@ class StudentInfo : AppCompatActivity() {
     var g_student_dob: TextView? = null
     var g_student_add: TextView? = null
     var g_student_id: TextView? = null
+    var g_ST_id:String?=null
+    var g_CO_id:String?=null
+    var g_CH_id:String?=null
+    var g_Assesment_Name:ArrayList<String> = arrayListOf()
+    var g_Assesment_Result:ArrayList<String> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_info)
@@ -38,13 +49,23 @@ class StudentInfo : AppCompatActivity() {
         g_student_add = findViewById(R.id.add_textview)
         g_student_id = findViewById(R.id.studentId_textView)
         fetchDetails()
+        fetchResult()
+        val myListAdapter = MyListAdapter(this,g_Assesment_Name,g_Assesment_Result)
+
+        listView.adapter = myListAdapter
+
+        listView.setOnItemClickListener(){adapterView, view, position, id ->
+            val itemAtPos = adapterView.getItemAtPosition(position)
+            val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+            Toast.makeText(this, "Click on item at $itemAtPos its item id $itemIdAtPos", Toast.LENGTH_LONG).show()
+        }
     }
 
 //fetchDetails() function fetch details of student from server__
     fun fetchDetails() {
 
 
-        val SERVER_URL_STUDENT = "http://192.168.29.71/poc/getSelectedStudentDetails.php"
+    var SERVER_URL_STUDENT = "http://192.168.43.91/android_db/getSelectedStudentDetails.php"
 
         val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_STUDENT, Response.Listener { response ->
             try {
@@ -78,6 +99,7 @@ class StudentInfo : AppCompatActivity() {
                     g_student_add?.setText(l_ST_Address)
                     g_student_dob?.setText(l_ST_Dob)
                     g_student_id?.setText(l_ST_Id.toString())
+                    g_ST_id = l_ST_ID.toString()
 
 
                 }
@@ -89,7 +111,7 @@ class StudentInfo : AppCompatActivity() {
             override fun getParams(): MutableMap<String, String>? {
                 val params: MutableMap<String, String> = HashMap()
                 var l_studentID: Int = intent.getIntExtra("ST_ID", 1)
-                //sending the user email and password for verification to the php file
+                //sending the Student ID for fetching student details from server
                 params["ST_ID"] = l_studentID.toString()
 
                 return params
@@ -98,5 +120,119 @@ class StudentInfo : AppCompatActivity() {
         MySingleton.getInstance(this@StudentInfo)!!.addToRequestQue(stringRequest)
     }
 
+
+
+    fun fetchResult() {
+
+
+      val SERVER_URL_RESULT = "http://192.168.43.91/android_db/getStudentResult.php"
+
+        val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_RESULT, Response.Listener { response ->
+            try {
+
+                val l_AM_NAME = "AM_Name"
+                val l_AR_RESULT = "AR_Result"
+
+
+                val jsonObject = JSONObject(response)
+                val result = jsonObject.getJSONArray("result")
+                var l_AM_Name: String? = null
+                var l_AR_Result:Int?=null
+
+                for (i in 0 until result.length()) {
+                    val jo = result.getJSONObject(i)
+                    l_AM_Name = jo.getString(l_AM_NAME)
+                    l_AR_Result = jo.getInt(l_AR_RESULT)
+                    g_Assesment_Name.add(l_AM_Name)
+                    g_Assesment_Result.add(l_AR_Result.toString())
+
+
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, Response.ErrorListener { Toast.makeText(this@StudentInfo, "Connect to Internet & try again", Toast.LENGTH_LONG).show() }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): MutableMap<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                var l_studentID: Int = intent.getIntExtra("ST_ID", 1)
+                //sending the Student ID, Course id, Cohort id for fetching student result details from server
+                params["ST_ID"] = l_studentID.toString()
+               // params["CO_ID"] ="1"
+               // params["CH_ID"] ="1"
+
+                return params
+            }
+        }
+        MySingleton.getInstance(this@StudentInfo)!!.addToRequestQue(stringRequest)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    val language = arrayOf<String>("C","C++","Java",".Net","Kotlin","Ruby","Rails","Python","Java Script","Php","Ajax","Perl","Hadoop")
+    val description = arrayOf<String>(
+            "10/20","10/20","10/20","10/20","10/20","10/20","10/20","10/20","10/20","10/20","10/20","10/20","10/20"
+
+    )
 
 }

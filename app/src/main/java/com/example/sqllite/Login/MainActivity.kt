@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
     //onclick function for logging in the user and verifing the user details
     fun login_main(view: View?)
     {
+       
         val l_email_user = g_email!!.text.toString()
         val l_password_user = g_password!!.text.toString()
         if (checkNetworkConnection())//checking whether app is connected to internet or not(if connected it will return true and hence the code below will run)
