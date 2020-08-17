@@ -3,6 +3,7 @@
 package com.example.sqllite
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -149,9 +150,13 @@ class ExoPlayer : AppCompatActivity() {
 
 
 
-    fun pause(view: View?) {}//onclick function for  pausing the session
     fun pop(view: View?) {}//onclick function for  starting popup quiz
-    fun stop(view: View?) {}//onclick function for  stopping the session
+    fun stop(view: View?) {
+
+        intent = Intent(this,Server::class.java)
+
+        startActivity(intent)
+    }//onclick function for  stopping the session
 
 
 }

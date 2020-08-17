@@ -8,7 +8,7 @@ import android.widget.ListView
 import android.widget.Toast
 
 class PdfContent : AppCompatActivity() {
-    var PDF: ArrayList<String>? = null
+    var g_PDF: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,12 +17,12 @@ class PdfContent : AppCompatActivity() {
         var db = sqlite(this)
 
         var intent = intent
-       PDF= intent.getStringArrayListExtra("pdf")
-        var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, PDF!!)
+       g_PDF= intent.getStringArrayListExtra("pdf")
+        var l_arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, g_PDF!!)
         listView.adapter = l_arrayAdapter
 
         listView.setOnItemClickListener { adapterView, view, position: Int, id: Long ->
-            var l_content_link = PDF!!.get(position)
+            var l_content_link = g_PDF!!.get(position)
          //   var l_ct_id: String? = db.getContentId(PDF!!.get(position))
             intent = Intent(this, PdfViewer::class.java)
 

@@ -1,5 +1,7 @@
 package com.example.sqllite
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -65,6 +67,12 @@ class SessionSelect : AppCompatActivity() {
     fun start_session2(view: View?)
     {
         val intent = Intent(this@SessionSelect, Server::class.java)
+        intent.putExtra("co_id", g_course_id)
+        intent.putExtra("sc_id", g_subconcept_id)
+        intent.putExtra("cn_id", g_concept_id)
+        intent.putExtra("sp_name", g_session_name)
+        intent.putExtra("sp_id", g_session_id)
+        intent.putExtra("cu_id",g_curriculum_id)
         startActivity(intent)
     }
 
@@ -72,6 +80,12 @@ class SessionSelect : AppCompatActivity() {
     fun start_session3(view: View?)
     {
         val intent = Intent(this@SessionSelect, Server::class.java)
+        intent.putExtra("co_id", g_course_id)
+        intent.putExtra("sc_id", g_subconcept_id)
+        intent.putExtra("cn_id", g_concept_id)
+        intent.putExtra("sp_name", g_session_name)
+        intent.putExtra("sp_id", g_session_id)
+        intent.putExtra("cu_id",g_curriculum_id)
         startActivity(intent)
     }
 
@@ -100,6 +114,7 @@ class SessionSelect : AppCompatActivity() {
     //onclick for logging out from the teacher's account
     private fun logout()
     {
+        (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()// for clearing app data
         val intent = Intent(this@SessionSelect, MainActivity::class.java)
         startActivity(intent)
     }

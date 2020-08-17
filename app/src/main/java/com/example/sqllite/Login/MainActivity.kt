@@ -32,7 +32,7 @@ This is the main activity and hence the login activity of the app too
 class MainActivity : AppCompatActivity() {
     var g_email: EditText? = null
     var g_password: EditText? = null
-    var remember:CheckBox?=null
+    var g_remember:CheckBox?=null
     var mydb1: sqlite? = null
 
     val g_JSON_ARRAY = "result"
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         mydb1 = sqlite(this)
         g_email = findViewById(R.id.email)
         g_password = findViewById(R.id.pass)
-        remember= findViewById<CheckBox>(R.id.remeberme)
+        g_remember= findViewById<CheckBox>(R.id.remeberme)
 //preferences
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         preferences2 = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
@@ -101,7 +101,7 @@ isReadStoragePermissionGranted()
         }
         if(sp.contains("pref_check")) {
             var check:Boolean = sp.getBoolean("pref_check",false)
-            remember!!.setChecked(check)
+            g_remember!!.setChecked(check)
 
 
         }
@@ -134,9 +134,9 @@ isReadStoragePermissionGranted()
                     {
 
                         //checking whether remember checkox is checked or not
-                        if(remember!!.isChecked){
+                        if(g_remember!!.isChecked){
 
-                            val boolIsChecked = remember!!.isChecked
+                            val boolIsChecked = g_remember!!.isChecked
                             val editor = preferences!!.edit()
                             editor.putString("pref_username",l_email_user)
                             editor.putString("pref_password",l_password_user)
@@ -317,6 +317,7 @@ isReadStoragePermissionGranted()
     }
 
     companion object {
+
         const val g_SERVER_URL = "http:/192.168.29.71/poc/login.php"
         const val SERVER_URL_COHORT = "http:/192.168.29.71/poc/getCohort.php"
         const val SERVER_URL_COURSE = "http:/192.168.29.71/poc/getCourse.php"
