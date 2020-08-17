@@ -102,7 +102,11 @@ class ResetPasswordActivity2 : AppCompatActivity() {
     }
 
     companion object {
+
         const val g_SERVER_URL = "http:/192.168.29.71/poc/resetpassword.php"
+
+
+
     }
 
 }

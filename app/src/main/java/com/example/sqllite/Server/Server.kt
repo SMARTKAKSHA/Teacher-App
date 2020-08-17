@@ -202,7 +202,7 @@ class Server : AppCompatActivity() {
                 showMessage("Error Connecting to Client!!", Color.RED, false)
             }
             showMessage("Connected to Client!!", greenColor, true)
-            sendMessage(g_curriculum_id+"/"+g_course_id+"/"+g_concept_id+"/"+g_subconcept_id+"/"+g_session_id+"/"+g_session_name)
+            sendMessage(g_curriculum_id+"/"+g_course_id+"/"+g_session_id)
         }
     }
 
@@ -227,8 +227,8 @@ class Server : AppCompatActivity() {
         val countTime: TextView = findViewById(com.example.sqllite.R.id.countTime)
         object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                countTime.text = g_session_name+" Starts in "+counter.toString()
-                counter++
+                countTime.text = g_session_name+" Starts in "+millisUntilFinished/1000
+
             }
             override fun onFinish() {
                 countTime.text = "Finished"
@@ -238,7 +238,12 @@ class Server : AppCompatActivity() {
                 intent.putExtra("cn_id", g_concept_id)
                 startActivity(intent)
             }
+
+
+
         }.start()
+
+
     }
 
     fun Start_Session(view: View?){
@@ -248,6 +253,7 @@ class Server : AppCompatActivity() {
         intent.putExtra("sc_id", g_subconcept_id)
         intent.putExtra("cn_id", g_concept_id)
         startActivity(intent)
+
     }
     companion object {
         //the SERVER_PORT is initialized which must correspond to the port of the client

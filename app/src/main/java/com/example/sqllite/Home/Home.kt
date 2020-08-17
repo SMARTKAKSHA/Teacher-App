@@ -1,6 +1,8 @@
 package com.example.sqllite
 
 import android.R
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -160,7 +162,7 @@ class Home : AppCompatActivity() {
         fetch_sessionid()
         fetch_conceptid()
         fetch_subconceptid()
-fetch_curriculumid()
+        fetch_curriculumid()
 
         val intent = Intent(this@Home, SessionSelect::class.java)
         intent.putExtra("cn_id",g_concept_id)
@@ -191,6 +193,7 @@ fetch_curriculumid()
     //onclick for logging out from the teacher's account
     private fun logout()
     {
+        (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()// for clearing app data
         val intent = Intent(this@Home, MainActivity::class.java)
         startActivity(intent)
     }

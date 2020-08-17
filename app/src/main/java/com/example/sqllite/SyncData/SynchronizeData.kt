@@ -17,7 +17,7 @@ import org.json.JSONObject
 import java.util.HashMap
 
 /*Created  By Divyanshu Gupta
-This is the Synchronize Data activity for synchronizing data from server to local database
+This is the Synchronize Data activity for synchronizing data from server to local database according to course and cohort selected
  */
 
 class SynchronizeData : AppCompatActivity() {
@@ -520,6 +520,7 @@ class SynchronizeData : AppCompatActivity() {
 
     companion object
     {
+
         const val SERVER_URL_CONTENT = "http:/192.168.29.71/poc/getContent.php"
         const val SERVER_URL_CONCEPT = "http:/192.168.29.71/poc/getConcept2.php"
         const val SERVER_URL_SUBCONCEPT = "http:/192.168.29.71/poc/getSubConcept2.php"
@@ -529,6 +530,10 @@ class SynchronizeData : AppCompatActivity() {
         const val SERVER_URL_COURSECONTENT = "http:/192.168.29.71/poc/getCourseContent.php"
         const val SERVER_URL_CURRICULUM = "http:/192.168.29.71/poc/getCurriculum2.php"
         const val SERVER_URL_CURRICULUMDETAILS = "http:/192.168.29.71/poc/getCurriculumDetails2.php"
+
+
+
+
 
     }
 }

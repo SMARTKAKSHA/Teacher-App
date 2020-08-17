@@ -29,14 +29,14 @@ class DownloadActivity : AppCompatActivity() {
 
 
     private var downloadManager: DownloadManager? = null
-    private var refid: Long = 0
-    private var Download_Uri: Uri? = null
+    private var g_refid: Long = 0
+    private var g_Download_Uri: Uri? = null
     var l_content_link: String? = null
     var file:File?=null
     var l_content_id: String? = null
     var db: sqlite? = null
-    var keyword:String?="/exoplayer-test-media-0/"
-    var list: ArrayList<Long> = ArrayList()
+    var g_keyword:String?="/exoplayer-test-media-0/"
+    var g_list: ArrayList<Long> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
@@ -58,24 +58,24 @@ class DownloadActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!) + keyword!!.length)
+                var filename = l_content_link!!.substring(l_content_link!!.indexOf(g_keyword!!) + g_keyword!!.length)
                 downloadit(filename)
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
 
             }
         } else { //permission is automatically granted on sdk<23 upon installation
-            var filename =l_content_link!!.substring(l_content_link!!.indexOf(keyword!!)+keyword!!.length)
+            var filename =l_content_link!!.substring(l_content_link!!.indexOf(g_keyword!!)+g_keyword!!.length)
             downloadit(filename)
         }
 
     }
     fun downloadit(filename: String) {
-        Download_Uri = Uri.parse(l_content_link)
+        g_Download_Uri = Uri.parse(l_content_link)
         val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         try{
             if(manager!=null){
-                val request = DownloadManager.Request(Download_Uri)
+                val request = DownloadManager.Request(g_Download_Uri)
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
 
                 request.setAllowedOverRoaming(false)
@@ -86,17 +86,17 @@ class DownloadActivity : AppCompatActivity() {
                 request.allowScanningByMediaScanner()
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,filename)
-                request.setMimeType(getMimeType(Download_Uri))
-                refid = manager.enqueue(request)
-                list.add(refid);
-Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
+                request.setMimeType(getMimeType(g_Download_Uri))
+                g_refid = manager.enqueue(request)
+                g_list.add(g_refid);
+                Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show()
                file = File(Environment.getExternalStorageDirectory().absolutePath+"/Download/",filename)
 
 
                 db?.updateContentTable(file.toString(),l_content_id.toString())
             }
             else{
-                var intent= Intent(Intent.ACTION_VIEW,Download_Uri)
+                var intent= Intent(Intent.ACTION_VIEW,g_Download_Uri)
                 startActivity(intent)
             }
         }catch (e:Exception){
@@ -114,8 +114,8 @@ Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show
         override fun onReceive(ctxt: Context, intent: Intent) {
             val referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             Log.e("IN", "" + referenceId)
-            list.remove(referenceId)
-            if (list.isEmpty()) {
+            g_list.remove(referenceId)
+            if (g_list.isEmpty()) {
                 Log.e("INSIDE", "" + referenceId)
                 val mBuilder = NotificationCompat.Builder(this@DownloadActivity)
                         .setSmallIcon(R.mipmap.ic_launcher)
@@ -136,7 +136,7 @@ Toast.makeText(this@DownloadActivity,"Download Started",Toast.LENGTH_SHORT).show
         super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
 
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            var filename = l_content_link!!.substring(l_content_link!!.indexOf(keyword!!) + keyword!!.length)
+            var filename = l_content_link!!.substring(l_content_link!!.indexOf(g_keyword!!) + g_keyword!!.length)
             downloadit(filename)
 
             // permission granted
