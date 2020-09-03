@@ -13,6 +13,7 @@ import java.util.ArrayList
 
 /*
 Created by Divyanshu Gupta
+In this we are getting cohortand course  for which we have to sync the data
  */
 class SynchronizeDataCohortSelect : AppCompatActivity() {
 

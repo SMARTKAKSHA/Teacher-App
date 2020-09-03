@@ -18,6 +18,10 @@ import java.net.Socket
 import java.text.SimpleDateFormat
 import java.util.*
 
+/*
+Created by Divyanshu Gupta
+In this we are connnecting teacher app to student app
+ */
 class Server : AppCompatActivity() {
 
     var  g_course_id: String?= null

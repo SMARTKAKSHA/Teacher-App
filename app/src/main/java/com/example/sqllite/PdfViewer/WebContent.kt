@@ -8,7 +8,10 @@ import android.widget.ListView
 import com.example.sqllite.R
 import com.example.sqllite.WebView
 import com.example.sqllite.sqlite
-
+/*
+Created by  Divyanshu Gupta
+Displaying web content
+ */
 class WebContent : AppCompatActivity() {
     var g_WEBSITE: ArrayList<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {

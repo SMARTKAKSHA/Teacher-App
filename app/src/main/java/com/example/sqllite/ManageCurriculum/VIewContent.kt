@@ -7,6 +7,10 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
+/*
+Created by Divyanshu gupta
+In this we are displaying all the content
+ */
 class VIewContent : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

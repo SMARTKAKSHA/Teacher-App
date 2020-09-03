@@ -12,7 +12,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import android.widget.Toast
-
+/*
+Created by  Divyanshu Gupta
+Viewing web content
+ */
 class WebView : AppCompatActivity() {
     var g_link: String? = null
     var webView: WebView?=null

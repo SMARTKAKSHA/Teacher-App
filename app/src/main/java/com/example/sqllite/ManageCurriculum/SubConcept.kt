@@ -7,7 +7,7 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-/*Created By Amrit Kumar
+/*Created By Divyanshu Gupta
 This Activity is Created for Displaying Sub concepts
  */
 

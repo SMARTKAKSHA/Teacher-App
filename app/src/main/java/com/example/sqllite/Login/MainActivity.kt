@@ -28,6 +28,8 @@ import java.util.*
 
 /*Created  By Divyanshu Gupta
 This is the main activity and hence the login activity of the app too
+
+In this we are also syncing cohort and course from server into the local database
  */
 class MainActivity : AppCompatActivity() {
     var g_email: EditText? = null

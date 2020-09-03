@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-
+/*
+CREATED BY DIVYANSHU GUPTA
+It displays the content type like video,audio pdf and website
+ */
 class CourseContent : AppCompatActivity() {
     var alist: ArrayList<String>? = null
     var WEBSITE=ArrayList<String>(10)
@@ -33,15 +36,6 @@ class CourseContent : AppCompatActivity() {
         alist!!.add("AUDIO")
         alist!!.add("WEBSITE")
 
-      /*  var l_videocontent: ArrayList<String>
-        l_videocontent = db.fetchVideoContent(l_course_ID, l_concept_ID, l_subconcept_ID)
-
-        for (i in 0 until l_videocontent.size) {
-            var link = l_videocontent.get(i)
-
-            VIDEO!!.add(i,link)
-        }
-*/
 
         var size= l_content.size
         for (i in 0 until size) {

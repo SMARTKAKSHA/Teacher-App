@@ -26,8 +26,7 @@ import com.google.android.exoplayer2.util.Util
 This Activity is Created for PLAYING VIDEO(CLASSROOM SESSION) AND PERFORMING DIFFERENT FUNCTIONS LIKE
 1) PLAYING NEXT VIDEO
 2) STOPING THE SESSION
-3) PAUSING THE SESSION
-4) STARTING POP UP QUIZ
+3) STARTING POP UP QUIZ
 
 NOTE:- IN THIS ACTIVITY WE HAVE INTEGERATED A THIRD PARTY VIDEO PLAYER THAT IS EXOPLAYER(RECOMMENDED BY GOOGLE) FOR PLAYING VIDEO
 */
@@ -60,7 +59,6 @@ class ExoPlayer : AppCompatActivity() {
         VIDEO= intent.getStringArrayListExtra("video")
        g_link=VIDEO!!.get(0)
         g_link2=VIDEO!!.get(0)
-            t1= findViewById<TextView>(R.id.t1)
 
                 /*    val cursor1: Cursor = g_mydb3!!.getlink(g_content_id!!)
                     val l_stringBuilder1 = StringBuilder()
@@ -69,7 +67,6 @@ class ExoPlayer : AppCompatActivity() {
                         g_link = l_stringBuilder1.toString()
                         Toast.makeText(this@ExoPlayer, g_link, Toast.LENGTH_SHORT).show()}
 */
-             t1!!.setText(g_link)
 
 
         extractoryFactory= DefaultExtractorsFactory()
