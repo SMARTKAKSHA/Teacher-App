@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 /*Created  By Divyanshu Gupta
 This is the test activity for starting different quiz for the student
 
-Note:- Not yet finished
+
  */
 class Test : AppCompatActivity()
 {

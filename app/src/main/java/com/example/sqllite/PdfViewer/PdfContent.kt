@@ -7,6 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 
+/*
+Created by  Divyanshu Gupta
+Displaying pdf content
+ */
 class PdfContent : AppCompatActivity() {
     var g_PDF: ArrayList<String>? = null
 

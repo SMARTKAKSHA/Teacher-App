@@ -15,7 +15,10 @@ import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
 import es.voghdev.pdfviewpager.library.remote.DownloadFile
 import es.voghdev.pdfviewpager.library.util.FileUtil
 
-
+/*
+Created by  Divyanshu Gupta
+Viewing pdf content
+ */
 class PdfViewer : AppCompatActivity(), DownloadFile.Listener {
     var g_link: String? = null
 

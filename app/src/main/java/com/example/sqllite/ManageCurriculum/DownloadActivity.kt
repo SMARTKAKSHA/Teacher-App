@@ -24,7 +24,10 @@ import androidx.core.app.NotificationCompat
 import java.io.File
 import java.nio.file.Path
 
-
+/*
+Created by Divyanshu Gupta
+In this video we are downloading the selected file and updating the downloaded file link in content table
+ */
 class DownloadActivity : AppCompatActivity() {
 
 

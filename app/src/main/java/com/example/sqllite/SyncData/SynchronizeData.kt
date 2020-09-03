@@ -28,6 +28,8 @@ class SynchronizeData : AppCompatActivity() {
     var check:Boolean?=null
     private var preferences: SharedPreferences?=null
     private val PREFS_NAME = "File"
+    private val PREFS_NAME2 = "SYNC_STATUS"
+    private var preferences2: SharedPreferences?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +41,27 @@ class SynchronizeData : AppCompatActivity() {
         val intent = intent
         g_course_id = intent.getStringExtra("co_id")
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        preferences2 = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
+
         var sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
         check = sp.getBoolean("content_sync",false)
+        checkSyncstatus()
+    }
+    private fun checkSyncstatus() {
+        var sp = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
+
+
+
+
+        var check:Boolean = sp!!.getBoolean("sync1",false)
+
+        if(check==true){
+            g_syncstatus!!.setText("Synced")
+        }
+        else if(check==false){
+        g_syncstatus!!.setText("Not Synced")
+        }
     }
     //onclick function for syncing the session
     fun sync_session_1(view: View?)
@@ -68,6 +88,9 @@ class SynchronizeData : AppCompatActivity() {
             editor.apply()
 
             g_syncstatus?.setText("Synced")
+            val editor2 = preferences2!!.edit()
+            editor2.putBoolean("sync1", true)
+            editor.apply()
         }
 
 

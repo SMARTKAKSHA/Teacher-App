@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.sqllite.R
 
-
+/*
+created by Amrit kumar
+ */
 class MyListAdapter(private val context: Activity, private val title: ArrayList<String>, private val description: ArrayList<String>)
     : ArrayAdapter<String>(context, R.layout.custom_list, title) {
 

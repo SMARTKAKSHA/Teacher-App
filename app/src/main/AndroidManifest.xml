@@ -23,7 +23,9 @@
         <activity android:name=".SynchronizeDataCohortSelect" />
         <activity
             android:name=".DownloadActivity"
-            android:label="DOWNLOAD" />
+            android:label="DOWNLOAD"
+
+            />
         <activity android:name=".SearchStudent" />
         <activity
             android:name=".StudentSelectCohort"
@@ -50,7 +52,9 @@
             android:label="Player" />
         <activity
             android:name=".TeacherHome"
-            android:label="Home" />
+            android:label="Home"
+
+         />
         <activity
             android:name=".SynchronizeData"
             android:label="Sync" />
@@ -78,6 +82,10 @@
         <activity
             android:name=".StudentInfo"
             android:label="StudentPerformance" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
