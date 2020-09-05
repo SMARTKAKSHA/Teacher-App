@@ -23,6 +23,8 @@ This is the Synchronize Data activity for synchronizing data from server to loca
 class SynchronizeData : AppCompatActivity() {
     var mydb1: sqlite? = null
     var g_syncstatus:TextView? = null
+    var g_syncstatus2:TextView? = null
+
     val g_JSON_ARRAY = "result"
     var g_course_id: String?= null
     var check:Boolean?=null
@@ -37,7 +39,6 @@ class SynchronizeData : AppCompatActivity() {
         mydb1 = sqlite(this)
         setContentView(R.layout.activity_synchronize_data)
         g_syncstatus = findViewById<View>(R.id.sync1) as TextView?
-
         val intent = intent
         g_course_id = intent.getStringExtra("co_id")
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -54,7 +55,7 @@ class SynchronizeData : AppCompatActivity() {
 
 
 
-        var check:Boolean = sp!!.getBoolean("sync1",false)
+        var check:Boolean = sp.getBoolean("sync1",false)
 
         if(check==true){
             g_syncstatus!!.setText("Synced")
@@ -90,7 +91,7 @@ class SynchronizeData : AppCompatActivity() {
             g_syncstatus?.setText("Synced")
             val editor2 = preferences2!!.edit()
             editor2.putBoolean("sync1", true)
-            editor.apply()
+            editor2.apply()
         }
 
 

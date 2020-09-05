@@ -56,7 +56,7 @@ class SearchStudent : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         val search = menu.findItem(R.id.appSearchBar)
         val searchView = search.actionView as SearchView
-        searchView.setBackgroundColor(Color.BLACK)
+        //searchView.setBackgroundColor(Color.BLACK)
         searchView.queryHint = "Search"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
