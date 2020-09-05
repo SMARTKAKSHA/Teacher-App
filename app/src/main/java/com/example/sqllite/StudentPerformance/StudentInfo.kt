@@ -1,6 +1,8 @@
 package com.example.sqllite
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -28,7 +30,7 @@ class StudentInfo : AppCompatActivity() {
     var g_student_add: TextView? = null
     var g_student_id: TextView? = null
     var g_ST_id:String?=null
-
+var g_name:String?=null
     var g_Assesment_Name:ArrayList<String> = arrayListOf()
     var g_Assesment_Result:ArrayList<String> = arrayListOf()
 
@@ -49,15 +51,16 @@ class StudentInfo : AppCompatActivity() {
         g_student_id = findViewById(R.id.studentId_textView)
         fetchDetails()
         fetchResult()
-        val myListAdapter = MyListAdapter(this,g_Assesment_Name,g_Assesment_Result)
+    }
+    fun view_grade(view: View?){
 
-        listView.adapter = myListAdapter
+        val intent = Intent(this@StudentInfo, Grades::class.java)
+        intent.putExtra("g_name",g_name)
+        intent.putStringArrayListExtra("g_ass_name",g_Assesment_Name)
+        intent.putStringArrayListExtra("g_ass_result",g_Assesment_Result)
 
-        listView.setOnItemClickListener(){adapterView, view, position, id ->
-            val itemAtPos = adapterView.getItemAtPosition(position)
-            val itemIdAtPos = adapterView.getItemIdAtPosition(position)
-            Toast.makeText(this, "Click on item at $itemAtPos its item id $itemIdAtPos", Toast.LENGTH_LONG).show()
-        }
+        startActivity(intent)
+
     }
 
 //fetchDetails() function fetch details of student from server__
@@ -94,6 +97,7 @@ class StudentInfo : AppCompatActivity() {
                     l_ST_Dob = jo.getString(l_ST_DOB)
 
                     var name: String = l_ST_Firstname + " " + l_ST_Lastname
+                    g_name=name
                     g_student_name?.setText(name)
                     g_student_add?.setText(l_ST_Address)
                     g_student_dob?.setText(l_ST_Dob)

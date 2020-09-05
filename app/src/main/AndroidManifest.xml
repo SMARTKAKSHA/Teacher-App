@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WebContent"></activity>
+        <activity android:name=".Grades"></activity>
+        <activity android:name=".WebContent" />
         <activity android:name=".PdfContent" />
         <activity android:name=".WebView" />
         <activity android:name=".PdfViewer" />
@@ -23,9 +24,7 @@
         <activity android:name=".SynchronizeDataCohortSelect" />
         <activity
             android:name=".DownloadActivity"
-            android:label="DOWNLOAD"
-
-            />
+            android:label="DOWNLOAD" />
         <activity android:name=".SearchStudent" />
         <activity
             android:name=".StudentSelectCohort"
@@ -52,9 +51,7 @@
             android:label="Player" />
         <activity
             android:name=".TeacherHome"
-            android:label="Home"
-
-         />
+            android:label="Home" />
         <activity
             android:name=".SynchronizeData"
             android:label="Sync" />

@@ -1,182 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<LinearLayout
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
-    tools:context=".MainActivity"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    >
-    <LinearLayout
+    tools:context=".StudentInfo">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_person_24"/>
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/CustomText"
-            android:id="@+id/name_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
 
-            android:text="@string/student_name" />
-    </LinearLayout>
-    <LinearLayout
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="131dp"
+            android:layout_marginEnd="150dp"
+            android:background="@drawable/image_background"
+            android:padding="10dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        >
-        <TextView
-            style="@style/CustomText"
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="30dp"
+        android:layout_height="wrap_content">
 
-            android:text="@string/student_id" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1119dp"
+            android:orientation="vertical"
+            android:padding="30dp">
 
-        <TextView
-            style="@style/CustomText"
-            android:id="@+id/studentId_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="30sp"
+                android:text="NAME"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                ></TextView>
 
-
-            android:text='@string/emptyy' />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
-
-        <TextView
-            android:layout_marginLeft="5dp"
-            style="@style/CustomText"
-            android:layout_width="94dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="30dp"
-
-            android:text="@string/course" />
-
-        <TextView
-            android:id="@+id/course_textview"
-            style="@style/CustomText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            <TextView
+                android:id="@+id/name_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Name"
+                android:padding="10dp"
 
 
-            android:text="@string/emptyy" />
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="30sp"
+                android:text="STUDENT ID"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+            <TextView
+                android:id="@+id/studentId_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Student Id"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="30sp"
+                android:text="COURSE"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+            <TextView
+                android:id="@+id/course_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Course"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="30sp"
+                android:text="COHORT"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+            <TextView
+                android:id="@+id/batch_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Cohort"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="30sp"
+                android:text="D.O.B"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+            <TextView
+                android:id="@+id/dob_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="D.O.B"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="30sp"
+                android:text="ADDRESS"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+            <TextView
+                android:id="@+id/add_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Address"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+            <Button
+                android:id="@+id/button_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/button_background"
+                android:text="View Grade"
+                android:onClick="view_grade"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
+        </LinearLayout>
 
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        >
-
-        <TextView
-            android:layout_marginLeft="5dp"
-            style="@style/CustomText"
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="30dp"
-
-            android:text="@string/cohort" />
-
-        <TextView
-            style="@style/CustomText"
-            android:id="@+id/batch_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+    </ScrollView>
 
 
-            android:text="B1" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        >
-
-        <TextView
-            android:layout_marginLeft="5dp"
-            style="@style/CustomText"
-            android:layout_width="98dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="30dp"
-
-            android:text="@string/dob" />
-
-        <TextView
-            style="@style/CustomText"
-            android:id="@+id/dob_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
 
 
-            android:text="@string/dd_mm_yyyy" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        >
-
-        <TextView
-            android:layout_marginLeft="5dp"
-            style="@style/CustomText"
-            android:layout_width="99dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="30dp"
-
-            android:text="@string/address" />
-
-        <TextView
-            style="@style/CustomText"
-            android:id="@+id/add_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-
-
-            android:text="@string/emptyy" />
-    </LinearLayout>
-
-</LinearLayout>
-
-    <ListView
-
-
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-
-        />
 
 
 </LinearLayout>
