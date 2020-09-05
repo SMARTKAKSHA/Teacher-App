@@ -89,6 +89,8 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/sync2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -110,6 +112,8 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/sync3"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"

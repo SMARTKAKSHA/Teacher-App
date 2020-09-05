@@ -3,11 +3,13 @@ package com.example.sqllite
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
@@ -28,6 +30,10 @@ class SessionSelect : AppCompatActivity() {
     var g_session_name: String?= null
     var g_session_id: String?= null
     var g_curriculum_id: String?= null
+    private val PREFS_NAME2 = "SYNC_STATUS"
+    var g_syncstatus: TextView? = null
+    var g_syncstatus2: TextView? = null
+    var g_syncstatus3: TextView? = null
 
     var g_concept_id: String?= null
     var g_subconcept_id: String?= null
@@ -38,6 +44,9 @@ class SessionSelect : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session_select)
         g_mydb1 = sqlite(this)
+        g_syncstatus = findViewById<View>(R.id.sync1) as TextView?
+        g_syncstatus2 = findViewById<View>(R.id.sync2) as TextView?
+        g_syncstatus3 = findViewById<View>(R.id.sync3) as TextView?
 
         val intent = intent
         g_course_id = intent.getStringExtra("co_id")
@@ -47,8 +56,40 @@ class SessionSelect : AppCompatActivity() {
         g_session_id= intent.getStringExtra("sp_id")
         g_curriculum_id = intent.getStringExtra("cu_id")
 
+        checkSyncstatus()
     }
+    private fun checkSyncstatus() {
+        var sp = getSharedPreferences(PREFS_NAME2, Context.MODE_PRIVATE)
 
+
+
+
+        var check:Boolean = sp.getBoolean("sync1",false)
+        var check2:Boolean = sp.getBoolean("sync2",false)
+        var check3:Boolean = sp.getBoolean("sync3",false)
+
+        if(check==true){
+            g_syncstatus!!.setText("Synced")
+        }
+        else if(check==false){
+            g_syncstatus!!.setText("Not Synced")
+        }
+
+        if(check2==true){
+            g_syncstatus2!!.setText("Synced")
+        }
+        else if(check2==false){
+            g_syncstatus2!!.setText("Not Synced")
+        }
+        if(check3==true){
+            g_syncstatus3!!.setText("Synced")
+        }
+        else if(check3==false){
+            g_syncstatus3!!.setText("Not Synced")
+        }
+
+
+    }
     //onclick function for starting session1 and it will open the classroom connection activity that is server class
     fun start_session1(view: View?)
     {

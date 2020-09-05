@@ -154,7 +154,7 @@ class ExoPlayer : AppCompatActivity() {
     fun pop(view: View?) {}//onclick function for  starting popup quiz
     fun stop(view: View?) {
 
-        intent = Intent(this,Server::class.java)
+        intent = Intent(this,SessionSelect::class.java)
 
         startActivity(intent)
     }//onclick function for  stopping the session

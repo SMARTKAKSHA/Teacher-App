@@ -35,7 +35,7 @@
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/sync1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -61,7 +61,7 @@
          />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/sync2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -90,7 +90,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/sync3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

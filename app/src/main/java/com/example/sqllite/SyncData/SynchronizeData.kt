@@ -28,6 +28,7 @@ class SynchronizeData : AppCompatActivity() {
     var mydb1: sqlite? = null
     var g_syncstatus:TextView? = null
     var g_syncstatus2:TextView? = null
+    var g_syncstatus3:TextView? = null
 
     val g_JSON_ARRAY = "result"
     var g_course_id: String?= null
@@ -43,6 +44,9 @@ class SynchronizeData : AppCompatActivity() {
         mydb1 = sqlite(this)
         setContentView(R.layout.activity_synchronize_data)
         g_syncstatus = findViewById<View>(R.id.sync1) as TextView?
+        g_syncstatus2 = findViewById<View>(R.id.sync2) as TextView?
+        g_syncstatus3 = findViewById<View>(R.id.sync3) as TextView?
+
         val intent = intent
         g_course_id = intent.getStringExtra("co_id")
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -60,12 +64,26 @@ class SynchronizeData : AppCompatActivity() {
 
 
         var check:Boolean = sp.getBoolean("sync1",false)
-
+        var check2:Boolean = sp.getBoolean("sync2",false)
+        var check3:Boolean = sp.getBoolean("sync3",false)
         if(check==true){
             g_syncstatus!!.setText("Synced")
         }
         else if(check==false){
         g_syncstatus!!.setText("Not Synced")
+        }
+
+        if(check2==true){
+            g_syncstatus2!!.setText("Synced")
+        }
+        else if(check2==false){
+            g_syncstatus2!!.setText("Not Synced")
+        }
+        if(check3==true){
+            g_syncstatus3!!.setText("Synced")
+        }
+        else if(check3==false){
+            g_syncstatus3!!.setText("Not Synced")
         }
     }
     //onclick function for syncing the session
@@ -103,8 +121,62 @@ class SynchronizeData : AppCompatActivity() {
 
 
 
-    fun sync_session_2(view: View?) {}
-    fun sync_session_3(view: View?) {}
+    fun sync_session_2(view: View?) {
+
+        if(check==true) {
+            getCurriculumDetail()
+            getSessionPlans()
+            getConcepts()
+
+
+        }
+        else if(check==false){
+            getCurriculumDetail()
+            getSessionPlans()
+            getSessionSection()
+            getConcepts()
+            getContent()
+            getCourseContent()
+            val editor = preferences!!.edit()
+            editor.putBoolean("content_sync", true)
+
+            editor.apply()
+
+            g_syncstatus2?.setText("Synced")
+            val editor2 = preferences2!!.edit()
+            editor2.putBoolean("sync2", true)
+            editor2.apply()
+        }
+
+    }
+    fun sync_session_3(view: View?) {
+
+        if(check==true) {
+            getCurriculumDetail()
+            getSessionPlans()
+            getConcepts()
+
+
+        }
+        else if(check==false){
+            getCurriculumDetail()
+            getSessionPlans()
+            getSessionSection()
+            getConcepts()
+            getContent()
+            getCourseContent()
+            val editor = preferences!!.edit()
+            editor.putBoolean("content_sync", true)
+
+            editor.apply()
+
+            g_syncstatus3?.setText("Synced")
+            val editor2 = preferences2!!.edit()
+            editor2.putBoolean("sync3", true)
+            editor2.apply()
+        }
+
+    }
 
     fun getCurriculumDetail(){
         val stringRequest: StringRequest = object : StringRequest(Method.POST, SERVER_URL_CURRICULUMDETAILS, Response.Listener { response ->
