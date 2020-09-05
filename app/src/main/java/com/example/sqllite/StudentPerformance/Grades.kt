@@ -1,7 +1,12 @@
 package com.example.sqllite
 
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -32,4 +37,6 @@ g_student!!.setText(g_Student_Name)
             Toast.makeText(this, "Click on item at $itemAtPos its item id $itemIdAtPos", Toast.LENGTH_LONG).show()
         }
     }
+
+
 }

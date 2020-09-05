@@ -24,7 +24,8 @@
         <activity android:name=".SynchronizeDataCohortSelect" />
         <activity
             android:name=".DownloadActivity"
-            android:label="DOWNLOAD" />
+            android:label="DOWNLOAD"
+            />
         <activity android:name=".SearchStudent" />
         <activity
             android:name=".StudentSelectCohort"

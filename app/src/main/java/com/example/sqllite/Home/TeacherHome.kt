@@ -3,11 +3,11 @@ package com.example.sqllite
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -81,5 +81,10 @@ class TeacherHome : AppCompatActivity() {
         val intent = Intent(this@TeacherHome, MainActivity::class.java)
         startActivity(intent)
 
+    }
+
+    //prevent from going to previous activity
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 }

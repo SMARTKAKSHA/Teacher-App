@@ -3,6 +3,7 @@ package com.example.sqllite
 
 
 import android.Manifest
+import android.app.ActivityManager
 import android.app.DownloadManager
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -15,6 +16,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
@@ -155,7 +158,29 @@ fun getMimeType(uri: Uri?): String? {
     return mimeTypeMap.getExtensionFromMimeType(resolver.getType(uri!!))
     }
 
+    //creating option menu for logout
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(com.example.sqllite.R.menu.menu_main, menu)
+        return true
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val l_id = item.itemId
+        if (l_id == com.example.sqllite.R.id.action_logout) {
+            logout()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //onclick for logging out from the teacher's account
+    private fun logout()
+    {
+        (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()// for clearing app data
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+
+    }
 
 }
 

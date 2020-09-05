@@ -3,6 +3,8 @@ package com.example.sqllite
 
 
 
+import android.app.ActivityManager
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 import android.content.Intent
+import android.view.MenuItem
 
 /*
 Created by Amrit and Divyanshu
@@ -141,32 +144,6 @@ class SearchStudent : AppCompatActivity() {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

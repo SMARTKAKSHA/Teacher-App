@@ -1,10 +1,15 @@
 package com.example.sqllite
 
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -121,6 +126,30 @@ class WebView : AppCompatActivity() {
         }
 
 
+
+    }
+
+    //creating option menu for logout
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(com.example.sqllite.R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val l_id = item.itemId
+        if (l_id == com.example.sqllite.R.id.action_logout) {
+            logout()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //onclick for logging out from the teacher's account
+    private fun logout()
+    {
+        (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()// for clearing app data
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
 
     }
 

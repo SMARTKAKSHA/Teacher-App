@@ -1,11 +1,15 @@
 package com.example.sqllite
 
 import android.R
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -262,5 +266,29 @@ class Server : AppCompatActivity() {
     companion object {
         //the SERVER_PORT is initialized which must correspond to the port of the client
         const val SERVER_PORT = 5050
+    }
+
+    //creating option menu for logout
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(com.example.sqllite.R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val l_id = item.itemId
+        if (l_id == com.example.sqllite.R.id.action_logout) {
+            logout()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //onclick for logging out from the teacher's account
+    private fun logout()
+    {
+        (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()// for clearing app data
+        val intent = Intent(this@Server, MainActivity::class.java)
+        startActivity(intent)
+
     }
 }
