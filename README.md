@@ -10,3 +10,6 @@
   5) Quizes
 
 # LOGIN PAGE
+
+<img src = "/smartkaksha clips/Login Page.jpg" width="250" height="500"/> 
+
