@@ -36,3 +36,11 @@
 <img src = "/smartkaksha clips/Student Search.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Student Info.jpeg" width="300" height="500"/> 
 
 <img src = "/smartkaksha clips/Student Grades.jpeg" width="300" height="500"/> 
+
+# SESSION CONTENT
+
+<img src = "/smartkaksha clips/Session Content.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Video.jpeg" width="300" height="500"/> 
+
+<img src = "/smartkaksha clips/Music.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Website.jpeg" width="300" height="500"/> 
+
+<img src = "/smartkaksha clips/Pdf.jpeg" width="300" height="500"/> 
