@@ -11,5 +11,5 @@
 
 # LOGIN PAGE
 
-<img src = "/smartkaksha clips/Login Page.jpeg" width="350" height="500"/> 
+<img src = "/smartkaksha clips/Login Page.jpeg" width="300" height="500"/> 
 
