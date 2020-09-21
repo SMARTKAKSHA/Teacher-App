@@ -9,10 +9,14 @@
   4) Attendance
   5) Quizes
 
-# LOGIN PAGE
+# LOGIN
 
 <img src = "/smartkaksha clips/Login Page.jpeg" width="300" height="500"/> 
 
-# MAIN SCREEN 
+# MAIN MENU 
 
 <img src = "/smartkaksha clips/Main Screen.jpeg" width="300" height="500"/> 
+
+# RESET PASSWORD
+
+<img src = "/smartkaksha clips/Reset Password 1.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Reset Password 2.jpeg" width="300" height="500"/> 
