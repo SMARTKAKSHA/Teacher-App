@@ -31,3 +31,8 @@
 
 <img src = "/smartkaksha clips/Sync Data.jpeg" width="300" height="500"/> 
 
+# STUDENT PERFORMANCE
+
+<img src = "/smartkaksha clips/Student Search.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Student Info.jpeg" width="300" height="500"/> 
+
+<img src = "/smartkaksha clips/Student Grades.jpeg" width="300" height="500"/> 
