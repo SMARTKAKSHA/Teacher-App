@@ -27,4 +27,7 @@
 
 <img src = "/smartkaksha clips/Server-Client Connection.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Test.jpeg" width="300" height="500"/> 
 
+# SYNCHRONIZE DATA FROM CLOUD
+
+<img src = "/smartkaksha clips/Sync Data.jpeg" width="300" height="500"/> 
 
