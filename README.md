@@ -1,6 +1,4 @@
-# DOWNLOAD
-
-SMARTKAKSHA APP
+## SMARTKAKSHA APP
 
   An online Classroom App for students and teachers
   
