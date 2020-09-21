@@ -25,5 +25,6 @@
 
 <img src = "/smartkaksha clips/Select Cohort and course.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Session.jpeg" width="300" height="500"/> 
 
-<img src = "/smartkaksha clips/Server-Client Connection.jpeg" width="300" height="500"/> 
+<img src = "/smartkaksha clips/Server-Client Connection.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Test.jpeg" width="300" height="500"/> 
+
 
