@@ -20,3 +20,10 @@
 # RESET PASSWORD
 
 <img src = "/smartkaksha clips/Reset Password 1.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Reset Password 2.jpeg" width="300" height="500"/> 
+
+# CLASSROOM SESSION
+
+<img src = "/smartkaksha clips/Select Cohort and course.jpeg" width="300" height="500"/> <img src = "/smartkaksha clips/Session.jpeg" width="300" height="500"/> 
+
+<img src = "/smartkaksha clips/Server-Client Connection.jpeg" width="300" height="500"/> 
+
